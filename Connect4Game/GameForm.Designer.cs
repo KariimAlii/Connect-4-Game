@@ -37,6 +37,7 @@
             this.GamePanel.Name = "GamePanel";
             this.GamePanel.Size = new System.Drawing.Size(596, 446);
             this.GamePanel.TabIndex = 0;
+            this.GamePanel.Click += new System.EventHandler(this.GamePanel_Click);
             // 
             // GameForm
             // 

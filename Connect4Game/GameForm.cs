@@ -80,5 +80,7 @@ namespace Connect4Game
         {
             Invalidate();
         }
+
+
     }
 }
