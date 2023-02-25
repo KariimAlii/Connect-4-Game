@@ -62,7 +62,7 @@ namespace Connect4Game
                     Board[row, i + 3] == playerIdentifier)
                 {
 
-                    MessageBox.Show("winner");
+                    MessageBox.Show($"Player {playerIdentifier} wins!");
                 }
 
             }
