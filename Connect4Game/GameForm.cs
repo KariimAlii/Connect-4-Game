@@ -11,16 +11,21 @@ namespace Connect4Game
         int Nrows;
         int Ncols;
         int Size;
-
         int[,] Board;
+        Point[,] points;
+        int[,] PlayerOneScores;
+        int[,] PlayerTwoScores;
+        int turn;
+        Brush Player1Brush;
+        Brush Player2Brush;
+        Brush PanelBrush;
+        int row_num;
+        int col_num;
         //================ Rectangle =================//
         Color Rect_Color;
         Rectangle Rect;
         Pen Rect_Pen;
         HatchBrush Rect_Brush;
-        //================ Circle =================//
-        Color Circle_Color;
-        Brush Circle_Brush;
         public GameForm()
         {
             InitializeComponent();
@@ -33,13 +38,19 @@ namespace Connect4Game
             Ncols = 7;
             Size = 100;
             Board = new int[Nrows, Ncols];
+            points = new Point[Nrows, Ncols];
+            PlayerOneScores = new int[Nrows, Ncols];
+            PlayerTwoScores = new int[Nrows, Ncols];
+            turn = 1;
+            Player1Brush = new SolidBrush(Color.Pink);
+            Player2Brush = new SolidBrush(Color.Yellow);
+            PanelBrush = new SolidBrush(Color.Cyan);
             //================ Panel =================//
             GamePanel.Width = Ncols * Size;
             GamePanel.Height = Nrows * Size;
             GamePanel.BackColor = Color.Beige;
             GamePanel.Location = new Point(50, 50);
         }
-
 
 
     }

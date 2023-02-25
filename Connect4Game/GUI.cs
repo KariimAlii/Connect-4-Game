@@ -27,19 +27,19 @@ namespace Connect4Game
             Graphics g = this.CreateGraphics();
             g.FillRectangle(Rect_Brush, Rect);
         }
-        public void DrawCircle(Color color, int x, int y, int size)
+        public void DrawCircle(Brush playerBrush, int x, int y, int size)
         {
-            Circle_Brush = new SolidBrush(color);
             Graphics g = GamePanel.CreateGraphics();
-            g.FillEllipse(Circle_Brush, x, y, size, size);
+            g.FillEllipse(playerBrush, x, y, size, size);
         }
         public void DrawGamePanel()
         {
-            for (int i = 0; i <= Nrows; i++)
+            for (int i = 0; i < Nrows; i++)
             {
-                for (int j = 0; j <= Ncols; j++)
+                for (int j = 0; j < Ncols; j++)
                 {
-                    DrawCircle(Color.Blue, i * Size, j * Size, Size);
+                    DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                    points[i, j] = new Point(j * Size, i * Size);
                 }
             }
         }
