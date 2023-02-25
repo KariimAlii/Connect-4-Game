@@ -87,13 +87,13 @@ namespace Connect4Game
             int r_row = row, l_row = row;
             int r_col = col, l_col = col;
             ////////////////////////right diagonal check///////////////
-            while (r_row > 0 && r_col < Ncols - 1)
+            while (r_row > 0 && r_col < Nrows - 1)
             {
                 r_row--;
                 r_col++;
             }
             //MessageBox.Show(row.ToString() + "," + col.ToString());
-            for (int i = r_row, j = r_col; i < Ncols - 3 && (j > 3); i++, j--)
+            for (int i = r_row, j = r_col; i < Nrows - 3 && (j > 3); i++, j--)
             {
                 if (Board[i, j] == playerIdentifier &&
                     Board[i + 1, j - 1] == playerIdentifier &&
@@ -113,7 +113,7 @@ namespace Connect4Game
                 l_col--;
             }
             //MessageBox.Show(l_row.ToString()+","+l_col.ToString());
-            for (int i = l_row, j = l_col; i < Ncols - 3 && (j < Nrows - 3); i++, j++)
+            for (int i = l_row, j = l_col; i < Nrows - 3 && (j < Ncols - 3); i++, j++)
             {
                 if (Board[i, j] == playerIdentifier &&
                     Board[i + 1, j + 1] == playerIdentifier &&
