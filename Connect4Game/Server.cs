@@ -31,7 +31,17 @@ namespace Connect4Game
             context = SynchronizationContext.Current;
         }
 
+        private async void ReceiveMessages()
+        {
+            char[] charArr = new char[100];
+            int x = await reader.ReadAsync(charArr, 0, 100);
+            string str = new string(charArr);
 
+            if (str.Contains("ClientStopped"))
+            {
+                MessageBox.Show("Your Client Stopped Playing!!");
+            }
+        }
         private void AcceptConnections()
         {
             while (true)
@@ -47,6 +57,8 @@ namespace Connect4Game
 
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
+
+                Task.Run(() => ReceiveMessages());
             }
         }
 
