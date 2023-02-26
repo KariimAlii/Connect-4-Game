@@ -79,6 +79,7 @@ namespace Connect4Game
         private void StopListening()
         {
             writer.Write("ServerStopped");
+            //Thread.Sleep(5000);
             listener.Stop();
 
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);

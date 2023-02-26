@@ -49,9 +49,10 @@ namespace Client
             }
             else if (str.Contains("ServerStopped"))
             {
-                Disconnect();
                 context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
                 context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+                MessageBox.Show("Server Stopped!");
+                Disconnect();
             }
         }
         private void Disconnect()
