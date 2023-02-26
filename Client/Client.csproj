@@ -66,6 +66,9 @@
     <Compile Include="Watcher.Designer.cs">
       <DependentUpon>Watcher.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Host.resx">
+      <DependentUpon>Host.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
