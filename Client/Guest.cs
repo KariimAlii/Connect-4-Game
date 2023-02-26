@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Connect4Game
+namespace Client
 {
-    public partial class Server : Form
+    public partial class Guest : Form
     {
-        public Server()
+        public Guest()
         {
             InitializeComponent();
         }

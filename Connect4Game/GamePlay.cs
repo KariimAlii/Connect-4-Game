@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-// Game Play Logic
+//=====================Game Play Logic====================//
 
 
 namespace Connect4Game
@@ -51,9 +51,7 @@ namespace Connect4Game
         private void Horizontal_Vertical_Checker(int row, int col, int playerIdentifier)
         {
 
-
-
-            //horizontal checker                 
+            //=====================Horizontal Checker====================//           
             for (int i = 0; i < Ncols - 3; i++)
             {
                 if (Board[row, i] == playerIdentifier &&
@@ -66,7 +64,7 @@ namespace Connect4Game
                 }
 
             }
-            //vertical checker
+            //=====================Vertical Checker====================//
             for (int i = 0; i < Nrows - 3; i++)
             {
                 if (Board[i, col] == playerIdentifier &&
@@ -86,7 +84,7 @@ namespace Connect4Game
         {
             int r_row = row, l_row = row;
             int r_col = col, l_col = col;
-            ////////////////////////right diagonal check///////////////
+            //=====================right diagonal check====================//
             while (r_row > 0 && r_col < Nrows - 1)
             {
                 r_row--;
@@ -106,7 +104,7 @@ namespace Connect4Game
 
             }
 
-            ////////////////////left diagonal check///////////////////
+            //=====================left diagonal check====================//
             while (l_col > 0 && l_row > 0)
             {
                 l_row--;
@@ -132,64 +130,3 @@ namespace Connect4Game
 
     }
 }
-
-
-
-
-//public void CheckScore(Point target)
-//{
-//    int Nx = target.X / Size;
-//    //MessageBox.Show(Nx.ToString());
-//    bool flag = true;
-//    for (int j = Ncols - 1; j >= 0 && flag; j--)
-//    {
-//        switch (turn)
-//        {
-//            case 1:
-//                if (Board[Nx, j] == 0)
-//                {
-//                    Board[Nx, j] = 1;
-//                    PlayerOneScores[Nx, j] = 1;
-//                    CheckWin(1);
-//                    DrawCircle(Player1Brush, Nx * Size, (j - 1) * Size, Size);
-//                    turn = 2;
-//                    flag = false;
-//                }
-//                break;
-//            case 2:
-//                if (Board[Nx, j] == 0)
-//                {
-//                    Board[Nx, j] = 1;
-//                    PlayerTwoScores[Nx, j] = 1;
-//                    CheckWin(2);
-//                    DrawCircle(Player2Brush, Nx * Size, (j - 1) * Size, Size);
-//                    turn = 1;
-//                    flag = false;
-//                }
-//                break;
-//        }
-
-
-//    }
-//}
-//public bool CheckWin(int PlayerNum)
-//{
-//    for (int i = 0; i < Nrows - 3; i++)
-//    {
-//        for (int j = 0; j < Ncols; j++)
-//        {
-
-//            switch (PlayerNum)
-//            {
-//                case 1:
-//                    //bool HorizontalCheck = false;
-//                    if (PlayerOneScores[i, j] == 1 && PlayerOneScores[i + 1, j] == 1 && PlayerOneScores[i + 2, j] == 1 && PlayerOneScores[i + 3, j] == 1) MessageBox.Show("player one wins!");
-//                    break;
-//                case 2:
-//                    if (PlayerTwoScores[i, j] == 1 && PlayerTwoScores[i + 1, j] == 1 && PlayerTwoScores[i + 2, j] == 1 && PlayerTwoScores[i + 3, j] == 1) MessageBox.Show("player two wins!");
-//                    break;
-//            }
-//        }
-//    }
-//    return true;
-//}

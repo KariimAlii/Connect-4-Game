@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Connect4Game
 {
-    public partial class Server : Form
+    public partial class Room : Form
     {
-        public Server()
+        public Room()
         {
             InitializeComponent();
         }

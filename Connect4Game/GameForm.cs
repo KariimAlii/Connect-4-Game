@@ -3,6 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
 
+//=====================Game Fields & Constructor====================//
 namespace Connect4Game
 {
     public partial class GameForm : Form
@@ -13,8 +14,6 @@ namespace Connect4Game
         int Size;
         int[,] Board;
         Point[,] points;
-        int[,] PlayerOneScores;
-        int[,] PlayerTwoScores;
         int turn;
         Brush Player1Brush;
         Brush Player2Brush;
@@ -39,8 +38,6 @@ namespace Connect4Game
             Size = 100;
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
-            PlayerOneScores = new int[Nrows, Ncols];
-            PlayerTwoScores = new int[Nrows, Ncols];
             turn = 1;
             Player1Brush = new SolidBrush(Color.Pink);
             Player2Brush = new SolidBrush(Color.Yellow);
