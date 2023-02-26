@@ -58,6 +58,7 @@ namespace Client
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+            writer.Write("ClientStopped");
             client.Close();
         }
         private void DisconnectBtn_Click(object sender, EventArgs e)
