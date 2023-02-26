@@ -78,8 +78,9 @@ namespace Connect4Game
         }
         private void StopListening()
         {
-            listener.Stop();
             writer.Write("ServerStopped");
+            listener.Stop();
+
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
         }
