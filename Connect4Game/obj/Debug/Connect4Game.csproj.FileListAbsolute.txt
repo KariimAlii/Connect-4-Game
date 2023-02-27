@@ -34,3 +34,15 @@ C:\Users\Dell\source\repos\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.cs
 C:\Users\Dell\source\repos\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 C:\Users\Dell\source\repos\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
 C:\Users\Dell\source\repos\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe.config
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
+C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb

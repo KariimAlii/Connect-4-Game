@@ -22,8 +22,8 @@ namespace Connect4Game
         StreamWriter writer;
         StreamReader reader;
         SynchronizationContext context;
-        CancellationTokenSource source = new CancellationTokenSource();
-        CancellationToken token;
+
+        Thread receivethread;
         
         
         public Server()
@@ -33,35 +33,29 @@ namespace Connect4Game
             IPAddress ip = new IPAddress(new byte[] { 127, 0, 0, 1 });
             listener = new TcpListener(ip, 5000);
             context = SynchronizationContext.Current;
-            token = source.Token;
 
         }
 
-        private void ReceiveMessages()
+        private async void ReceiveMessages()
         {
-            char[] charArr = new char[100];
-            
-            //int x = await reader.ReadAsync(charArr, 0, 100);
-            
-           Task task = reader.ReadAsync(charArr, 0, 100);
-            try
-            {
-                task.Wait(token);
-            }
-            catch (Exception)
+            receivethread = new Thread(() =>
             {
 
-            }
-            task.Start();
+                char[] charArr = new char[100];
+                int x = reader.Read(charArr, 0, 100);
+                string str = new string(charArr);
+
+                if (str.Contains("ClientStopped"))
+                {
+                    MessageBox.Show("Your Client Stopped Playing!!");
+                }
+
+            });
+            receivethread.Start();
+
+
+
             
-
-
-            string str = new string(charArr);
-                
-            if (str.Contains("ClientStopped"))
-            {
-                MessageBox.Show("Your Client Stopped Playing!!");
-            }
         }
         private void AcceptConnections()
         {
@@ -79,7 +73,6 @@ namespace Connect4Game
 
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
-
                 Task.Run(() => ReceiveMessages());
                 //ReceiveMessages();  
             }
@@ -103,7 +96,7 @@ namespace Connect4Game
         {
             writer.Write("ServerStopped");
             //Thread.Sleep(5000);
-            source.Cancel();
+            receivethread.Abort();
             listener.Stop();
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
