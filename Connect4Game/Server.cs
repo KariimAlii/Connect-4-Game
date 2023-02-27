@@ -118,8 +118,10 @@ namespace Connect4Game
             //writer.Write("ServerStopped");
             //Thread.Sleep(5000);
             //backgroundWorker1.CancelAsync();
-            clients.ForEach((client) => { client.backgroundWorker2.CancelAsync();
+            clients.ForEach((client) => { 
+                client.backgroundWorker2.CancelAsync();
                 client.tcpClient.Dispose();
+
             });
             listener.Stop();
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
