@@ -37,6 +37,13 @@ namespace Client
             reader = new StreamReader(stream);
             Task.Run(() => ReceiveMessages());
             writer.AutoFlush = true;
+            string tempname = namebox.Text;
+            string tempnum = numberbox.Text;
+            //sending username and number (here number represents any property that would be implemented futher
+            writer.Write($"{tempname},{tempnum}");
+            
+
+
         }
         private async void ReceiveMessages()
         {
@@ -56,18 +63,18 @@ namespace Client
                 Disconnect();
             }
         }
-        private void Disconnect()
+        private async void Disconnect()
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-
-            writer.Write("ClientStopped");
-            
+            await  writer.WriteAsync("ClientStopped");
             client.Close();
         }
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
             Disconnect();
         }
+
+      
     }
 }
