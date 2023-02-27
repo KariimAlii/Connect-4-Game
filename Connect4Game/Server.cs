@@ -22,8 +22,8 @@ namespace Connect4Game
         StreamWriter writer;
         StreamReader reader;
         SynchronizationContext context;
-
         Thread receivethread;
+
         
         
         public Server()
@@ -38,6 +38,7 @@ namespace Connect4Game
 
         private async void ReceiveMessages()
         {
+            //thread to stop Reading after closing the connection
             receivethread = new Thread(() =>
             {
 
