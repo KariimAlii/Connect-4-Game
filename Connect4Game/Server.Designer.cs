@@ -33,6 +33,7 @@
             this.StopBtn = new System.Windows.Forms.Button();
             this.ListenBtn = new System.Windows.Forms.Button();
             this.clients_list = new System.Windows.Forms.ListBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // StatusBox
@@ -93,6 +94,10 @@
             this.clients_list.Size = new System.Drawing.Size(122, 95);
             this.clients_list.TabIndex = 13;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // Server
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,5 +122,6 @@
         private System.Windows.Forms.Button StopBtn;
         private System.Windows.Forms.Button ListenBtn;
         private System.Windows.Forms.ListBox clients_list;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

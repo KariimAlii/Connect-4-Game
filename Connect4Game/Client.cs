@@ -13,13 +13,13 @@ namespace Connect4Game
 {
     internal class Client
     {
-         TcpClient tcpClient;
-       public string name { get; set; }
+         public TcpClient tcpClient;
+        public string name { get; set; }
         public string number { get; set; }
         NetworkStream stream;
         StreamWriter writer;
         StreamReader reader;
-        BackgroundWorker backgroundWorker2;
+        public BackgroundWorker backgroundWorker2;
 
         public Client(TcpClient tcpClient,string name,string number)
         {
@@ -34,8 +34,17 @@ namespace Connect4Game
             backgroundWorker2 = new BackgroundWorker();
             backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             Task.Run(() => ReceiveMessages());
+            backgroundWorker2.WorkerSupportsCancellation= true;
             
         }
+        ~Client() {
+            backgroundWorker2.CancelAsync();
+            MessageBox.Show("A");
+            tcpClient.Close();
+            
+        }
+
+        
         private async void ReceiveMessages()
         {
             if (backgroundWorker2.IsBusy == false)
@@ -56,7 +65,9 @@ namespace Connect4Game
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
-
+                        this.tcpClient.Close();
+                        MessageBox.Show(this.tcpClient.Connected.ToString());
+                        
                     }
 
                     else if (str.Contains(","))
