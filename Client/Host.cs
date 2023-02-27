@@ -30,12 +30,13 @@ namespace Client
 
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
-            client = new TcpClient("192.168.1.5", 5000);
+            client = new TcpClient("127.0.0.1", 5000);
             stream = client.GetStream();
             writer = new StreamWriter(stream);
             writer.AutoFlush = true;
             reader = new StreamReader(stream);
             Task.Run(() => ReceiveMessages());
+            writer.AutoFlush = true;
         }
         private async void ReceiveMessages()
         {
@@ -59,7 +60,9 @@ namespace Client
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+
             writer.Write("ClientStopped");
+            
             client.Close();
         }
         private void DisconnectBtn_Click(object sender, EventArgs e)

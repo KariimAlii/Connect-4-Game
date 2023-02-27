@@ -17,26 +17,47 @@ namespace Connect4Game
     public partial class Server : Form
     {
         TcpListener listener;
+        TcpClient serverClient;
         NetworkStream stream;
         StreamWriter writer;
         StreamReader reader;
         SynchronizationContext context;
+        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationToken token;
+        
+        
         public Server()
         {
             InitializeComponent();
-
-            IPAddress ip = new IPAddress(new byte[] { 192, 168, 1, 5 });
+            
+            IPAddress ip = new IPAddress(new byte[] { 127, 0, 0, 1 });
             listener = new TcpListener(ip, 5000);
-
             context = SynchronizationContext.Current;
+            token = source.Token;
+
         }
 
-        private async void ReceiveMessages()
+        private void ReceiveMessages()
         {
             char[] charArr = new char[100];
-            int x = await reader.ReadAsync(charArr, 0, 100);
-            string str = new string(charArr);
+            
+            //int x = await reader.ReadAsync(charArr, 0, 100);
+            
+           Task task = reader.ReadAsync(charArr, 0, 100);
+            try
+            {
+                task.Wait(token);
+            }
+            catch (Exception)
+            {
 
+            }
+            task.Start();
+            
+
+
+            string str = new string(charArr);
+                
             if (str.Contains("ClientStopped"))
             {
                 MessageBox.Show("Your Client Stopped Playing!!");
@@ -46,9 +67,10 @@ namespace Connect4Game
         {
             while (true)
             {
-                TcpClient serverClient = listener.AcceptTcpClient();
+                 serverClient = listener.AcceptTcpClient();
+               
+                
                 stream = serverClient.GetStream();
-
                 writer = new StreamWriter(stream);
                 writer.AutoFlush = true;
                 writer.Write("Connected");
@@ -59,13 +81,14 @@ namespace Connect4Game
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
 
                 Task.Run(() => ReceiveMessages());
+                //ReceiveMessages();  
             }
         }
 
         private void ListenBtn_Click(object sender, EventArgs e)
         {
             listener.Start();
-
+            
             Task.Run(() => AcceptConnections());
 
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
@@ -80,8 +103,8 @@ namespace Connect4Game
         {
             writer.Write("ServerStopped");
             //Thread.Sleep(5000);
+            source.Cancel();
             listener.Stop();
-
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
         }
