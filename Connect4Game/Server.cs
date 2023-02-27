@@ -17,14 +17,15 @@ namespace Connect4Game
     public partial class Server : Form
     {
         TcpListener listener;
-        TcpClient serverClient;
+        List<Client> clients;
         NetworkStream stream;
         StreamWriter writer;
         StreamReader reader;
         SynchronizationContext context;
         Thread receivethread;
-
-        
+        Client temp;
+        string tempnum;
+        string tempstr;
         
         public Server()
         {
@@ -33,50 +34,44 @@ namespace Connect4Game
             IPAddress ip = new IPAddress(new byte[] { 127, 0, 0, 1 });
             listener = new TcpListener(ip, 5000);
             context = SynchronizationContext.Current;
-
-        }
-
-        private async void ReceiveMessages()
-        {
-            //thread to stop Reading after closing the connection
-            receivethread = new Thread(() =>
-            {
-
-                char[] charArr = new char[100];
-                int x = reader.Read(charArr, 0, 100);
-                string str = new string(charArr);
-
-                if (str.Contains("ClientStopped"))
-                {
-                    MessageBox.Show("Your Client Stopped Playing!!");
-                }
-
-            });
-            receivethread.Start();
-
-
-
+            clients = new List<Client>();
+            
             
         }
-        private void AcceptConnections()
+
+        
+        private  async void AcceptConnections()
         {
             while (true)
             {
-                 serverClient = listener.AcceptTcpClient();
-               
-                
-                stream = serverClient.GetStream();
-                writer = new StreamWriter(stream);
-                writer.AutoFlush = true;
-                writer.Write("Connected");
-
-                reader = new StreamReader(stream);
-
+                TcpClient serverClient = await listener.AcceptTcpClientAsync();
+              
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
-                Task.Run(() => ReceiveMessages());
-                //ReceiveMessages();  
+                
+                //ReceiveMessages();
+                temp = new Client(serverClient, tempstr, tempnum);  
+                clients.Add(temp);
+                //if (clients[0].tcpClient.Connected)
+                //{
+                //    MessageBox.Show(clients[0].name);
+                //}
+                Thread.Sleep(100);
+                Invoke(new Action(() => {
+                    clients.ForEach(client =>
+                    {
+                        if(client.name == temp.name)
+                        {
+                            clients_list.Items.Add(client.name + client.number);
+                        }
+                        
+                    });
+                }));
+                
+
+
             }
+            
         }
 
         private void ListenBtn_Click(object sender, EventArgs e)
@@ -84,23 +79,28 @@ namespace Connect4Game
             listener.Start();
             
             Task.Run(() => AcceptConnections());
-
+            
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
             context.Post((object obj) => StatusBox.Text = "Listening...", null);
+            
         }
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
+            //clients.ForEach(item => { MessageBox.Show(item.ToString()); });
+
             StopListening();
         }
         private void StopListening()
         {
             writer.Write("ServerStopped");
             //Thread.Sleep(5000);
-            receivethread.Abort();
+            //backgroundWorker1.CancelAsync();
             listener.Stop();
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
         }
+
+       
     }
 }
