@@ -17,9 +17,11 @@ namespace Client
     public partial class Host : Form
     {
         TcpClient client;
+
+        Stream stream;
         StreamReader reader;
         StreamWriter writer;
-        Stream stream;
+
         SynchronizationContext context;
         public Host()
         {
@@ -32,42 +34,53 @@ namespace Client
         {
             client = new TcpClient("127.0.0.1", 5000);
             stream = client.GetStream();
+
             writer = new StreamWriter(stream);
-            writer.AutoFlush = true;
-            reader = new StreamReader(stream);
-            Task.Run(() => ReceiveMessages());
             writer.AutoFlush = true;
             string tempname = namebox.Text;
             string tempnum = numberbox.Text;
-            //sending username and number (here number represents any property that would be implemented futher
             writer.Write($"{tempname},{tempnum}");
-            
 
+            context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+            context.Post((object obj) => StatusBox.Text = "Connected..", null);
+
+
+            reader = new StreamReader(stream);
+
+            Task.Run(() => ReceiveMessages());
+
+            //sending username and number (here number represents any property that would be implemented futher
 
         }
         private async void ReceiveMessages()
         {
-            char[] charArr = new char[100];
-            int x = await reader.ReadAsync(charArr, 0, 100);
-            string str = new string(charArr);
-            if (str.Contains("Connected"))
+
+            if (stream != null)
             {
-                context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
-                context.Post((object obj) => StatusBox.Text = str, null);
-            }
-            else if (str.Contains("ServerStopped"))
-            {
-                context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-                context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-                MessageBox.Show("Server Stopped!");
-                Disconnect();
+                char[] charArr = new char[100];
+                int x = await reader.ReadAsync(charArr, 0, 100);
+                string str = new string(charArr);
+                //string str = await reader.ReadLineAsync();
+                if (str.Contains("Connected"))
+                {
+                    context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+                    context.Post((object obj) => StatusBox.Text = str, null);
+                }
+                else if (str.Contains("ServerStopped"))
+                {
+                    context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
+                    context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+                    MessageBox.Show("Server Stopped!");
+                    Disconnect();
+                }
             }
         }
         private async void Disconnect()
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-            await  writer.WriteAsync("ClientStopped");
+            await writer.WriteAsync("ClientStopped");
+            //writer.Write("ClientStopped");
 
             client.Close();
         }
@@ -76,6 +89,6 @@ namespace Client
             Disconnect();
         }
 
-      
+
     }
 }

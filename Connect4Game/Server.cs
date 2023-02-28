@@ -37,9 +37,9 @@ namespace Connect4Game
             listener = new TcpListener(ip, 5000);
             context = SynchronizationContext.Current;
             clients = new List<Client>();
-            
+
         }
-        
+
 
 
         private void AcceptConnections()
@@ -49,41 +49,9 @@ namespace Connect4Game
                 TcpClient serverClient = listener.AcceptTcpClient();
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
-                //ReceiveMessages();
-                temp = new Client(serverClient, tempstr, tempnum);
+                temp = new Client(serverClient);
                 clients.Add(temp);
-                //if (clients[0].tcpClient.Connected)
-                //{
-                //    MessageBox.Show(clients[0].name);
-                //}
-                Thread.Sleep(100);
-                //UpdateClients();
-                //Invoke(new Action(() => {
-                //    clients.ForEach(client =>
-                //    {
-                //        if (client.name == temp.name)
-                //        {
-                //            clients_list.Items.Add(client.name + client.number);
-                //        }
-                //        if (!client.tcpClient.Connected)
-                //        {
-                //            clients.Remove(client);
-                //            int index = clients.IndexOf(client);
-                //            clients.RemoveAt(index);
-                //            clients_list.Items.RemoveAt(index);
-                //            clients_list.Refresh();
-                //        }
-
-                //    });
-                //}));
-                //if (!backgroundWorker1.IsBusy)
-                //{
-                //    backgroundWorker1.RunWorkerAsync();
-                //}
-
             }
-
-
         }
 
 
@@ -94,12 +62,13 @@ namespace Connect4Game
             Task.Run(() => AcceptConnections());
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
             context.Post((object obj) => StatusBox.Text = "Listening...", null);
+
             receivethread = new Thread(() =>
             {
-                while(true) {
+                while (true)
+                {
                     UpdateClients();
                     Thread.Sleep(1000);
-                
                 }
 
             });
@@ -118,8 +87,9 @@ namespace Connect4Game
             //writer.Write("ServerStopped");
             //Thread.Sleep(5000);
             //backgroundWorker1.CancelAsync();
-            clients.ForEach((client) => {
-                client.backgroundWorker2.CancelAsync();
+            clients.ForEach((client) =>
+            {
+                //client.backgroundWorker2.CancelAsync();
                 client.tcpClient.Dispose();
 
             });
@@ -128,28 +98,48 @@ namespace Connect4Game
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
         }
-        
 
-        
-        public  void UpdateClients()
+
+
+        public void UpdateClients()
         {
-            int count = 0;
-            clients_list.Items.Clear();
+            context.Post((object obj) => clients_list.Items.Clear(), null);
             clients.ForEach(client =>
             {
                 if (client.tcpClient.Connected)
                 {
-                    //MessageBox.Show(client.name);
-                    clients_list.Items.Add(client);
-                    //MessageBox.Show(clients_list.Items[count++].ToString());
+                    context.Post((object obj) => clients_list.Items.Add(client), null);
                 }
                 else
                 {
-                    clients_list.Items.Remove(client);
+                    context.Post((object obj) =>
+                    {
+                        clients_list.Items.Remove(client);
+                        clients.Remove(client);
+                    }, null);
                 }
             });
         }
-        
+
+        private void OpenGame_Click(object sender, EventArgs e)
+        {
+            Task.Run(() => Application.Run(new GameForm()));
+        }
+
+        private void connected_clients_Click(object sender, EventArgs e)
+        {
+            clients.ForEach((client) =>
+            {
+                if (client.tcpClient.Connected)
+                {
+                    MessageBox.Show($"{client.name} is connected");
+                }
+                else
+                {
+                    MessageBox.Show($"{client.name} is Disconnected!!!!!");
+                }
+            });
+        }
     }
 }
 
