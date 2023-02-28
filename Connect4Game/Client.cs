@@ -39,9 +39,7 @@ namespace Connect4Game
         }
         ~Client() {
             backgroundWorker2.CancelAsync();
-            MessageBox.Show("A");
             tcpClient.Close();
-            
         }
 
         
@@ -66,7 +64,8 @@ namespace Connect4Game
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
                         this.tcpClient.Close();
-                        MessageBox.Show(this.tcpClient.Connected.ToString());
+                        //MessageBox.Show(this.tcpClient.Connected.ToString());
+
                         
                     }
 

@@ -46,3 +46,15 @@ C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\De
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
+F:\C# project\C4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe.config
+F:\C# project\C4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
+F:\C# project\C4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
