@@ -34,6 +34,7 @@
             this.ListenBtn = new System.Windows.Forms.Button();
             this.clients_list = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.connected_clients = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StatusBox
@@ -96,13 +97,22 @@
             // 
             // backgroundWorker1
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // connected_clients
+            // 
+            this.connected_clients.Location = new System.Drawing.Point(249, 204);
+            this.connected_clients.Name = "connected_clients";
+            this.connected_clients.Size = new System.Drawing.Size(109, 20);
+            this.connected_clients.TabIndex = 14;
+            this.connected_clients.Text = "connected_clients";
+            this.connected_clients.UseVisualStyleBackColor = true;
             // 
             // Server
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.connected_clients);
             this.Controls.Add(this.clients_list);
             this.Controls.Add(this.StopBtn);
             this.Controls.Add(this.ListenBtn);
@@ -123,5 +133,6 @@
         private System.Windows.Forms.Button ListenBtn;
         private System.Windows.Forms.ListBox clients_list;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button connected_clients;
     }
 }
