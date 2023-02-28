@@ -20,14 +20,16 @@ namespace Connect4Game
     {
         TcpListener listener;
         List<Client> clients;
-        NetworkStream stream;
-        StreamWriter writer;
-        StreamReader reader;
+        //NetworkStream stream;
+        //StreamWriter writer;
+        //StreamReader reader;
         SynchronizationContext context;
         Thread receivethread;
-        Client temp;
-        string tempnum;
-        string tempstr;
+        public Room room1{ get; set; }
+        public Room room2 { get; set; }
+        public Room room3 { get; set; }
+
+
 
         public Server()
         {
@@ -37,7 +39,10 @@ namespace Connect4Game
             listener = new TcpListener(ip, 5000);
             context = SynchronizationContext.Current;
             clients = new List<Client>();
-
+            room1 = new Room();
+            room2 = new Room();
+            room3 = new Room();
+            
         }
 
 
@@ -49,8 +54,8 @@ namespace Connect4Game
                 TcpClient serverClient = listener.AcceptTcpClient();
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
-                temp = new Client(serverClient);
-                clients.Add(temp);
+                //Client temp = new Client(serverClient);
+                clients.Add(new Client(serverClient));
             }
         }
 
@@ -108,16 +113,32 @@ namespace Connect4Game
             {
                 if (client.tcpClient.Connected)
                 {
-                    context.Post((object obj) => clients_list.Items.Add(client), null);
+                    context.Post((object obj) => clients_list.Items.Add(client.name), null);
+                    if (client.room == "1"&&room1.host==null)
+                    {
+                        room1.host = client;
+                        client.writer.Write("Room1");
+                    }
+                    else if (client.room == "2" && room1.host == null)
+                    {
+                        room1.host = client;
+                        client.writer.Write("Room2");
+                    }
+                    else if (client.room == "3" && room1.host == null)
+                    {
+                        room1.host = client;
+                        client.writer.Write("Room3");
+                    }
                 }
                 else
                 {
                     context.Post((object obj) =>
                     {
-                        clients_list.Items.Remove(client);
+                        clients_list.Items.Remove(client.name);
                         clients.Remove(client);
                     }, null);
                 }
+               
             });
         }
 
@@ -128,11 +149,14 @@ namespace Connect4Game
 
         private void connected_clients_Click(object sender, EventArgs e)
         {
+           
             clients.ForEach((client) =>
             {
                 if (client.tcpClient.Connected)
                 {
                     MessageBox.Show($"{client.name} is connected");
+                    MessageBox.Show($"{ client.name} in room{client.room}");
+                    //Task.Run(() => { client.writer.Write("Hello"); });
                 }
                 else
                 {

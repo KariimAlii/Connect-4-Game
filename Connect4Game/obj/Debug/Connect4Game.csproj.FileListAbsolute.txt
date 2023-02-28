@@ -58,3 +58,4 @@ F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.Gener
 F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
 F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
+F:\C# project\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Room.resources

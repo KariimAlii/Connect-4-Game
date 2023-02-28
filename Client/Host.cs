@@ -28,6 +28,11 @@ namespace Client
             InitializeComponent();
 
             context = SynchronizationContext.Current;
+            
+            
+
+
+
         }
 
         private void ConnectBtn_Click(object sender, EventArgs e)
@@ -48,31 +53,56 @@ namespace Client
             reader = new StreamReader(stream);
 
             Task.Run(() => ReceiveMessages());
+            room1.Visible = true;
+            room2.Visible = true;
+            room3.Visible = true;
 
             //sending username and number (here number represents any property that would be implemented futher
 
         }
         private async void ReceiveMessages()
         {
-
-            if (stream != null)
+            while (true)
             {
-                char[] charArr = new char[100];
-                int x = await reader.ReadAsync(charArr, 0, 100);
-                string str = new string(charArr);
-                //string str = await reader.ReadLineAsync();
-                if (str.Contains("Connected"))
+                if (stream != null)
                 {
-                    context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
-                    context.Post((object obj) => StatusBox.Text = str, null);
+
+                    char[] charArr = new char[100];
+                    int x = await reader.ReadAsync(charArr, 0, 100);
+                    string str = new string(charArr);
+                    //string str = await reader.ReadLineAsync();
+                    if (str.Contains("Connected"))
+                    {
+                        context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+                        context.Post((object obj) => StatusBox.Text = str, null);
+                       
+                    }
+                    else if (str.Contains("ServerStopped"))
+                    {
+                        context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
+                        context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+                        MessageBox.Show("Server Stopped!");
+                        Disconnect();
+                    }
+                    else if(str.Contains("Room1"))
+                    {
+
+                        Application.Run(new GameForm());
+                        
+                    }
+                    else if (str.Contains("Room2"))
+                    {
+
+                        Application.Run(new GameForm());
+                    }
+                    else if (str.Contains("Room3"))
+                    {
+
+                        Application.Run(new GameForm());
+                    }
+
                 }
-                else if (str.Contains("ServerStopped"))
-                {
-                    context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-                    context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-                    MessageBox.Show("Server Stopped!");
-                    Disconnect();
-                }
+
             }
         }
         private async void Disconnect()
@@ -89,6 +119,19 @@ namespace Client
             Disconnect();
         }
 
+        private void room1_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room1");
+        }
 
+        private void room2_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room2");
+        }
+
+        private void room3_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room3");
+        }
     }
 }

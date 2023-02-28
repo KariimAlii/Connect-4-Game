@@ -1,6 +1,6 @@
-﻿namespace Connect4Game
+﻿namespace Client
 {
-    partial class Room
+    partial class GameForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.GamePanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // Room
+            // GamePanel
+            // 
+            this.GamePanel.Location = new System.Drawing.Point(0, 0);
+            this.GamePanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GamePanel.Name = "GamePanel";
+            this.GamePanel.Size = new System.Drawing.Size(447, 362);
+            this.GamePanel.TabIndex = 0;
+            this.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GamePanel_MouseClick);
+            // 
+            // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(736, 454);
-            this.Name = "Room";
-            this.Text = "Room";
+            this.ClientSize = new System.Drawing.Size(820, 462);
+            this.Controls.Add(this.GamePanel);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Name = "GameForm";
+            this.Text = "Connect 4 Game";
+            this.Resize += new System.EventHandler(this.GameForm_Resize);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel GamePanel;
     }
 }
+

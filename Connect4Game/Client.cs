@@ -12,15 +12,16 @@ using System.Windows.Forms;
 
 namespace Connect4Game
 {
-    internal class Client
+    public  class Client
     {
         public TcpClient tcpClient;
         public string name { get; set; }
-        public string number { get; set; }
+        public string room { get; set; }
+        
 
         NetworkStream stream;
-        StreamWriter writer;
-        StreamReader reader;
+        public StreamWriter writer { get; }
+        public StreamReader reader { get; }
         Thread streamingThread;
 
         public BackgroundWorker backgroundWorker2;
@@ -28,7 +29,7 @@ namespace Connect4Game
         public Client(TcpClient tcpClient)
         {
             this.tcpClient = tcpClient;
-
+            
             stream = tcpClient.GetStream();
 
             writer = new StreamWriter(stream);
@@ -42,6 +43,7 @@ namespace Connect4Game
             streamingThread = new Thread(() => ReceiveMessages());
             streamingThread.IsBackground = true;
             streamingThread.Start();
+            
         }
         //~Client() {
         //    backgroundWorker2.CancelAsync();
@@ -75,8 +77,20 @@ namespace Connect4Game
 
                         string[] temp = str.Split(',');
                         name = temp[0];
-                        number = temp[1];
+                        //room = temp[1];
                         /*MessageBox.Show(str);*/
+                    }
+                    else if(str.Contains("Room1")&&this.room!="1")
+                    {
+                        this.room = "1";
+                    }
+                    else if (str.Contains("Room2") && this.room!="2")
+                    {
+                        this.room = "2";
+                    }
+                    else if (str.Contains("Room3") && this.room !="3")
+                    {
+                        this.room = "3";
                     }
 
                 }

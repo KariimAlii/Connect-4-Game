@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Connect4Game
+namespace Client
 {
     public partial class Room : Form
     {
-        public Client host;
-         Client guest { get; set; }
+        public string host;
+        public string guest { get; set; }
 
-        List<Client> watcher = new List<Client>();
+        //List<Client> watcher = new List<Client>();
         public string Room_number { set; get; }
         public Room()
         {

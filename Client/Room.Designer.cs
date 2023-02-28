@@ -1,4 +1,4 @@
-﻿namespace Connect4Game
+﻿namespace Client
 {
     partial class Room
     {
