@@ -42,3 +42,14 @@ C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Client\obj\Debug\Cl
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Client\obj\Debug\Client.exe
 C:\Users\Dell\Desktop\OldFiles\gitclone\iti43\Connect-4-Game\Client\obj\Debug\Client.pdb
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\bin\Debug\Client.exe.config
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\bin\Debug\Client.exe
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\bin\Debug\Client.pdb
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.Host.resources
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.exe
+C:\Users\Rogina\Desktop\C Sharp Labs\CsharpProject\Connect-4-Game\Client\obj\Debug\Client.pdb

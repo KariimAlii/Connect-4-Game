@@ -15,6 +15,23 @@ namespace Connect4Game
         public Room()
         {
             InitializeComponent();
+
+
+            
+            
         }
+        public string Owner { set; get; }
+        public string Player2 { set; get; }
+        public string watcher { set; get; }   
+
+        
+        
+
     }
+
+
+
+    
+
 }
+

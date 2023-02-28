@@ -34,16 +34,17 @@
             this.ListenBtn = new System.Windows.Forms.Button();
             this.clients_list = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StatusBox
             // 
             this.StatusBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.StatusBox.Location = new System.Drawing.Point(230, 229);
-            this.StatusBox.Margin = new System.Windows.Forms.Padding(2);
+            this.StatusBox.Location = new System.Drawing.Point(307, 282);
+            this.StatusBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusBox.Name = "StatusBox";
-            this.StatusBox.Size = new System.Drawing.Size(151, 21);
+            this.StatusBox.Size = new System.Drawing.Size(200, 24);
             this.StatusBox.TabIndex = 10;
             // 
             // ConnectionLabel
@@ -51,10 +52,9 @@
             this.ConnectionLabel.AutoSize = true;
             this.ConnectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConnectionLabel.ForeColor = System.Drawing.Color.Red;
-            this.ConnectionLabel.Location = new System.Drawing.Point(174, 231);
-            this.ConnectionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ConnectionLabel.Location = new System.Drawing.Point(232, 284);
             this.ConnectionLabel.Name = "ConnectionLabel";
-            this.ConnectionLabel.Size = new System.Drawing.Size(59, 17);
+            this.ConnectionLabel.Size = new System.Drawing.Size(69, 20);
             this.ConnectionLabel.TabIndex = 9;
             this.ConnectionLabel.Text = "Status:";
             // 
@@ -63,10 +63,10 @@
             this.StopBtn.BackColor = System.Drawing.Color.IndianRed;
             this.StopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.StopBtn.Location = new System.Drawing.Point(491, 64);
-            this.StopBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.StopBtn.Location = new System.Drawing.Point(655, 79);
+            this.StopBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopBtn.Name = "StopBtn";
-            this.StopBtn.Size = new System.Drawing.Size(85, 33);
+            this.StopBtn.Size = new System.Drawing.Size(113, 41);
             this.StopBtn.TabIndex = 12;
             this.StopBtn.Text = "Stop";
             this.StopBtn.UseVisualStyleBackColor = false;
@@ -77,10 +77,10 @@
             this.ListenBtn.BackColor = System.Drawing.Color.Chartreuse;
             this.ListenBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ListenBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ListenBtn.Location = new System.Drawing.Point(491, 29);
-            this.ListenBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.ListenBtn.Location = new System.Drawing.Point(655, 36);
+            this.ListenBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ListenBtn.Name = "ListenBtn";
-            this.ListenBtn.Size = new System.Drawing.Size(85, 30);
+            this.ListenBtn.Size = new System.Drawing.Size(113, 37);
             this.ListenBtn.TabIndex = 11;
             this.ListenBtn.Text = "Start";
             this.ListenBtn.UseVisualStyleBackColor = false;
@@ -89,26 +89,40 @@
             // clients_list
             // 
             this.clients_list.FormattingEnabled = true;
-            this.clients_list.Location = new System.Drawing.Point(95, 43);
+            this.clients_list.ItemHeight = 16;
+            this.clients_list.Location = new System.Drawing.Point(127, 53);
+            this.clients_list.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.clients_list.Name = "clients_list";
-            this.clients_list.Size = new System.Drawing.Size(122, 95);
+            this.clients_list.Size = new System.Drawing.Size(161, 116);
             this.clients_list.TabIndex = 13;
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(354, 136);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(128, 58);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Join Game";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Server
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.clients_list);
             this.Controls.Add(this.StopBtn);
             this.Controls.Add(this.ListenBtn);
             this.Controls.Add(this.StatusBox);
             this.Controls.Add(this.ConnectionLabel);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Server";
             this.Text = "Server";
             this.ResumeLayout(false);
@@ -123,5 +137,6 @@
         private System.Windows.Forms.Button ListenBtn;
         private System.Windows.Forms.ListBox clients_list;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button1;
     }
 }

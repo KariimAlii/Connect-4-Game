@@ -40,6 +40,8 @@ namespace Client
             string tempname = namebox.Text;
             string tempnum = numberbox.Text;
             //sending username and number (here number represents any property that would be implemented futher
+            ConnectBtn.Enabled = false;
+            
             writer.Write($"{tempname},{tempnum}");
             
 
@@ -74,6 +76,7 @@ namespace Client
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
             Disconnect();
+            ConnectBtn.Enabled = true;
         }
 
       

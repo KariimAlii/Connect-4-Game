@@ -37,12 +37,12 @@ namespace Connect4Game
             backgroundWorker2.WorkerSupportsCancellation= true;
             
         }
-        ~Client() {
-            backgroundWorker2.CancelAsync();
-            MessageBox.Show("A");
-            tcpClient.Close();
+        //~Client() {
+        //    backgroundWorker2.CancelAsync();
+        //    MessageBox.Show("A");
+        //    tcpClient.Close();
             
-        }
+        //}
 
         
         private async void ReceiveMessages()
@@ -65,7 +65,9 @@ namespace Connect4Game
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
+                        MessageBox.Show(this.tcpClient.Connected.ToString());
                         this.tcpClient.Close();
+                        backgroundWorker2.CancelAsync();
                         MessageBox.Show(this.tcpClient.Connected.ToString());
                         
                     }
