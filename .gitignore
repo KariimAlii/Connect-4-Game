@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 .vs/Connect4Game/v17/.suo
 Client/Client.csproj
+*.cache
