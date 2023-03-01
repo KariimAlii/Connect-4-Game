@@ -408,3 +408,4 @@ FodyWeavers.xsd
 Client/Client.csproj
 *.cache
 Client/obj/Debug/*.cache
+Client/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
