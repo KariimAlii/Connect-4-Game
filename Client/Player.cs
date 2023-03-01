@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class Host : Form
+    public partial class Player : Form
     {
         TcpClient client;
 
@@ -23,7 +23,7 @@ namespace Client
         StreamWriter writer;
 
         SynchronizationContext context;
-        public Host()
+        public Player()
         {
             InitializeComponent();
 
