@@ -40,6 +40,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.room2 = new System.Windows.Forms.Button();
             this.room3 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // StatusBox
@@ -126,7 +128,7 @@
             // 
             // room1
             // 
-            this.room1.Location = new System.Drawing.Point(119, 114);
+            this.room1.Location = new System.Drawing.Point(105, 114);
             this.room1.Name = "room1";
             this.room1.Size = new System.Drawing.Size(75, 23);
             this.room1.TabIndex = 23;
@@ -139,7 +141,7 @@
             // 
             this.listBox1.BackColor = System.Drawing.SystemColors.Menu;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(107, 143);
+            this.listBox1.Location = new System.Drawing.Point(85, 143);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 95);
             this.listBox1.TabIndex = 24;
@@ -157,7 +159,7 @@
             // 
             // room3
             // 
-            this.room3.Location = new System.Drawing.Point(333, 114);
+            this.room3.Location = new System.Drawing.Point(358, 114);
             this.room3.Name = "room3";
             this.room3.Size = new System.Drawing.Size(75, 23);
             this.room3.TabIndex = 26;
@@ -166,11 +168,31 @@
             this.room3.Visible = false;
             this.room3.Click += new System.EventHandler(this.room3_Click);
             // 
+            // listBox2
+            // 
+            this.listBox2.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(211, 143);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.TabIndex = 27;
+            // 
+            // listBox3
+            // 
+            this.listBox3.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(337, 143);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(120, 95);
+            this.listBox3.TabIndex = 28;
+            // 
             // Host
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.room3);
             this.Controls.Add(this.room2);
             this.Controls.Add(this.listBox1);
@@ -205,6 +227,8 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button room2;
         private System.Windows.Forms.Button room3;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBox3;
     }
 }
 

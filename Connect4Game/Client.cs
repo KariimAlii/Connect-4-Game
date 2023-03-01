@@ -29,6 +29,7 @@ namespace Connect4Game
         public Client(TcpClient tcpClient)
         {
             this.tcpClient = tcpClient;
+
             
             stream = tcpClient.GetStream();
 
@@ -43,6 +44,7 @@ namespace Connect4Game
             streamingThread = new Thread(() => ReceiveMessages());
             streamingThread.IsBackground = true;
             streamingThread.Start();
+            
             
         }
         //~Client() {
@@ -80,20 +82,23 @@ namespace Connect4Game
                         //room = temp[1];
                         /*MessageBox.Show(str);*/
                     }
-                    else if(str.Contains("Room1")&&this.room!="1")
+                    ////////////////////////accepting their request to join the room////////////////
+                    else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
+                        
                     }
-                    else if (str.Contains("Room2") && this.room!="2")
+                    else if (str.Contains("Room2") && this.room == null)
                     {
                         this.room = "2";
                     }
-                    else if (str.Contains("Room3") && this.room !="3")
+                    else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
                     }
 
                 }
+                
 
             }
         }

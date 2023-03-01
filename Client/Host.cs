@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -23,11 +24,23 @@ namespace Client
         StreamWriter writer;
 
         SynchronizationContext context;
+
+        string name;
+        string number;
+        string room;
+        enum status
+        {
+            Host,
+            Guest,
+            Watcher,
+        }
+        status mine;
         public Host()
         {
             InitializeComponent();
 
             context = SynchronizationContext.Current;
+            
             
             
 
@@ -42,9 +55,9 @@ namespace Client
 
             writer = new StreamWriter(stream);
             writer.AutoFlush = true;
-            string tempname = namebox.Text;
-            string tempnum = numberbox.Text;
-            writer.Write($"{tempname},{tempnum}");
+             name = namebox.Text;
+             number = numberbox.Text;
+            writer.Write($"{name},{number}");
 
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
             context.Post((object obj) => StatusBox.Text = "Connected..", null);
@@ -57,7 +70,7 @@ namespace Client
             room2.Visible = true;
             room3.Visible = true;
 
-            //sending username and number (here number represents any property that would be implemented futher
+            
 
         }
         private async void ReceiveMessages()
@@ -68,9 +81,17 @@ namespace Client
                 {
 
                     char[] charArr = new char[100];
-                    int x = await reader.ReadAsync(charArr, 0, 100);
+                    try
+                    {
+                        int x = await reader.ReadAsync(charArr, 0, 100);
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    
                     string str = new string(charArr);
-                    //string str = await reader.ReadLineAsync();
                     if (str.Contains("Connected"))
                     {
                         context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
@@ -84,27 +105,98 @@ namespace Client
                         MessageBox.Show("Server Stopped!");
                         Disconnect();
                     }
-                    else if(str.Contains("Room1"))
+                    ////////////////////receiveing the broadcast from the server to update room list///////////
+                    else if(str.Contains("R1"))
                     {
+                        room = "1";
+                        string host = str.Split('1')[1].Split('|')[0];
+                        string guest = str.Split('1')[1].Split('|')[1];
+                        if(!listBox1.Items.Contains(host))
+                        {
+                            listBox1.Items.Add(host);
+                            this.name = host;
+                            if(host==this.name)
+                            {
+                                this.mine = status.Host;
+                            }
+                        }
+                        if (!listBox1.Items.Contains(guest))
+                        {
+                            listBox1.Items.Add(guest);
+                            this.name=guest;
+                            if (guest == this.name)
+                            {
+                                this.mine = status.Guest;
 
-                        Application.Run(new GameForm());
+                            }
+                        }
+
+                        
                         
                     }
-                    else if (str.Contains("Room2"))
+                    else if (str.Contains("R2"))
                     {
+                        room = "2";
+                        string host = str.Split('2')[1].Split('|')[0];
+                        string guest = str.Split('2')[1].Split('|')[1];
+                        if (!listBox2.Items.Contains(host))
+                        {
+                            listBox2.Items.Add(host);
+                            if (host == this.name)
+                            {
+                                
+                                this.mine = status.Host;
 
-                        Application.Run(new GameForm());
+                            }
+                        }
+                        if (!listBox2.Items.Contains(guest))
+                        {
+                            listBox2.Items.Add(guest);
+                            if (guest == this.name)
+                            {
+                                
+                                this.mine = status.Guest;
+
+                            }
+                        }
+
+
                     }
-                    else if (str.Contains("Room3"))
+                    else if (str.Contains("R3"))
                     {
+                        room = "3";
+                        string host = str.Split('3')[1].Split('|')[0];
+                        string guest = str.Split('3')[1].Split('|')[1];
+                        if (!listBox3.Items.Contains(host))
+                        {
+                            listBox3.Items.Add(host);
+                            if (host == this.name)
+                            {
+                                this.mine = status.Host;
 
-                        Application.Run(new GameForm());
+                            }
+                        }
+                        if (!listBox3.Items.Contains(guest))
+                        {
+                            listBox3.Items.Add(guest);
+                            if (guest == this.name)
+                            {
+                                this.mine = status.Guest;
+
+                            }
+                        }
+
                     }
+
 
                 }
 
             }
         }
+      
+
+        
+
         private async void Disconnect()
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
@@ -133,5 +225,7 @@ namespace Client
         {
             writer.WriteAsync("Room3");
         }
+
+        
     }
 }

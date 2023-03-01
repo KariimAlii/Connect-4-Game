@@ -13,7 +13,7 @@ namespace Connect4Game
     public partial class Room : Form
     {
         public Client host;
-         Client guest { get; set; }
+        public Client guest { get; set; }
 
         List<Client> watcher = new List<Client>();
         public string Room_number { set; get; }
