@@ -21,7 +21,7 @@ namespace Client
         Guest,
         Watcher,
     }
-    public partial class Host : Form
+    public partial class Player : Form
     {
         TcpClient client;
 
@@ -36,7 +36,7 @@ namespace Client
         string room;
 
         Status playerStatus;
-        public Host()
+        public Player()
         {
             InitializeComponent();
             context = SynchronizationContext.Current;

@@ -1,6 +1,6 @@
 ﻿namespace Client
 {
-    partial class Host
+    partial class Player
     {
         /// <summary>
         /// Required designer variable.
