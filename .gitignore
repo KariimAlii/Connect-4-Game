@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+.vs/Connect4Game/v17/.suo
+Client/Client.csproj
