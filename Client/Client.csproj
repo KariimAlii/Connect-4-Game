@@ -55,12 +55,6 @@
     <Compile Include="GamePlay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Guest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Guest.Designer.cs">
-      <DependentUpon>Guest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,12 +71,6 @@
     </Compile>
     <Compile Include="Room.Designer.cs">
       <DependentUpon>Room.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Watcher.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Watcher.Designer.cs">
-      <DependentUpon>Watcher.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

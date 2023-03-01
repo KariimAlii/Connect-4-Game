@@ -22,7 +22,7 @@ namespace Connect4Game
         List<Client> clients;
         SynchronizationContext context;
         Thread receivethread;
-        public Room room1{ get; set; }
+        public Room room1 { get; set; }
         public Room room2 { get; set; }
         public Room room3 { get; set; }
 
@@ -39,7 +39,7 @@ namespace Connect4Game
             room1 = new Room();
             room2 = new Room();
             room3 = new Room();
-            
+
         }
 
 
@@ -71,7 +71,6 @@ namespace Connect4Game
                     UpdateClients();
                     Thread.Sleep(1000);
                 }
-
             });
             receivethread.IsBackground = true;
             receivethread.Start();
@@ -124,6 +123,10 @@ namespace Connect4Game
                             room1.guest = client;
 
                         }
+                        else if (room1.guest != client && room1.host != client)
+                        {
+                            room1.watcherList.Add(client);
+                        }
 
                     }
                     else if (client.room == "2")
@@ -136,6 +139,10 @@ namespace Connect4Game
                         {
                             room2.guest = client;
                         }
+                        else if (room2.guest != client && room2.host != client)
+                        {
+                            room2.watcherList.Add(client);
+                        }
                     }
                     else if (client.room == "3")
                     {
@@ -147,23 +154,28 @@ namespace Connect4Game
                         {
                             room3.guest = client;
                         }
+                        else if (room3.guest != client && room3.host != client)
+                        {
+                            room3.watcherList.Add(client);
+                        }
 
                     }
                     ////////broadcasting to client to update their lists//////////
-                    
+
                     if (room1.host != null && room1.guest != null)
                     {
                         client.writer.Write($"R1{room1.host.name}|{room1.guest.name}");
-                        Thread.Sleep(100);
-
+                        //Thread.Sleep(100);
                     }
                     if (room2.host != null && room2.guest != null)
                     {
                         client.writer.Write($"R2{room2.host.name}|{room2.guest.name}");
+                        //Thread.Sleep(100);
                     }
-                    if (room3.host != null && room1.guest != null)
+                    if (room3.host != null && room3.guest != null)
                     {
                         client.writer.Write($"R3{room3.host.name}|{room3.guest.name}");
+                        //Thread.Sleep(100);
                     }
                 }
                 else
@@ -177,7 +189,7 @@ namespace Connect4Game
 
 
             });
- 
+
         }
 
         private void OpenGame_Click(object sender, EventArgs e)
@@ -187,10 +199,10 @@ namespace Connect4Game
 
         private void connected_clients_Click(object sender, EventArgs e)
         {
-            
+
             clients.ForEach((client) =>
             {
-            if (client.tcpClient.Connected)
+                if (client.tcpClient.Connected)
                 {
 
                     MessageBox.Show($"{room1.host.name},{room1.guest.name}");
@@ -201,7 +213,7 @@ namespace Connect4Game
                 {
                     MessageBox.Show($"{client.name} is Disconnected!!!!!");
                 }
-                
+
             });
         }
     }

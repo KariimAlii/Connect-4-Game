@@ -15,6 +15,12 @@ using System.Windows.Forms;
 
 namespace Client
 {
+    public enum Status
+    {
+        Host,
+        Guest,
+        Watcher,
+    }
     public partial class Host : Form
     {
         TcpClient client;
@@ -28,24 +34,12 @@ namespace Client
         string name;
         string number;
         string room;
-        enum status
-        {
-            Host,
-            Guest,
-            Watcher,
-        }
-        status mine;
+
+        Status playerStatus;
         public Host()
         {
             InitializeComponent();
-
             context = SynchronizationContext.Current;
-            
-            
-            
-
-
-
         }
 
         private void ConnectBtn_Click(object sender, EventArgs e)
@@ -55,8 +49,8 @@ namespace Client
 
             writer = new StreamWriter(stream);
             writer.AutoFlush = true;
-             name = namebox.Text;
-             number = numberbox.Text;
+            name = namebox.Text;
+            number = numberbox.Text;
             writer.Write($"{name},{number}");
 
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
@@ -69,8 +63,6 @@ namespace Client
             room1.Visible = true;
             room2.Visible = true;
             room3.Visible = true;
-
-            
 
         }
         private async void ReceiveMessages()
@@ -88,15 +80,15 @@ namespace Client
                     catch (Exception)
                     {
 
-                        
+
                     }
-                    
+
                     string str = new string(charArr);
                     if (str.Contains("Connected"))
                     {
                         context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                         context.Post((object obj) => StatusBox.Text = str, null);
-                       
+
                     }
                     else if (str.Contains("ServerStopped"))
                     {
@@ -105,97 +97,44 @@ namespace Client
                         MessageBox.Show("Server Stopped!");
                         Disconnect();
                     }
-                    ////////////////////receiveing the broadcast from the server to update room list///////////
-                    else if(str.Contains("R1"))
+                    //==================Receiveing The Broadcast From The Server To Update Room List==================//
+                    else if (str.Contains("R1") && !str.Contains("R2") && !str.Contains("R3"))
                     {
                         room = "1";
                         string host = str.Split('1')[1].Split('|')[0];
                         string guest = str.Split('1')[1].Split('|')[1];
-                        if(!listBox1.Items.Contains(host))
-                        {
-                            listBox1.Items.Add(host);
-                            this.name = host;
-                            if(host==this.name)
-                            {
-                                this.mine = status.Host;
-                            }
-                        }
-                        if (!listBox1.Items.Contains(guest))
-                        {
-                            listBox1.Items.Add(guest);
-                            this.name=guest;
-                            if (guest == this.name)
-                            {
-                                this.mine = status.Guest;
-
-                            }
-                        }
-
-                        
-                        
+                        if (!listBox1.Items.Contains(host)) context.Post((object obj) => listBox1.Items.Add(host), null);
+                        if (!listBox1.Items.Contains(guest)) context.Post((object obj) => listBox1.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
                     }
-                    else if (str.Contains("R2"))
+                    else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
                     {
                         room = "2";
                         string host = str.Split('2')[1].Split('|')[0];
                         string guest = str.Split('2')[1].Split('|')[1];
-                        if (!listBox2.Items.Contains(host))
-                        {
-                            listBox2.Items.Add(host);
-                            if (host == this.name)
-                            {
-                                
-                                this.mine = status.Host;
-
-                            }
-                        }
-                        if (!listBox2.Items.Contains(guest))
-                        {
-                            listBox2.Items.Add(guest);
-                            if (guest == this.name)
-                            {
-                                
-                                this.mine = status.Guest;
-
-                            }
-                        }
-
-
+                        if (!listBox2.Items.Contains(host)) context.Post((object obj) => listBox2.Items.Add(host), null);
+                        if (!listBox2.Items.Contains(guest)) context.Post((object obj) => listBox2.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
                     }
-                    else if (str.Contains("R3"))
+                    else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
                     {
                         room = "3";
                         string host = str.Split('3')[1].Split('|')[0];
                         string guest = str.Split('3')[1].Split('|')[1];
-                        if (!listBox3.Items.Contains(host))
-                        {
-                            listBox3.Items.Add(host);
-                            if (host == this.name)
-                            {
-                                this.mine = status.Host;
-
-                            }
-                        }
-                        if (!listBox3.Items.Contains(guest))
-                        {
-                            listBox3.Items.Add(guest);
-                            if (guest == this.name)
-                            {
-                                this.mine = status.Guest;
-
-                            }
-                        }
-
+                        if (!listBox3.Items.Contains(host)) context.Post((object obj) => listBox3.Items.Add(host), null);
+                        if (!listBox3.Items.Contains(guest)) context.Post((object obj) => listBox3.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
                     }
-
-
                 }
 
             }
         }
-      
 
-        
+
+
 
         private async void Disconnect()
         {
@@ -226,6 +165,6 @@ namespace Client
             writer.WriteAsync("Room3");
         }
 
-        
+
     }
 }

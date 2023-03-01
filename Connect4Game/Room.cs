@@ -15,7 +15,7 @@ namespace Connect4Game
         public Client host;
         public Client guest { get; set; }
 
-        List<Client> watcher = new List<Client>();
+        public List<Client> watcherList = new List<Client>();
         public string Room_number { set; get; }
         public Room()
         {
