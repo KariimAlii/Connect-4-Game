@@ -36,6 +36,12 @@
             this.numberbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.room1 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.room2 = new System.Windows.Forms.Button();
+            this.room3 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // StatusBox
@@ -120,11 +126,77 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "Number";
             // 
+            // room1
+            // 
+            this.room1.Location = new System.Drawing.Point(105, 114);
+            this.room1.Name = "room1";
+            this.room1.Size = new System.Drawing.Size(75, 23);
+            this.room1.TabIndex = 23;
+            this.room1.Text = "Room 1";
+            this.room1.UseVisualStyleBackColor = true;
+            this.room1.Visible = false;
+            this.room1.Click += new System.EventHandler(this.room1_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(85, 143);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.TabIndex = 24;
+            // 
+            // room2
+            // 
+            this.room2.Location = new System.Drawing.Point(230, 114);
+            this.room2.Name = "room2";
+            this.room2.Size = new System.Drawing.Size(75, 23);
+            this.room2.TabIndex = 25;
+            this.room2.Text = "Room 2";
+            this.room2.UseVisualStyleBackColor = true;
+            this.room2.Visible = false;
+            this.room2.Click += new System.EventHandler(this.room2_Click);
+            // 
+            // room3
+            // 
+            this.room3.Location = new System.Drawing.Point(358, 114);
+            this.room3.Name = "room3";
+            this.room3.Size = new System.Drawing.Size(75, 23);
+            this.room3.TabIndex = 26;
+            this.room3.Text = "Room 3";
+            this.room3.UseVisualStyleBackColor = true;
+            this.room3.Visible = false;
+            this.room3.Click += new System.EventHandler(this.room3_Click);
+            // 
+            // listBox2
+            // 
+            this.listBox2.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(211, 143);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.TabIndex = 27;
+            // 
+            // listBox3
+            // 
+            this.listBox3.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(337, 143);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(120, 95);
+            this.listBox3.TabIndex = 28;
+            // 
             // Host
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.room3);
+            this.Controls.Add(this.room2);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.room1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numberbox);
@@ -151,6 +223,12 @@
         private System.Windows.Forms.TextBox numberbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button room1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button room2;
+        private System.Windows.Forms.Button room3;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBox3;
     }
 }
 

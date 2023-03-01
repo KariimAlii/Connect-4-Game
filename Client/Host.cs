@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,12 @@ using System.Windows.Forms;
 
 namespace Client
 {
+    public enum Status
+    {
+        Host,
+        Guest,
+        Watcher,
+    }
     public partial class Host : Form
     {
         TcpClient client;
@@ -23,10 +30,15 @@ namespace Client
         StreamWriter writer;
 
         SynchronizationContext context;
+
+        string name;
+        string number;
+        string room;
+
+        Status playerStatus;
         public Host()
         {
             InitializeComponent();
-
             context = SynchronizationContext.Current;
         }
 
@@ -37,9 +49,9 @@ namespace Client
 
             writer = new StreamWriter(stream);
             writer.AutoFlush = true;
-            string tempname = namebox.Text;
-            string tempnum = numberbox.Text;
-            writer.Write($"{tempname},{tempnum}");
+            name = namebox.Text;
+            number = numberbox.Text;
+            writer.Write($"{name},{number}");
 
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
             context.Post((object obj) => StatusBox.Text = "Connected..", null);
@@ -48,33 +60,82 @@ namespace Client
             reader = new StreamReader(stream);
 
             Task.Run(() => ReceiveMessages());
-
-            //sending username and number (here number represents any property that would be implemented futher
+            room1.Visible = true;
+            room2.Visible = true;
+            room3.Visible = true;
 
         }
         private async void ReceiveMessages()
         {
-
-            if (stream != null)
+            while (true)
             {
-                char[] charArr = new char[100];
-                int x = await reader.ReadAsync(charArr, 0, 100);
-                string str = new string(charArr);
-                //string str = await reader.ReadLineAsync();
-                if (str.Contains("Connected"))
+                if (stream != null)
                 {
-                    context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
-                    context.Post((object obj) => StatusBox.Text = str, null);
+
+                    char[] charArr = new char[100];
+                    try
+                    {
+                        int x = await reader.ReadAsync(charArr, 0, 100);
+                    }
+                    catch (Exception)
+                    {
+
+
+                    }
+
+                    string str = new string(charArr);
+                    if (str.Contains("Connected"))
+                    {
+                        context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+                        context.Post((object obj) => StatusBox.Text = str, null);
+
+                    }
+                    else if (str.Contains("ServerStopped"))
+                    {
+                        context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
+                        context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+                        MessageBox.Show("Server Stopped!");
+                        Disconnect();
+                    }
+                    //==================Receiveing The Broadcast From The Server To Update Room List==================//
+                    else if (str.Contains("R1") && !str.Contains("R2") && !str.Contains("R3"))
+                    {
+                        room = "1";
+                        string host = str.Split('1')[1].Split('|')[0];
+                        string guest = str.Split('1')[1].Split('|')[1];
+                        if (!listBox1.Items.Contains(host)) context.Post((object obj) => listBox1.Items.Add(host), null);
+                        if (!listBox1.Items.Contains(guest)) context.Post((object obj) => listBox1.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
+                    }
+                    else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
+                    {
+                        room = "2";
+                        string host = str.Split('2')[1].Split('|')[0];
+                        string guest = str.Split('2')[1].Split('|')[1];
+                        if (!listBox2.Items.Contains(host)) context.Post((object obj) => listBox2.Items.Add(host), null);
+                        if (!listBox2.Items.Contains(guest)) context.Post((object obj) => listBox2.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
+                    }
+                    else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
+                    {
+                        room = "3";
+                        string host = str.Split('3')[1].Split('|')[0];
+                        string guest = str.Split('3')[1].Split('|')[1];
+                        if (!listBox3.Items.Contains(host)) context.Post((object obj) => listBox3.Items.Add(host), null);
+                        if (!listBox3.Items.Contains(guest)) context.Post((object obj) => listBox3.Items.Add(guest), null);
+                        if (this.name == host) this.playerStatus = Status.Host;
+                        if (this.name == guest) this.playerStatus = Status.Guest;
+                    }
                 }
-                else if (str.Contains("ServerStopped"))
-                {
-                    context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-                    context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-                    MessageBox.Show("Server Stopped!");
-                    Disconnect();
-                }
+
             }
         }
+
+
+
+
         private async void Disconnect()
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
@@ -87,6 +148,21 @@ namespace Client
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
             Disconnect();
+        }
+
+        private void room1_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room1");
+        }
+
+        private void room2_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room2");
+        }
+
+        private void room3_Click(object sender, EventArgs e)
+        {
+            writer.WriteAsync("Room3");
         }
 
 

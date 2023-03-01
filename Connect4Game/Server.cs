@@ -20,14 +20,13 @@ namespace Connect4Game
     {
         TcpListener listener;
         List<Client> clients;
-        NetworkStream stream;
-        StreamWriter writer;
-        StreamReader reader;
         SynchronizationContext context;
         Thread receivethread;
-        Client temp;
-        string tempnum;
-        string tempstr;
+        public Room room1 { get; set; }
+        public Room room2 { get; set; }
+        public Room room3 { get; set; }
+
+
 
         public Server()
         {
@@ -37,6 +36,9 @@ namespace Connect4Game
             listener = new TcpListener(ip, 5000);
             context = SynchronizationContext.Current;
             clients = new List<Client>();
+            room1 = new Room();
+            room2 = new Room();
+            room3 = new Room();
 
         }
 
@@ -49,8 +51,7 @@ namespace Connect4Game
                 TcpClient serverClient = listener.AcceptTcpClient();
                 context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
                 context.Post((object obj) => StatusBox.Text = "Connection Accepted!", null);
-                temp = new Client(serverClient);
-                clients.Add(temp);
+                clients.Add(new Client(serverClient));
             }
         }
 
@@ -70,7 +71,6 @@ namespace Connect4Game
                     UpdateClients();
                     Thread.Sleep(1000);
                 }
-
             });
             receivethread.IsBackground = true;
             receivethread.Start();
@@ -108,17 +108,88 @@ namespace Connect4Game
             {
                 if (client.tcpClient.Connected)
                 {
-                    context.Post((object obj) => clients_list.Items.Add(client), null);
+                    context.Post((object obj) => clients_list.Items.Add(client.name), null);
+
+                    ////////////////assign host and guest to client depending on their room;/////////////// 
+                    if (client.room == "1")
+                    {
+                        if (room1.host == null)
+                        {
+                            room1.host = client;
+
+                        }
+                        else if (room1.guest == null && room1.host != client)
+                        {
+                            room1.guest = client;
+
+                        }
+                        else if (room1.guest != client && room1.host != client)
+                        {
+                            room1.watcherList.Add(client);
+                        }
+
+                    }
+                    else if (client.room == "2")
+                    {
+                        if (room2.host == null)
+                        {
+                            room2.host = client;
+                        }
+                        else if (room2.guest == null && room2.host != client)
+                        {
+                            room2.guest = client;
+                        }
+                        else if (room2.guest != client && room2.host != client)
+                        {
+                            room2.watcherList.Add(client);
+                        }
+                    }
+                    else if (client.room == "3")
+                    {
+                        if (room3.host == null)
+                        {
+                            room3.host = client;
+                        }
+                        else if (room3.guest == null && room3.host != client)
+                        {
+                            room3.guest = client;
+                        }
+                        else if (room3.guest != client && room3.host != client)
+                        {
+                            room3.watcherList.Add(client);
+                        }
+
+                    }
+                    ////////broadcasting to client to update their lists//////////
+
+                    if (room1.host != null && room1.guest != null)
+                    {
+                        client.writer.Write($"R1{room1.host.name}|{room1.guest.name}");
+                        //Thread.Sleep(100);
+                    }
+                    if (room2.host != null && room2.guest != null)
+                    {
+                        client.writer.Write($"R2{room2.host.name}|{room2.guest.name}");
+                        //Thread.Sleep(100);
+                    }
+                    if (room3.host != null && room3.guest != null)
+                    {
+                        client.writer.Write($"R3{room3.host.name}|{room3.guest.name}");
+                        //Thread.Sleep(100);
+                    }
                 }
                 else
                 {
                     context.Post((object obj) =>
                     {
-                        clients_list.Items.Remove(client);
+                        clients_list.Items.Remove(client.name);
                         clients.Remove(client);
                     }, null);
                 }
+
+
             });
+
         }
 
         private void OpenGame_Click(object sender, EventArgs e)
@@ -128,16 +199,21 @@ namespace Connect4Game
 
         private void connected_clients_Click(object sender, EventArgs e)
         {
+
             clients.ForEach((client) =>
             {
                 if (client.tcpClient.Connected)
                 {
-                    MessageBox.Show($"{client.name} is connected");
+
+                    MessageBox.Show($"{room1.host.name},{room1.guest.name}");
+                    MessageBox.Show($"{room2.host.name},{room2.guest.name}");
+                    MessageBox.Show($"{room3.host.name},{room3.guest.name}");
                 }
                 else
                 {
                     MessageBox.Show($"{client.name} is Disconnected!!!!!");
                 }
+
             });
         }
     }

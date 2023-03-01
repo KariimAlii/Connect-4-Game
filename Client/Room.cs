@@ -10,9 +10,14 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class Watcher : Form
+    public partial class Room : Form
     {
-        public Watcher()
+        public string host;
+        public string guest { get; set; }
+
+        //List<Client> watcher = new List<Client>();
+        public string Room_number { set; get; }
+        public Room()
         {
             InitializeComponent();
         }

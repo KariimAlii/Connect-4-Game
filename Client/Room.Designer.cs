@@ -1,6 +1,6 @@
 ﻿namespace Client
 {
-    partial class Watcher
+    partial class Room
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Room
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Watcher";
+            this.ClientSize = new System.Drawing.Size(736, 454);
+            this.Name = "Room";
+            this.Text = "Room";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

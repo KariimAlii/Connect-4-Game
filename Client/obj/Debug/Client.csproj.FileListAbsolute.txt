@@ -53,3 +53,7 @@ F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.
 F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.exe
 F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.pdb
+F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.Room.resources
+F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
+D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
+D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Room.resources
