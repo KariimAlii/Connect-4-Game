@@ -35,6 +35,7 @@ namespace Client
         string number;
         string room;
 
+        GameForm game;
         Status playerStatus;
         public Player()
         {
@@ -100,17 +101,21 @@ namespace Client
                     //==================Receiveing The Broadcast From The Server To Update Room List==================//
                     else if (str.Contains("R1") && !str.Contains("R2") && !str.Contains("R3"))
                     {
-                        room = "1";
+                        this.room = "1";
                         string host = str.Split('1')[1].Split('|')[0];
                         string guest = str.Split('1')[1].Split('|')[1];
                         if (!listBox1.Items.Contains(host)) context.Post((object obj) => listBox1.Items.Add(host), null);
-                        if (!listBox1.Items.Contains(guest)) context.Post((object obj) => listBox1.Items.Add(guest), null);
+                        if (!listBox1.Items.Contains(guest))
+                        {
+                            context.Post((object obj) => listBox1.Items.Add(guest), null);
+
+                        }
                         if (this.name == host) this.playerStatus = Status.Host;
                         if (this.name == guest) this.playerStatus = Status.Guest;
                     }
                     else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
                     {
-                        room = "2";
+                        this.room = "2";
                         string host = str.Split('2')[1].Split('|')[0];
                         string guest = str.Split('2')[1].Split('|')[1];
                         if (!listBox2.Items.Contains(host)) context.Post((object obj) => listBox2.Items.Add(host), null);
@@ -120,13 +125,19 @@ namespace Client
                     }
                     else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
                     {
-                        room = "3";
+                        this.room = "3";
                         string host = str.Split('3')[1].Split('|')[0];
                         string guest = str.Split('3')[1].Split('|')[1];
                         if (!listBox3.Items.Contains(host)) context.Post((object obj) => listBox3.Items.Add(host), null);
                         if (!listBox3.Items.Contains(guest)) context.Post((object obj) => listBox3.Items.Add(guest), null);
                         if (this.name == host) this.playerStatus = Status.Host;
                         if (this.name == guest) this.playerStatus = Status.Guest;
+                    }
+                    ////////////////////////////////////////zzz/////////////////////
+                    if (str.Contains("Open"))
+                    {
+                        game = new GameForm();
+                        Application.Run(game);
                     }
                 }
 

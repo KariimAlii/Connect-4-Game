@@ -12,8 +12,9 @@ namespace Connect4Game
 {
     public partial class Room : Form
     {
-        public Client host;
-        public Client guest { get; set; }
+        private Client host;
+        private Client guest;
+
 
         public List<Client> watcherList = new List<Client>();
         public string Room_number { set; get; }
@@ -21,5 +22,16 @@ namespace Connect4Game
         {
             InitializeComponent();
         }
+        public Client getHost() { return this.host; }
+        public Client getGuest() { return this.guest; }
+        public void setHost(ref Client host)
+        {
+            this.host = host;
+        }
+        public void setGuest(ref Client guest)
+        {
+            this.guest = guest;
+        }
+
     }
 }

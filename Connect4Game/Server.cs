@@ -113,17 +113,19 @@ namespace Connect4Game
                     ////////////////assign host and guest to client depending on their room;/////////////// 
                     if (client.room == "1")
                     {
-                        if (room1.host == null)
+                        if (room1.getHost() == null)
                         {
-                            room1.host = client;
+                            room1.setHost(ref client);
 
                         }
-                        else if (room1.guest == null && room1.host != client)
+                        else if (room1.getGuest() == null && room1.getHost() != client)
                         {
-                            room1.guest = client;
+                            room1.setGuest(ref client);
+                            room1.getHost().writer.Write("Open");
+                            room1.getGuest().writer.Write("Open");
 
                         }
-                        else if (room1.guest != client && room1.host != client)
+                        else if (room1.getGuest() != client && room1.getHost() != client)
                         {
                             room1.watcherList.Add(client);
                         }
@@ -131,30 +133,34 @@ namespace Connect4Game
                     }
                     else if (client.room == "2")
                     {
-                        if (room2.host == null)
+                        if (room2.getHost() == null)
                         {
-                            room2.host = client;
+                            room2.setHost(ref client);
+
                         }
-                        else if (room2.guest == null && room2.host != client)
+                        else if (room2.getGuest() == null && room2.getHost() != client)
                         {
-                            room2.guest = client;
+                            room2.setGuest(ref client);
+
                         }
-                        else if (room2.guest != client && room2.host != client)
+                        else if (room2.getGuest() != client && room2.getHost() != client)
                         {
                             room2.watcherList.Add(client);
                         }
                     }
                     else if (client.room == "3")
                     {
-                        if (room3.host == null)
+                        if (room3.getHost() == null)
                         {
-                            room3.host = client;
+                            room3.setHost(ref client);
+
                         }
-                        else if (room3.guest == null && room3.host != client)
+                        else if (room3.getGuest() == null && room3.getHost() != client)
                         {
-                            room3.guest = client;
+                            room3.setGuest(ref client);
+
                         }
-                        else if (room3.guest != client && room3.host != client)
+                        else if (room3.getGuest() != client && room3.getHost() != client)
                         {
                             room3.watcherList.Add(client);
                         }
@@ -162,19 +168,19 @@ namespace Connect4Game
                     }
                     ////////broadcasting to client to update their lists//////////
 
-                    if (room1.host != null && room1.guest != null)
+                    if (room1.getHost() != null && room1.getGuest() != null)
                     {
-                        client.writer.Write($"R1{room1.host.name}|{room1.guest.name}");
+                        client.writer.Write($"R1{room1.getHost().name}|{room1.getGuest().name}");
                         //Thread.Sleep(100);
                     }
-                    if (room2.host != null && room2.guest != null)
+                    if (room2.getHost() != null && room2.getGuest() != null)
                     {
-                        client.writer.Write($"R2{room2.host.name}|{room2.guest.name}");
+                        client.writer.Write($"R2{room2.getHost().name}|{room2.getGuest().name}");
                         //Thread.Sleep(100);
                     }
-                    if (room3.host != null && room3.guest != null)
+                    if (room3.getHost() != null && room3.getGuest() != null)
                     {
-                        client.writer.Write($"R3{room3.host.name}|{room3.guest.name}");
+                        client.writer.Write($"R3{room3.getHost().name}|{room3.getGuest().name}");
                         //Thread.Sleep(100);
                     }
                 }
@@ -205,9 +211,9 @@ namespace Connect4Game
                 if (client.tcpClient.Connected)
                 {
 
-                    MessageBox.Show($"{room1.host.name},{room1.guest.name}");
-                    MessageBox.Show($"{room2.host.name},{room2.guest.name}");
-                    MessageBox.Show($"{room3.host.name},{room3.guest.name}");
+                    MessageBox.Show($"{room1.getHost().name},{room1.getGuest().name}");
+                    MessageBox.Show($"{room2.getHost().name},{room2.getGuest().name}");
+                    MessageBox.Show($"{room3.getHost().name},{room3.getGuest().name}");
                 }
                 else
                 {
