@@ -32,15 +32,20 @@ namespace Connect4Game
                 switch (turn)
                 {
                     case 1:
-                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        
+                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
                         Board[col_num, row_num] = 1;
+                        Dim_Player2();
                         turn = 2;
+
                         Horizontal_Vertical_Checker(col_num, row_num, 1);
                         Diagonal_Checker(col_num, row_num, 1);
                         break;
                     case 2:
-                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        
+                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
                         Board[col_num, row_num] = 2;
+                        Dim_Player1();
                         turn = 1;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);
@@ -48,6 +53,9 @@ namespace Connect4Game
                 }
             }
         }
+
+       
+
         private void Horizontal_Vertical_Checker(int row, int col, int playerIdentifier)
         {
 
