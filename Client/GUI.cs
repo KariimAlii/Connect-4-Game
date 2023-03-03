@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Configuration;
 
 //=====================Game GUI====================//
 
@@ -36,7 +37,19 @@ namespace Client
             {
                 for (int j = 0; j < Ncols; j++)
                 {
-                    DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                    switch (Board[i, j])
+                    {
+                        case 0:
+                            DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                            break;
+                        case 1:
+                            DrawCircle(Player1Brush, j * Size, i * Size, Size);
+                            break;
+                        case 2:
+                            DrawCircle(Player2Brush, j * Size, i * Size, Size);
+                            break;
+                    }
+
                     points[i, j] = new Point(j * Size, i * Size);
                 }
             }

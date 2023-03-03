@@ -106,11 +106,22 @@ namespace Connect4Game
 
                         if (str.StartsWith("$"))
                         {
+
                             string full = str.Split('*')[0].Trim('$');
+                            string playerName = str.Split('*')[1];
                             string row = full.Split('/')[0];
                             string col = full.Split('/')[1];
-                            this.server.room1.getHost().writer.Write($"@{row}/{col}*");
-                            this.server.room1.getGuest().writer.Write($"@{row}/{col}*");
+                            if (row.StartsWith("G"))
+                            {
+                                row = row.Trim('G');
+                                this.server.room1.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
+                            }
+                            else if (row.StartsWith("H"))
+                            {
+                                row = row.Trim('H');
+                                this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
+                            }
+
                         }
                     }
 

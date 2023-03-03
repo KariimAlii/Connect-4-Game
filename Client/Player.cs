@@ -34,7 +34,7 @@ namespace Client
 
         SynchronizationContext context;
 
-        string name;
+        public string name;
         string number;
         string room;
 
@@ -161,13 +161,13 @@ namespace Client
 
 
 
-                    else if (str.StartsWith("@"))
-                    {
-                        string full = str.Split('*')[0].Trim('@');
-                        string row = full.Split('/')[0];
-                        string col = full.Split('/')[1];
-                        MessageBox.Show(row, col);
-                    }
+                    //else if (str.StartsWith("@"))
+                    //{
+                    //    string full = str.Split('*')[0].Trim('@');
+                    //    string row = full.Split('/')[0];
+                    //    string col = full.Split('/')[1];
+
+                    //}
                     ////////////////////////////////////////zzz/////////////////////
                     //else if (str.StartsWith("Room1"))
                     //{
@@ -180,8 +180,8 @@ namespace Client
                     /////////////////////////////////////////////////////
                     if (str.Contains("Open"))
                     {
-
-                        game = new GameForm(this);
+                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
+                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         Thread thread = new Thread(() =>
                         {
@@ -225,7 +225,20 @@ namespace Client
         }
         private void Mouse(object sender, MouseEventArgs e)
         {
-            writer.WriteLine($"${this.game.row_num}/{this.game.col_num}");
+            if (this.playerStatus == Status.Host)
+            {
+                writer.WriteLine($"$H{this.game.row_num}/{this.game.col_num}*{this.name}");
+                game.GamePanel.Enabled = false;
+                game.DrawGamePanel();
+
+            }
+            else if (this.playerStatus == Status.Guest)
+            {
+                writer.WriteLine($"$G{this.game.row_num}/{this.game.col_num}*{this.name}");
+                game.GamePanel.Enabled = false;
+                game.DrawGamePanel();
+
+            }
 
 
         }
@@ -237,7 +250,6 @@ namespace Client
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
             context.Post((object obj) => StatusBox.Text = "Disconnected", null);
             await writer.WriteAsync("ClientStopped");
-            //writer.Write("ClientStopped");
 
             client.Close();
         }

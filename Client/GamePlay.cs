@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,14 +14,16 @@ namespace Client
 
         private void GamePanel_MouseClick(object sender, MouseEventArgs e)
         {
+            challenger = this.player.name;
             CheckScore(e.Location);
+
         }
 
         public void CheckScore(Point target)
         {
             col_num = Nrows - 1;
             row_num = (target.X / Size);
-            adjustPlay(row_num, col_num);
+            adjustPlay(row_num, col_num, turn);
         }
 
         private void Horizontal_Vertical_Checker(int row, int col, int playerIdentifier)
@@ -34,8 +37,9 @@ namespace Client
                     Board[row, i + 2] == playerIdentifier &&
                     Board[row, i + 3] == playerIdentifier)
                 {
+                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
+                    else MessageBox.Show($"You Lose !");
 
-                    MessageBox.Show($"Player {playerIdentifier} wins!");
                 }
 
             }
@@ -48,7 +52,9 @@ namespace Client
                     Board[i + 3, col] == playerIdentifier)
                 {
 
-                    MessageBox.Show($"Player {playerIdentifier} wins!");
+                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
+                    else MessageBox.Show($"You Lose !");
+                    this.GamePanel.Enabled = false;
                 }
 
             }
@@ -74,7 +80,9 @@ namespace Client
                     Board[i + 3, j - 3] == playerIdentifier)
                 {
 
-                    MessageBox.Show($"Player {playerIdentifier} wins!");
+                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
+                    else MessageBox.Show($"You Lose !");
+                    this.GamePanel.Enabled = false;
                 }
 
             }
@@ -94,7 +102,9 @@ namespace Client
                     Board[i + 3, j + 3] == playerIdentifier)
                 {
 
-                    MessageBox.Show($"Player {playerIdentifier} wins!");
+                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
+                    else MessageBox.Show($"You Lose !");
+                    this.GamePanel.Enabled = false;
                 }
 
             }
@@ -102,8 +112,9 @@ namespace Client
 
         }
 
-        public void adjustPlay(int row_num, int col_num)
+        public void adjustPlay(int row_num, int col_num, int turn)
         {
+
             while (col_num >= 0 && Board[col_num, row_num] > 0)
             {
                 col_num--;
@@ -111,19 +122,20 @@ namespace Client
 
             if (col_num >= 0 && Board[col_num, row_num] == 0)
             {
-                switch (this.player.playerStatus)
+                switch (turn)
                 {
-                    case Status.Host:
+
+                    case 1:
+
                         DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 1;
-                        turn = 2;
                         Horizontal_Vertical_Checker(col_num, row_num, 1);
                         Diagonal_Checker(col_num, row_num, 1);
                         break;
-                    case Status.Guest:
+                    case 2:
+
                         DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 2;
-                        turn = 1;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);
                         break;

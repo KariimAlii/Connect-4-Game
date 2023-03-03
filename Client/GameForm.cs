@@ -18,6 +18,7 @@ namespace Client
         int[,] Board;
         Point[,] points;
         int turn;
+        string challenger;
         Brush Player1Brush;
         Brush Player2Brush;
         Brush PanelBrush;
@@ -31,7 +32,7 @@ namespace Client
 
 
         Player player;
-        public GameForm(Player player)
+        public GameForm(Player player, int turns)
         {
             InitializeComponent();
             //================ Adjust Window =================//
@@ -44,7 +45,7 @@ namespace Client
             Size = 100;
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
-            turn = 1;
+            turn = turns;
             Player1Brush = new SolidBrush(Color.Pink);
             Player2Brush = new SolidBrush(Color.Yellow);
             PanelBrush = new SolidBrush(Color.Cyan);
@@ -60,10 +61,10 @@ namespace Client
                 {
                     while (true)
                     {
-                        char[] charArr = new char[100];
+                        char[] charArr = new char[300];
                         try
                         {
-                            int x = await this.player.reader.ReadAsync(charArr, 0, 100);
+                            int x = await this.player.reader.ReadAsync(charArr, 0, 300);
                         }
                         catch (Exception)
                         {
@@ -75,14 +76,29 @@ namespace Client
 
 
 
-                        if (str.StartsWith("@"))
+                        if (str.Contains("@"))
                         {
-
                             string full = str.Split('*')[0].Trim('@');
+                            challenger = str.Split('*')[1];
                             string row = full.Split('/')[0];
                             string col = full.Split('/')[1];
-                            //MessageBox.Show(row, col);
-                            adjustPlay(int.Parse(row), int.Parse(col));
+                            if (this.player.playerStatus == Status.Host)
+                            {
+                                GamePanel.Enabled = true;
+                                DrawGamePanel();
+                                adjustPlay(int.Parse(row), int.Parse(col), 1);
+
+                            }
+                            if (this.player.playerStatus == Status.Guest)
+                            {
+                                GamePanel.Enabled = true;
+                                DrawGamePanel();
+                                adjustPlay(int.Parse(row), int.Parse(col), 2);
+
+                            }
+
+
+
                         }
                     }
                 }
