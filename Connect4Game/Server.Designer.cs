@@ -35,6 +35,7 @@
             this.clients_list = new System.Windows.Forms.ListBox();
             this.connected_clients = new System.Windows.Forms.Button();
             this.OpenGame = new System.Windows.Forms.Button();
+            this.SerializeBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StatusBox
@@ -117,11 +118,22 @@
             this.OpenGame.UseVisualStyleBackColor = true;
             this.OpenGame.Click += new System.EventHandler(this.OpenGame_Click);
             // 
+            // SerializeBtn
+            // 
+            this.SerializeBtn.Location = new System.Drawing.Point(111, 321);
+            this.SerializeBtn.Name = "SerializeBtn";
+            this.SerializeBtn.Size = new System.Drawing.Size(75, 23);
+            this.SerializeBtn.TabIndex = 16;
+            this.SerializeBtn.Text = "Serialize";
+            this.SerializeBtn.UseVisualStyleBackColor = true;
+            this.SerializeBtn.Click += new System.EventHandler(this.SerializeBtn_Click);
+            // 
             // Server
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.SerializeBtn);
             this.Controls.Add(this.OpenGame);
             this.Controls.Add(this.connected_clients);
             this.Controls.Add(this.clients_list);
@@ -145,5 +157,6 @@
         private System.Windows.Forms.ListBox clients_list;
         private System.Windows.Forms.Button connected_clients;
         private System.Windows.Forms.Button OpenGame;
+        private System.Windows.Forms.Button SerializeBtn;
     }
 }

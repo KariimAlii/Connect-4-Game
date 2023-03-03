@@ -12,6 +12,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client
 {
@@ -176,6 +180,22 @@ namespace Client
             writer.WriteAsync("Room3");
         }
 
+        private void DeserializeBtn_Click(object sender, EventArgs e)
+        {
+            //string str = "Hey from Player";
+            //byte[] byteBuffer = Encoding.ASCII.GetBytes(str);
+            //stream.Write(byteBuffer, 0, byteBuffer.Length);
 
+            //int[] intArray = new int[4] { 1, 2, 3, 4 };
+            //byte[] result = new byte[intArray.Length * sizeof(int)];
+            //Buffer.BlockCopy(intArray, 0, result, 0, result.Length);
+            //stream.Write(result, 0, result.Length);
+
+            //string[] b = new string[] { "asda", "asda" };
+            //BinaryFormatter a = new BinaryFormatter();
+            //a.Serialize(stream, b);
+
+
+        }
     }
 }

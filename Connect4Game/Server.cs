@@ -13,6 +13,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Connect4Game
 {
@@ -66,7 +70,7 @@ namespace Connect4Game
 
             receivethread = new Thread(() =>
             {
-                while (true)
+                while (false)
                 {
                     UpdateClients();
                     Thread.Sleep(1000);
@@ -222,7 +226,23 @@ namespace Connect4Game
 
             });
         }
+
+        private void SerializeBtn_Click(object sender, EventArgs e)
+        {
+            //byte[] buffer = new byte[100];
+            //int y = clients[0].stream.Read(buffer, 0, 100);
+            //string str = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+            //MessageBox.Show(str);
+
+            //BinaryFormatter a = new BinaryFormatter();
+            //string[] b = new string[2];
+            //b = (string[])a.Deserialize(clients[0].stream);
+            //for (var i = 0; i < b.Length; i++) MessageBox.Show(b[i]);
+
+        }
     }
 }
 
 
+// https://www.c-sharpcorner.com/UploadFile/ajyadav123/applied-C-Sharp-net-socket-programming/
+// https://www.c-sharpcorner.com/article/how-to-convert-a-byte-array-to-a-string/

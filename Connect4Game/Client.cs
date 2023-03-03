@@ -19,7 +19,7 @@ namespace Connect4Game
         public string room { get; set; }
 
 
-        NetworkStream stream;
+        public NetworkStream stream;
         public StreamWriter writer { get; }
         public StreamReader reader { get; }
         Thread streamingThread;
@@ -55,7 +55,7 @@ namespace Connect4Game
 
         private void ReceiveMessages()
         {
-            while (true)
+            while (false)
             {
                 if (stream != null)
                 {
@@ -63,7 +63,9 @@ namespace Connect4Game
                     int x = reader.Read(charArr, 0, 100);
                     string str = new string(charArr);
 
-                    //string str = await reader.ReadLineAsync();
+
+
+
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
@@ -71,7 +73,6 @@ namespace Connect4Game
                         streamingThread.Abort();
                         //this.tcpClient.Close();
 
-                        //MessageBox.Show(this.tcpClient.Connected.ToString());
                     }
 
                     else if (str.Contains(","))

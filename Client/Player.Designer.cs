@@ -42,16 +42,17 @@
             this.room3 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
+            this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StatusBox
             // 
             this.StatusBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.StatusBox.Location = new System.Drawing.Point(76, 330);
-            this.StatusBox.Margin = new System.Windows.Forms.Padding(2);
+            this.StatusBox.Location = new System.Drawing.Point(101, 406);
+            this.StatusBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusBox.Name = "StatusBox";
-            this.StatusBox.Size = new System.Drawing.Size(151, 21);
+            this.StatusBox.Size = new System.Drawing.Size(200, 24);
             this.StatusBox.TabIndex = 18;
             // 
             // ConnectionLabel
@@ -59,10 +60,9 @@
             this.ConnectionLabel.AutoSize = true;
             this.ConnectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConnectionLabel.ForeColor = System.Drawing.Color.Red;
-            this.ConnectionLabel.Location = new System.Drawing.Point(20, 332);
-            this.ConnectionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ConnectionLabel.Location = new System.Drawing.Point(27, 409);
             this.ConnectionLabel.Name = "ConnectionLabel";
-            this.ConnectionLabel.Size = new System.Drawing.Size(59, 17);
+            this.ConnectionLabel.Size = new System.Drawing.Size(69, 20);
             this.ConnectionLabel.TabIndex = 17;
             this.ConnectionLabel.Text = "Status:";
             // 
@@ -71,10 +71,10 @@
             this.DisconnectBtn.BackColor = System.Drawing.Color.IndianRed;
             this.DisconnectBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisconnectBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.DisconnectBtn.Location = new System.Drawing.Point(476, 62);
-            this.DisconnectBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.DisconnectBtn.Location = new System.Drawing.Point(635, 76);
+            this.DisconnectBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DisconnectBtn.Name = "DisconnectBtn";
-            this.DisconnectBtn.Size = new System.Drawing.Size(104, 33);
+            this.DisconnectBtn.Size = new System.Drawing.Size(139, 41);
             this.DisconnectBtn.TabIndex = 16;
             this.DisconnectBtn.Text = "Disconnect";
             this.DisconnectBtn.UseVisualStyleBackColor = false;
@@ -85,10 +85,10 @@
             this.ConnectBtn.BackColor = System.Drawing.Color.LawnGreen;
             this.ConnectBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConnectBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ConnectBtn.Location = new System.Drawing.Point(476, 17);
-            this.ConnectBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.ConnectBtn.Location = new System.Drawing.Point(635, 21);
+            this.ConnectBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ConnectBtn.Name = "ConnectBtn";
-            this.ConnectBtn.Size = new System.Drawing.Size(104, 30);
+            this.ConnectBtn.Size = new System.Drawing.Size(139, 37);
             this.ConnectBtn.TabIndex = 15;
             this.ConnectBtn.Text = "Connect";
             this.ConnectBtn.UseVisualStyleBackColor = false;
@@ -96,41 +96,46 @@
             // 
             // namebox
             // 
-            this.namebox.Location = new System.Drawing.Point(76, 31);
+            this.namebox.Location = new System.Drawing.Point(101, 38);
+            this.namebox.Margin = new System.Windows.Forms.Padding(4);
             this.namebox.Name = "namebox";
-            this.namebox.Size = new System.Drawing.Size(173, 20);
+            this.namebox.Size = new System.Drawing.Size(229, 22);
             this.namebox.TabIndex = 19;
             // 
             // numberbox
             // 
-            this.numberbox.Location = new System.Drawing.Point(76, 70);
+            this.numberbox.Location = new System.Drawing.Point(101, 86);
+            this.numberbox.Margin = new System.Windows.Forms.Padding(4);
             this.numberbox.Name = "numberbox";
-            this.numberbox.Size = new System.Drawing.Size(173, 20);
+            this.numberbox.Size = new System.Drawing.Size(229, 22);
             this.numberbox.TabIndex = 20;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 38);
+            this.label1.Location = new System.Drawing.Point(27, 47);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 21;
             this.label1.Text = "Name";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 77);
+            this.label2.Location = new System.Drawing.Point(27, 95);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(55, 16);
             this.label2.TabIndex = 22;
             this.label2.Text = "Number";
             // 
             // room1
             // 
-            this.room1.Location = new System.Drawing.Point(105, 114);
+            this.room1.Location = new System.Drawing.Point(140, 140);
+            this.room1.Margin = new System.Windows.Forms.Padding(4);
             this.room1.Name = "room1";
-            this.room1.Size = new System.Drawing.Size(75, 23);
+            this.room1.Size = new System.Drawing.Size(100, 28);
             this.room1.TabIndex = 23;
             this.room1.Text = "Room 1";
             this.room1.UseVisualStyleBackColor = true;
@@ -141,16 +146,19 @@
             // 
             this.listBox1.BackColor = System.Drawing.SystemColors.Menu;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(85, 143);
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(113, 176);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.Size = new System.Drawing.Size(159, 116);
             this.listBox1.TabIndex = 24;
             // 
             // room2
             // 
-            this.room2.Location = new System.Drawing.Point(230, 114);
+            this.room2.Location = new System.Drawing.Point(307, 140);
+            this.room2.Margin = new System.Windows.Forms.Padding(4);
             this.room2.Name = "room2";
-            this.room2.Size = new System.Drawing.Size(75, 23);
+            this.room2.Size = new System.Drawing.Size(100, 28);
             this.room2.TabIndex = 25;
             this.room2.Text = "Room 2";
             this.room2.UseVisualStyleBackColor = true;
@@ -159,9 +167,10 @@
             // 
             // room3
             // 
-            this.room3.Location = new System.Drawing.Point(358, 114);
+            this.room3.Location = new System.Drawing.Point(477, 140);
+            this.room3.Margin = new System.Windows.Forms.Padding(4);
             this.room3.Name = "room3";
-            this.room3.Size = new System.Drawing.Size(75, 23);
+            this.room3.Size = new System.Drawing.Size(100, 28);
             this.room3.TabIndex = 26;
             this.room3.Text = "Room 3";
             this.room3.UseVisualStyleBackColor = true;
@@ -172,25 +181,40 @@
             // 
             this.listBox2.BackColor = System.Drawing.SystemColors.Menu;
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(211, 143);
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(281, 176);
+            this.listBox2.Margin = new System.Windows.Forms.Padding(4);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.Size = new System.Drawing.Size(159, 116);
             this.listBox2.TabIndex = 27;
             // 
             // listBox3
             // 
             this.listBox3.BackColor = System.Drawing.SystemColors.Menu;
             this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(337, 143);
+            this.listBox3.ItemHeight = 16;
+            this.listBox3.Location = new System.Drawing.Point(449, 176);
+            this.listBox3.Margin = new System.Windows.Forms.Padding(4);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(120, 95);
+            this.listBox3.Size = new System.Drawing.Size(159, 116);
             this.listBox3.TabIndex = 28;
             // 
-            // Host
+            // DeserializeBtn
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.DeserializeBtn.Location = new System.Drawing.Point(619, 330);
+            this.DeserializeBtn.Name = "DeserializeBtn";
+            this.DeserializeBtn.Size = new System.Drawing.Size(116, 34);
+            this.DeserializeBtn.TabIndex = 29;
+            this.DeserializeBtn.Text = "Deserialize";
+            this.DeserializeBtn.UseVisualStyleBackColor = true;
+            this.DeserializeBtn.Click += new System.EventHandler(this.DeserializeBtn_Click);
+            // 
+            // Player
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.DeserializeBtn);
             this.Controls.Add(this.listBox3);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.room3);
@@ -205,8 +229,8 @@
             this.Controls.Add(this.ConnectionLabel);
             this.Controls.Add(this.DisconnectBtn);
             this.Controls.Add(this.ConnectBtn);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Host";
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "Player";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -229,6 +253,7 @@
         private System.Windows.Forms.Button room3;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.Button DeserializeBtn;
     }
 }
 
