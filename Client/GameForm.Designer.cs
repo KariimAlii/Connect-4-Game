@@ -56,7 +56,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel GamePanel;
+        public System.Windows.Forms.Panel GamePanel;
     }
 }
 

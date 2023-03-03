@@ -2,6 +2,9 @@
 using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Net.Sockets;
+using System.IO;
+using System.Threading;
 
 //=====================Game Fields & Constructor====================//
 namespace Client
@@ -18,14 +21,17 @@ namespace Client
         Brush Player1Brush;
         Brush Player2Brush;
         Brush PanelBrush;
-        int row_num;
-        int col_num;
+        public int row_num { get; set; }
+        public int col_num { get; set; }
         //================ Rectangle =================//
         Color Rect_Color;
         Rectangle Rect;
         Pen Rect_Pen;
         HatchBrush Rect_Brush;
-        public GameForm()
+
+
+        Player player;
+        public GameForm(Player player)
         {
             InitializeComponent();
             //================ Adjust Window =================//
@@ -47,9 +53,43 @@ namespace Client
             GamePanel.Height = Nrows * Size;
             GamePanel.BackColor = Color.Beige;
             GamePanel.Location = new Point(50, 50);
-            
+            this.player = player;
+            Thread thread = new Thread(async () =>
+            {
+                if (this.player != null)
+                {
+                    while (true)
+                    {
+                        char[] charArr = new char[100];
+                        try
+                        {
+                            int x = await this.player.reader.ReadAsync(charArr, 0, 100);
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+
+                        string str = new string(charArr);
+
+
+
+                        if (str.StartsWith("@"))
+                        {
+
+                            string full = str.Split('*')[0].Trim('@');
+                            string row = full.Split('/')[0];
+                            string col = full.Split('/')[1];
+                            //MessageBox.Show(row, col);
+                            adjustPlay(int.Parse(row), int.Parse(col));
+                        }
+                    }
+                }
+            });
+            thread.Start();
         }
 
-        
+
     }
 }

@@ -20,34 +20,9 @@ namespace Client
         {
             col_num = Nrows - 1;
             row_num = (target.X / Size);
-
-
-            while (col_num >= 0 && Board[col_num, row_num] > 0)
-            {
-                col_num--;
-            }
-
-            if (col_num >= 0 && Board[col_num, row_num] == 0)
-            {
-                switch (turn)
-                {
-                    case 1:
-                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
-                        Board[col_num, row_num] = 1;
-                        turn = 2;
-                        Horizontal_Vertical_Checker(col_num, row_num, 1);
-                        Diagonal_Checker(col_num, row_num, 1);
-                        break;
-                    case 2:
-                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
-                        Board[col_num, row_num] = 2;
-                        turn = 1;
-                        Horizontal_Vertical_Checker(col_num, row_num, 2);
-                        Diagonal_Checker(col_num, row_num, 2);
-                        break;
-                }
-            }
+            adjustPlay(row_num, col_num);
         }
+
         private void Horizontal_Vertical_Checker(int row, int col, int playerIdentifier)
         {
 
@@ -123,6 +98,43 @@ namespace Client
                 }
 
             }
+
+
+        }
+
+        public void adjustPlay(int row_num, int col_num)
+        {
+            while (col_num >= 0 && Board[col_num, row_num] > 0)
+            {
+                col_num--;
+            }
+
+            if (col_num >= 0 && Board[col_num, row_num] == 0)
+            {
+                switch (this.player.playerStatus)
+                {
+                    case Status.Host:
+                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        Board[col_num, row_num] = 1;
+                        turn = 2;
+                        Horizontal_Vertical_Checker(col_num, row_num, 1);
+                        Diagonal_Checker(col_num, row_num, 1);
+                        break;
+                    case Status.Guest:
+                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        Board[col_num, row_num] = 2;
+                        turn = 1;
+                        Horizontal_Vertical_Checker(col_num, row_num, 2);
+                        Diagonal_Checker(col_num, row_num, 2);
+                        break;
+                }
+            }
+
+
+
+
+
+
 
 
         }

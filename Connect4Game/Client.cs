@@ -17,6 +17,8 @@ namespace Connect4Game
         public TcpClient tcpClient;
         public string name { get; set; }
         public string room { get; set; }
+        public Room myRoom;
+        public Server server;
 
 
         NetworkStream stream;
@@ -79,6 +81,7 @@ namespace Connect4Game
 
                         string[] temp = str.Split(',');
                         name = temp[0];
+
                         //room = temp[1];
                         /*MessageBox.Show(str);*/
                     }
@@ -86,6 +89,8 @@ namespace Connect4Game
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
+
+
                     }
                     else if (str.Contains("Room2") && this.room == null)
                     {
@@ -94,6 +99,19 @@ namespace Connect4Game
                     else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
+                    }
+                    //////////////////////////////////////////////////////////////////////
+                    if (this.room == "1")
+                    {
+
+                        if (str.StartsWith("$"))
+                        {
+                            string full = str.Split('*')[0].Trim('$');
+                            string row = full.Split('/')[0];
+                            string col = full.Split('/')[1];
+                            this.server.room1.getHost().writer.Write($"@{row}/{col}*");
+                            this.server.room1.getGuest().writer.Write($"@{row}/{col}*");
+                        }
                     }
 
                 }

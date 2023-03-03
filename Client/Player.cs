@@ -8,15 +8,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Client
 {
     public enum Status
     {
+        None,
         Host,
         Guest,
         Watcher,
@@ -26,8 +29,8 @@ namespace Client
         TcpClient client;
 
         Stream stream;
-        StreamReader reader;
-        StreamWriter writer;
+        public StreamReader reader;
+        public StreamWriter writer;
 
         SynchronizationContext context;
 
@@ -36,7 +39,7 @@ namespace Client
         string room;
 
         GameForm game;
-        Status playerStatus;
+        public Status playerStatus;
         public Player()
         {
             InitializeComponent();
@@ -85,6 +88,7 @@ namespace Client
                     }
 
                     string str = new string(charArr);
+                    List(str);
                     if (str.Contains("Connected"))
                     {
                         context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
@@ -99,51 +103,132 @@ namespace Client
                         Disconnect();
                     }
                     //==================Receiveing The Broadcast From The Server To Update Room List==================//
-                    else if (str.Contains("R1") && !str.Contains("R2") && !str.Contains("R3"))
+                    else if (str.StartsWith("R1") && !str.Contains("R2") && !str.Contains("R3"))
                     {
-                        this.room = "1";
-                        string host = str.Split('1')[1].Split('|')[0];
-                        string guest = str.Split('1')[1].Split('|')[1];
-                        if (!listBox1.Items.Contains(host)) context.Post((object obj) => listBox1.Items.Add(host), null);
-                        if (!listBox1.Items.Contains(guest))
-                        {
-                            context.Post((object obj) => listBox1.Items.Add(guest), null);
 
+
+                        this.room = "1";
+                        string temp = str.Substring(3).Split('*')[0];
+                        if (str.StartsWith("R1H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
                         }
-                        if (this.name == host) this.playerStatus = Status.Host;
-                        if (this.name == guest) this.playerStatus = Status.Guest;
+                        if (str.StartsWith("R1G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
                     }
+                    //else if (str.StartsWith("Room1"))
+                    //{
+                    //    string temp1 = str.Substring(5).Split(',')[0];
+                    //    string temp2 = str.Substring(5).Split(',')[1];
+                    //    if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
+                    //    if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
+                    //}
                     else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
                     {
                         this.room = "2";
-                        string host = str.Split('2')[1].Split('|')[0];
-                        string guest = str.Split('2')[1].Split('|')[1];
-                        if (!listBox2.Items.Contains(host)) context.Post((object obj) => listBox2.Items.Add(host), null);
-                        if (!listBox2.Items.Contains(guest)) context.Post((object obj) => listBox2.Items.Add(guest), null);
-                        if (this.name == host) this.playerStatus = Status.Host;
-                        if (this.name == guest) this.playerStatus = Status.Guest;
+                        string temp = str.Substring(3).Split('*')[0];
+                        if (str.StartsWith("R2H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
+                        }
+                        if (str.StartsWith("R2G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
                     }
                     else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
                     {
                         this.room = "3";
-                        string host = str.Split('3')[1].Split('|')[0];
-                        string guest = str.Split('3')[1].Split('|')[1];
-                        if (!listBox3.Items.Contains(host)) context.Post((object obj) => listBox3.Items.Add(host), null);
-                        if (!listBox3.Items.Contains(guest)) context.Post((object obj) => listBox3.Items.Add(guest), null);
-                        if (this.name == host) this.playerStatus = Status.Host;
-                        if (this.name == guest) this.playerStatus = Status.Guest;
+                        string temp = str.Substring(3).Split('*')[0];
+                        if (str.StartsWith("R3H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
+                        }
+                        if (str.StartsWith("R3G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
+                    }
+
+
+
+
+                    else if (str.StartsWith("@"))
+                    {
+                        string full = str.Split('*')[0].Trim('@');
+                        string row = full.Split('/')[0];
+                        string col = full.Split('/')[1];
+                        MessageBox.Show(row, col);
                     }
                     ////////////////////////////////////////zzz/////////////////////
+                    //else if (str.StartsWith("Room1"))
+                    //{
+                    //    string room1 = str.Split('*')[0];
+                    //    string temp1 = room1.Substring(5).Split(',')[0];
+                    //    string temp2 = room1.Substring(5).Split(',')[1];
+                    //    if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
+                    //    if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
+                    //}
+                    /////////////////////////////////////////////////////
                     if (str.Contains("Open"))
                     {
-                        game = new GameForm();
-                        Application.Run(game);
+
+                        game = new GameForm(this);
+                        this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
+                        Thread thread = new Thread(() =>
+                        {
+                            Application.Run(game);
+                        });
+                        thread.Start();
                     }
+                    ////////////////////
+
+
                 }
 
             }
         }
+        public void List(string str)
+        {
+            if (str.StartsWith("Room1"))
+            {
+                string room1 = str.Split('*')[0];
+                string temp1 = room1.Substring(5).Split(',')[0];
+                string temp2 = room1.Substring(5).Split(',')[1];
+                if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
+                if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
+            }
+            if (str.StartsWith("Room2"))
+            {
+                string room2 = str.Split('*')[0];
+                string temp1 = room2.Substring(5).Split(',')[0];
+                string temp2 = room2.Substring(5).Split(',')[1];
+                if (!listBox2.Items.Contains(temp1)) { listBox2.Items.Add(temp1); }
+                if (!listBox2.Items.Contains(temp2)) { listBox2.Items.Add(temp2); }
+            }
+            if (str.StartsWith("Room3"))
+            {
+                string room3 = str.Split('*')[0];
+                string temp1 = room3.Substring(5).Split(',')[0];
+                string temp2 = room3.Substring(5).Split(',')[1];
+                if (!listBox3.Items.Contains(temp1)) { listBox3.Items.Add(temp1); }
+                if (!listBox3.Items.Contains(temp2)) { listBox3.Items.Add(temp2); }
+            }
+        }
+        private void Mouse(object sender, MouseEventArgs e)
+        {
+            writer.WriteLine($"${this.game.row_num}/{this.game.col_num}");
 
+
+        }
 
 
 

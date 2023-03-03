@@ -70,3 +70,15 @@ E:\C4\Connect-4-Game\Client\obj\Debug\Client.Properties.Resources.resources
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.Room.resources
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+F:\Coc4\Connect-4-Game\Client\bin\Debug\Client.exe.config
+F:\Coc4\Connect-4-Game\Client\bin\Debug\Client.exe
+F:\Coc4\Connect-4-Game\Client\bin\Debug\Client.pdb
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.Player.resources
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.Properties.Resources.resources
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.exe
+F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.pdb
