@@ -37,9 +37,19 @@ namespace Client
                     Board[row, i + 2] == playerIdentifier &&
                     Board[row, i + 3] == playerIdentifier)
                 {
-                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
 
+                    DialogBox dlg_Box = new DialogBox();
+                    //dlg_Box.LabelText = "kk";
+                    if (this.challenger == this.player.name) dlg_Box.setLabelText("You Won !");
+                    else dlg_Box.setLabelText("You Lose !");
+                    DialogResult dlg_Result = dlg_Box.ShowDialog();
+                    if (dlg_Result == DialogResult.OK)
+                    {
+                        MessageBox.Show("PlayAgain!");
+                    }
+                    //if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
+                    //else MessageBox.Show($"You Lose !");
+                    //this.GamePanel.Enabled = false;
                 }
 
             }
@@ -141,14 +151,6 @@ namespace Client
                         break;
                 }
             }
-
-
-
-
-
-
-
-
         }
 
 
