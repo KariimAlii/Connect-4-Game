@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,9 +62,18 @@ namespace Connect4Game
             {
                 if (stream != null)
                 {
-                    char[] charArr = new char[100];
-                    int x = reader.Read(charArr, 0, 100);
-                    string str = new string(charArr);
+                    string str = "";
+                    try
+                    {
+                        char[] charArr = new char[100];
+                        int x = reader.Read(charArr, 0, 100);
+                        str = new string(charArr);
+                    }
+                    catch
+                    {
+
+                    }
+
 
                     //string str = await reader.ReadLineAsync();
                     if (str.Contains("ClientStopped"))
@@ -89,20 +99,24 @@ namespace Connect4Game
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
+                        myRoom = this.server.room1;
 
 
                     }
                     else if (str.Contains("Room2") && this.room == null)
                     {
                         this.room = "2";
+                        myRoom = this.server.room1;
                     }
                     else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
+                        myRoom = this.server.room1;
                     }
                     //////////////////////////////////////////////////////////////////////
                     if (this.room == "1")
                     {
+
 
                         if (str.StartsWith("$"))
                         {
@@ -111,19 +125,47 @@ namespace Connect4Game
                             string playerName = str.Split('*')[1];
                             string row = full.Split('/')[0];
                             string col = full.Split('/')[1];
+
                             if (row.StartsWith("G"))
                             {
                                 row = row.Trim('G');
+                                myRoom.Board.Add(row + col + '/');
                                 this.server.room1.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.WriteLine($"H%{row}/{col}*{playerName}");
+                                        string combinedString = string.Join("", this.myRoom.Board);
+                                        this.writer.Write($"^^{combinedString}");
+                                    }
+
+                                }
+
+
+
                             }
                             else if (row.StartsWith("H"))
                             {
                                 row = row.Trim('H');
+                                myRoom.Board.Add(row + col + '/');
                                 this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.WriteLine($"G%{row}/{col}*{playerName}");
+                                    }
+
+                                }
+
                             }
+
+
 
                         }
                     }
+
 
                 }
 

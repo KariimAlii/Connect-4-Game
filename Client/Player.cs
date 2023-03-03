@@ -37,7 +37,7 @@ namespace Client
         public string name;
         string number;
         string room;
-
+        string[] played;
         GameForm game;
         public Status playerStatus;
         public Player()
@@ -119,6 +119,11 @@ namespace Client
                             string name = str.Split('G')[1].Split('*')[0];
                             this.playerStatus = Status.Guest;
                         }
+                        if (str.StartsWith("R1W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
+                        }
                     }
                     //else if (str.StartsWith("Room1"))
                     //{
@@ -158,7 +163,12 @@ namespace Client
                         }
                     }
 
+                    if (str.Contains("^^"))
+                    {
+                        str = str.Remove(0, 2);
+                        played = str.Split('/');
 
+                    }
 
 
                     //else if (str.StartsWith("@"))
@@ -178,10 +188,29 @@ namespace Client
                     //    if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
                     //}
                     /////////////////////////////////////////////////////
+
                     if (str.Contains("Open"))
                     {
                         if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
                         if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
+                        if (this.playerStatus == Status.Watcher)
+                        {
+                            game = new GameForm(this, 3);
+                            this.game.GamePanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.Mouse);
+
+                            foreach (string item in played)
+                            {
+                                if (item != "")
+                                {
+                                    string playedrow = item.Substring(0, 1);
+                                    string playedcol = item.Substring(1, 1);
+
+                                    game.adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
+                                }
+
+                            }
+
+                        }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         Thread thread = new Thread(() =>
                         {
@@ -203,8 +232,9 @@ namespace Client
                 string room1 = str.Split('*')[0];
                 string temp1 = room1.Substring(5).Split(',')[0];
                 string temp2 = room1.Substring(5).Split(',')[1];
-                if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
-                if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
+                if (!listBox1.Items.Contains(temp1)) { context.Post((object obj) => listBox1.Items.Add(temp1), null); }
+                if (!listBox1.Items.Contains(temp2)) { context.Post((object obj) => listBox1.Items.Add(temp2), null); }
+
             }
             if (str.StartsWith("Room2"))
             {
@@ -228,16 +258,16 @@ namespace Client
             if (this.playerStatus == Status.Host)
             {
                 writer.WriteLine($"$H{this.game.row_num}/{this.game.col_num}*{this.name}");
+                //context.Post((object obj) => game.GamePanel.Enabled = false, null);
                 game.GamePanel.Enabled = false;
                 game.DrawGamePanel();
-
             }
             else if (this.playerStatus == Status.Guest)
             {
                 writer.WriteLine($"$G{this.game.row_num}/{this.game.col_num}*{this.name}");
+                //context.Post((object obj) => game.GamePanel.Enabled = false, null);
                 game.GamePanel.Enabled = false;
                 game.DrawGamePanel();
-
             }
 
 

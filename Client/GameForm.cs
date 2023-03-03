@@ -46,6 +46,10 @@ namespace Client
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
             turn = turns;
+            //if (turn == 3)
+            //{
+            //    GamePanel.Enabled = false;
+            //}
             Player1Brush = new SolidBrush(Color.Pink);
             Player2Brush = new SolidBrush(Color.Yellow);
             PanelBrush = new SolidBrush(Color.Cyan);
@@ -76,7 +80,7 @@ namespace Client
 
 
 
-                        if (str.Contains("@"))
+                        if (str.StartsWith("@"))
                         {
                             string full = str.Split('*')[0].Trim('@');
                             challenger = str.Split('*')[1];
@@ -87,19 +91,36 @@ namespace Client
                                 GamePanel.Enabled = true;
                                 DrawGamePanel();
                                 adjustPlay(int.Parse(row), int.Parse(col), 1);
-
                             }
                             if (this.player.playerStatus == Status.Guest)
                             {
                                 GamePanel.Enabled = true;
                                 DrawGamePanel();
                                 adjustPlay(int.Parse(row), int.Parse(col), 2);
-
                             }
-
+                        }
+                        if (str.StartsWith("H%") && this.player.playerStatus == Status.Watcher)
+                        {
+                            string full = str.Split('*')[0].Trim('H').Trim('%');
+                            challenger = str.Split('*')[1];
+                            string row = full.Split('/')[0];
+                            string col = full.Split('/')[1];
+                            DrawGamePanel();
+                            adjustPlay(int.Parse(row), int.Parse(col), 1);
 
 
                         }
+                        if (str.StartsWith("G%") && this.player.playerStatus == Status.Watcher)
+                        {
+                            string full = str.Split('*')[0].Trim('G').Trim('%');
+                            challenger = str.Split('*')[1];
+                            string row = full.Split('/')[0];
+                            string col = full.Split('/')[1];
+                            DrawGamePanel();
+                            adjustPlay(int.Parse(row), int.Parse(col), 2);
+                        }
+
+
                     }
                 }
             });

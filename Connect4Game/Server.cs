@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -132,7 +133,6 @@ namespace Connect4Game
                         else if (room1.getGuest() == null && room1.getHost() != client)
                         {
                             room1.setGuest(ref client);
-
                             room1.getGuest().writer.Write($"R1G{client.name}*");
                             room1.getHost().writer.Write("Open");
                             room1.getGuest().writer.Write("Open");
@@ -140,7 +140,17 @@ namespace Connect4Game
                         }
                         else if (room1.getGuest() != client && room1.getHost() != client)
                         {
-                            room1.watcherList.Add(client);
+                            if (!room1.watcherList.Contains(client))
+                            {
+                                string combinedString = string.Join("", client.myRoom.Board);
+                                client.writer.Write($"^^{combinedString}");
+                                room1.watcherList.Add(client);
+                                room1.watcherList[0].writer.Write($"R1W{client.name}*");
+                                room1.watcherList[0].writer.Write("Open");
+
+
+                            }
+
                         }
 
                     }
@@ -214,10 +224,6 @@ namespace Connect4Game
                         clients.Remove(client);
                     }, null);
                 }
-
-
-
-
             });
 
         }

@@ -16,14 +16,13 @@ namespace Connect4Game
     {
         private Client host;
         private Client guest;
-        public string msg = "Message";
-
+        public List<string> Board;
         public List<Client> watcherList = new List<Client>();
         public string Room_number { set; get; }
         public Room()
         {
             InitializeComponent();
-
+            Board = new List<string>();
 
         }
         public Client getHost() { return this.host; }

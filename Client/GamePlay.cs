@@ -39,7 +39,6 @@ namespace Client
                 {
                     if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
                     else MessageBox.Show($"You Lose !");
-
                 }
 
             }
@@ -133,12 +132,12 @@ namespace Client
                         Diagonal_Checker(col_num, row_num, 1);
                         break;
                     case 2:
-
                         DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 2;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);
                         break;
+
                 }
             }
 
