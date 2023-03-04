@@ -14,7 +14,6 @@ D:\Web\My Github\Connect-4-Game\Client\bin\Debug\Client.exe
 D:\Web\My Github\Connect-4-Game\Client\bin\Debug\Client.pdb
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.csproj.AssemblyReference.cache
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
-D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Host.resources
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Properties.Resources.resources
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
@@ -56,7 +55,6 @@ F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.pdb
 F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.Room.resources
 F:\C# project\C4\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
-D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Room.resources
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.AssemblyReference.cache
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
 E:\C4\Connect-4-Game\Client\obj\Debug\Client.exe
@@ -82,3 +80,5 @@ F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
 F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.exe
 F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.pdb
+D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Player.resources
+D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.DialogBox.resources
