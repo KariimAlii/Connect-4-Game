@@ -32,7 +32,7 @@ namespace Client
         public StreamReader reader;
         public StreamWriter writer;
 
-        SynchronizationContext context;
+        public SynchronizationContext context;
 
         public string name;
         string number;
@@ -159,8 +159,8 @@ namespace Client
                     }
                     if (str.Contains("Open"))
                     {
-                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
-                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
+                        if (this.playerStatus == Status.Host) { MessageBox.Show("Hello from the Host"); game = new GameForm(this, 2); }
+                        if (this.playerStatus == Status.Guest) { MessageBox.Show("Hello from the Guest"); game = new GameForm(this, 1); }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         Thread thread = new Thread(() =>
                         {

@@ -63,8 +63,16 @@ namespace Connect4Game
                 if (stream != null)
                 {
                     char[] charArr = new char[100];
-                    int x = reader.Read(charArr, 0, 100);
-                    string str = new string(charArr);
+                    string str = "";
+                    try
+                    {
+                        int x = reader.Read(charArr, 0, 100);
+                        str = new string(charArr);
+                    }
+                    catch
+                    {
+
+                    }
 
                     //string str = await reader.ReadLineAsync();
                     if (str.Contains("ClientStopped"))
@@ -90,16 +98,17 @@ namespace Connect4Game
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
-
-
+                        this.myRoom = this.server.room1;
                     }
                     else if (str.Contains("Room2") && this.room == null)
                     {
                         this.room = "2";
+                        this.myRoom = this.server.room2;
                     }
                     else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
+                        this.myRoom = this.server.room2;
                     }
                     //////////////////////////////////////////////////////////////////////
                     if (this.room == "1")
@@ -126,34 +135,34 @@ namespace Connect4Game
                         }
                         if (str.StartsWith("PlayAgain"))
                         {
-                            //string status = str.Split('-')[1];
-                            //switch (status)
-                            //{
-                            //    case "Host":
-                            //        this.myRoom.setHost(ref this);
-                            //        break;
-                            //    case "Guest":
 
-                            //        break;
-                            //}
                         }
                         if (str.StartsWith("Exit"))
                         {
-                            //string status = str.Split('-')[1];
-                            //switch (status)
-                            //{
-                            //    case "Host":
-                            //        this.myRoom.setHost(null);
-                            //        break;
-                            //    case "Guest":
-                            //        this.myRoom.setGuest(null);
-                            //        break;
-                            //}
-
-                            this.tcpClient.Close();
-                            this.tcpClient.Dispose();
+                            string status = str.Split('-')[1];
+                            if (status.Contains("Host"))
+                            {
+                                this.server.needHost1 = true;
+                                this.server.needGuest1 = true;
+                                this.server.clients.Remove(this.myRoom.getGuest());
+                                this.server.clients.Remove(this);
+                                this.myRoom.getGuest().writer.Write("CloseYourApp");
+                                Thread.Sleep(2000);
+                                this.myRoom.getGuest().tcpClient.Close();
+                                MessageBox.Show("Set Host to null");
+                            }
+                            else if (status.Contains("Guest"))
+                            {
+                                this.server.needGuest1 = true;
+                                this.server.clients.Remove(this);
+                                MessageBox.Show("Set Guest to null");
+                            }
                             isConnected = false;
+                            this.tcpClient.Close();
+                            //this.tcpClient.Dispose();
+
                         }
+
                     }
 
                 }
@@ -164,3 +173,17 @@ namespace Connect4Game
 
     }
 }
+
+
+//switch (status)
+//{
+//    case "Host":
+
+//        break;
+//    case "Guest":
+
+//        break;
+//    default:
+
+//        break;
+//}

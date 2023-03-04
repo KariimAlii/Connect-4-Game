@@ -144,24 +144,15 @@ namespace Client
             if (dlg_Result == DialogResult.OK)
             {
                 MessageBox.Show("PlayAgain!");
-                if (this.player.playerStatus == Status.Host)
-                {
-                    Board = new int[Nrows, Ncols];
-                    DrawGamePanel();
-                    //this.player.myRo
-                    this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
-                }
-                else // GUEST
-                {
-                    Board = new int[Nrows, Ncols];
-                    DrawGamePanel();
-                }
+                Board = new int[Nrows, Ncols];
+                DrawGamePanel();
+                this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
+                this.GamePanel.Enabled = true;
+
             }
             else
             {
                 this.player.writer.Write("Exit-" + this.player.playerStatus.ToString());
-                this.player.client.Close();
-                this.player.Dispose();
                 this.Close();
             }
 
