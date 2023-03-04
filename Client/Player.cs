@@ -26,13 +26,13 @@ namespace Client
     }
     public partial class Player : Form
     {
-        TcpClient client;
+        public TcpClient client;
 
-        Stream stream;
+        public Stream stream;
         public StreamReader reader;
         public StreamWriter writer;
 
-        SynchronizationContext context;
+        public SynchronizationContext context;
 
         public string name;
         string number;
@@ -157,31 +157,10 @@ namespace Client
                             this.playerStatus = Status.Guest;
                         }
                     }
-
-
-
-
-                    //else if (str.StartsWith("@"))
-                    //{
-                    //    string full = str.Split('*')[0].Trim('@');
-                    //    string row = full.Split('/')[0];
-                    //    string col = full.Split('/')[1];
-
-                    //}
-                    ////////////////////////////////////////zzz/////////////////////
-                    //else if (str.StartsWith("Room1"))
-                    //{
-                    //    string room1 = str.Split('*')[0];
-                    //    string temp1 = room1.Substring(5).Split(',')[0];
-                    //    string temp2 = room1.Substring(5).Split(',')[1];
-                    //    if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
-                    //    if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
-                    //}
-                    /////////////////////////////////////////////////////
                     if (str.Contains("Open"))
                     {
-                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
-                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
+                        if (this.playerStatus == Status.Host) { MessageBox.Show("Hello from the Host"); game = new GameForm(this, 2); }
+                        if (this.playerStatus == Status.Guest) { MessageBox.Show("Hello from the Guest"); game = new GameForm(this, 1); }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         Thread thread = new Thread(() =>
                         {
@@ -189,7 +168,6 @@ namespace Client
                         });
                         thread.Start();
                     }
-                    ////////////////////
 
 
                 }
@@ -242,9 +220,6 @@ namespace Client
 
 
         }
-
-
-
         private async void Disconnect()
         {
             context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);

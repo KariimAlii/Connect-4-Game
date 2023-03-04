@@ -17,15 +17,16 @@ namespace Connect4Game
         public TcpClient tcpClient;
         public string name { get; set; }
         public string room { get; set; }
-        public Room myRoom;
-        public Server server;
 
+        public Room myRoom;
+
+        public Server server;
 
         NetworkStream stream;
         public StreamWriter writer { get; }
         public StreamReader reader { get; }
         Thread streamingThread;
-
+        bool isConnected = true;
         public BackgroundWorker backgroundWorker2;
 
         public Client(TcpClient tcpClient)
@@ -57,13 +58,21 @@ namespace Connect4Game
 
         private void ReceiveMessages()
         {
-            while (true)
+            while (isConnected)
             {
                 if (stream != null)
                 {
                     char[] charArr = new char[100];
-                    int x = reader.Read(charArr, 0, 100);
-                    string str = new string(charArr);
+                    string str = "";
+                    try
+                    {
+                        int x = reader.Read(charArr, 0, 100);
+                        str = new string(charArr);
+                    }
+                    catch
+                    {
+
+                    }
 
                     //string str = await reader.ReadLineAsync();
                     if (str.Contains("ClientStopped"))
@@ -89,16 +98,17 @@ namespace Connect4Game
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
-
-
+                        this.myRoom = this.server.room1;
                     }
                     else if (str.Contains("Room2") && this.room == null)
                     {
                         this.room = "2";
+                        this.myRoom = this.server.room2;
                     }
                     else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
+                        this.myRoom = this.server.room2;
                     }
                     //////////////////////////////////////////////////////////////////////
                     if (this.room == "1")
@@ -123,6 +133,36 @@ namespace Connect4Game
                             }
 
                         }
+                        if (str.StartsWith("PlayAgain"))
+                        {
+
+                        }
+                        if (str.StartsWith("Exit"))
+                        {
+                            string status = str.Split('-')[1];
+                            if (status.Contains("Host"))
+                            {
+                                this.server.needHost1 = true;
+                                this.server.needGuest1 = true;
+                                this.server.clients.Remove(this.myRoom.getGuest());
+                                this.server.clients.Remove(this);
+                                this.myRoom.getGuest().writer.Write("CloseYourApp");
+                                Thread.Sleep(2000);
+                                this.myRoom.getGuest().tcpClient.Close();
+                                MessageBox.Show("Set Host to null");
+                            }
+                            else if (status.Contains("Guest"))
+                            {
+                                this.server.needGuest1 = true;
+                                this.server.clients.Remove(this);
+                                MessageBox.Show("Set Guest to null");
+                            }
+                            isConnected = false;
+                            this.tcpClient.Close();
+                            //this.tcpClient.Dispose();
+
+                        }
+
                     }
 
                 }
@@ -133,3 +173,17 @@ namespace Connect4Game
 
     }
 }
+
+
+//switch (status)
+//{
+//    case "Host":
+
+//        break;
+//    case "Guest":
+
+//        break;
+//    default:
+
+//        break;
+//}

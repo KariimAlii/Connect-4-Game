@@ -30,11 +30,11 @@ namespace Client
         Pen Rect_Pen;
         HatchBrush Rect_Brush;
 
-
         Player player;
         public GameForm(Player player, int turns)
         {
             InitializeComponent();
+
             //================ Adjust Window =================//
             this.Width = Screen.PrimaryScreen.Bounds.Width;
             this.Height = Screen.PrimaryScreen.Bounds.Height;
@@ -96,9 +96,11 @@ namespace Client
                                 adjustPlay(int.Parse(row), int.Parse(col), 2);
 
                             }
+                        }
 
-
-
+                        if (str.StartsWith("CloseYourApp"))
+                        {
+                            this.Close();
                         }
                     }
                 }

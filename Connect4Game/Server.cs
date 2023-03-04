@@ -19,13 +19,22 @@ namespace Connect4Game
     public partial class Server : Form
     {
         TcpListener listener;
-        List<Client> clients;
+        public List<Client> clients;
         SynchronizationContext context;
         Thread receivethread;
         public Room room1 { get; set; }
         public Room room2 { get; set; }
         public Room room3 { get; set; }
 
+
+        public bool needHost1 = true;
+        public bool needHost2 = true;
+        public bool needHost3 = true;
+
+
+        public bool needGuest1 = true;
+        public bool needGuest2 = true;
+        public bool needGuest3 = true;
 
 
         public Server()
@@ -123,24 +132,28 @@ namespace Connect4Game
                     ////////////////assign host and guest to client depending on their room;/////////////// 
                     if (client.room == "1")
                     {
-                        if (room1.getHost() == null)
+                        if (needHost1) //room1.getHost() == null
                         {
                             room1.setHost(ref client);
                             client.writer.Write($"R1H{client.name}*");
-
+                            MessageBox.Show("Im the HOST");
+                            needHost1 = false;
                         }
-                        else if (room1.getGuest() == null && room1.getHost() != client)
+                        else if (needGuest1 && room1.getHost() != client) //room1.getGuest() == null && room1.getHost() != client
                         {
                             room1.setGuest(ref client);
-
+                            MessageBox.Show("Im the GUEST");
                             room1.getGuest().writer.Write($"R1G{client.name}*");
                             room1.getHost().writer.Write("Open");
                             room1.getGuest().writer.Write("Open");
+                            needGuest1 = false;
 
                         }
-                        else if (room1.getGuest() != client && room1.getHost() != client)
+                        else if (needGuest1 && room1.getHost() != client) //room1.getGuest() != client  && room1.getHost() != client
                         {
                             room1.watcherList.Add(client);
+                            MessageBox.Show("Im a watcher");
+                            needGuest1 = false;
                         }
 
                     }
@@ -172,7 +185,6 @@ namespace Connect4Game
                         {
                             room3.setHost(ref client);
                             client.writer.Write($"R3H{client.name}*");
-
                         }
                         else if (room3.getGuest() == null && room3.getHost() != client)
                         {
@@ -188,7 +200,7 @@ namespace Connect4Game
                         }
 
                     }
-                    ////////broadcasting to client to update their lists//////////
+                    //========Broadcasting to All Players to update their Room Lists========//
 
                     if (room1.getHost() != null && room1.getGuest() != null)
                     {
@@ -212,6 +224,7 @@ namespace Connect4Game
                     {
                         clients_list.Items.Remove(client.name);
                         clients.Remove(client);
+                        client.tcpClient.Dispose();
                     }, null);
                 }
 
