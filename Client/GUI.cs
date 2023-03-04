@@ -57,6 +57,7 @@ namespace Client
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawGamePanel();
+            ReDraw();
         }
 
         private void GameForm_Resize(object sender, EventArgs e)

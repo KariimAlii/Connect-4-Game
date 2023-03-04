@@ -38,7 +38,12 @@ namespace Client
                     Board[row, i + 3] == playerIdentifier)
                 {
                     if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
+                    else if (this.player.playerStatus != Status.Watcher)
+                        MessageBox.Show($"You Lose !");
+                    else
+                    {
+                        MessageBox.Show("Game End");
+                    }
                 }
 
             }
@@ -52,8 +57,12 @@ namespace Client
                 {
 
                     if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
-                    this.GamePanel.Enabled = false;
+                    else if (this.player.playerStatus != Status.Watcher)
+                        MessageBox.Show($"You Lose !");
+                    else
+                    {
+                        MessageBox.Show("Game End");
+                    }
                 }
 
             }
@@ -80,8 +89,12 @@ namespace Client
                 {
 
                     if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
-                    this.GamePanel.Enabled = false;
+                    else if (this.player.playerStatus != Status.Watcher)
+                        MessageBox.Show($"You Lose !");
+                    else
+                    {
+                        MessageBox.Show("Game End");
+                    }
                 }
 
             }
@@ -102,7 +115,12 @@ namespace Client
                 {
 
                     if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
+                    else if (this.player.playerStatus != Status.Watcher)
+                        MessageBox.Show($"You Lose !");
+                    else
+                    {
+                        MessageBox.Show("Game End");
+                    }
                     this.GamePanel.Enabled = false;
                 }
 

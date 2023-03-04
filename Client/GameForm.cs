@@ -29,9 +29,9 @@ namespace Client
         Rectangle Rect;
         Pen Rect_Pen;
         HatchBrush Rect_Brush;
-
-
         Player player;
+        //=====================Redrawing==============//
+        Boolean drawn;
         public GameForm(Player player, int turns)
         {
             InitializeComponent();
@@ -59,6 +59,7 @@ namespace Client
             GamePanel.BackColor = Color.Beige;
             GamePanel.Location = new Point(50, 50);
             this.player = player;
+            drawn = true;
             Thread thread = new Thread(async () =>
             {
                 if (this.player != null)
@@ -124,9 +125,48 @@ namespace Client
                     }
                 }
             });
+
             thread.Start();
+
         }
 
+        public void ReDraw()
+        {
+            if (this.player.playerStatus == Status.Watcher && drawn)
+            {
+                drawn = false;
+                int disk = 2;
 
+                foreach (string item in this.player.played)
+                {
+                    if (item != "")
+                    {
+
+                        string playedrow = item.Substring(0, 1);
+                        string playedcol = item.Substring(1, 1);
+                        if (playedrow != "\0" && playedcol != "\0")
+                        {
+                            if (disk % 2 == 0)
+                            {
+                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 1);
+
+                            }
+                            else
+                            {
+                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
+
+                            }
+                            disk++;
+
+
+
+                        }
+                    }
+
+                }
+                DrawGamePanel();
+            }
+        }
     }
+
 }

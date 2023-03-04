@@ -106,12 +106,12 @@ namespace Connect4Game
                     else if (str.Contains("Room2") && this.room == null)
                     {
                         this.room = "2";
-                        myRoom = this.server.room1;
+                        myRoom = this.server.room2;
                     }
                     else if (str.Contains("Room3") && this.room == null)
                     {
                         this.room = "3";
-                        myRoom = this.server.room1;
+                        myRoom = this.server.room3;
                     }
                     //////////////////////////////////////////////////////////////////////
                     if (this.room == "1")

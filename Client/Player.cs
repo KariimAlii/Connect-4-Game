@@ -37,7 +37,7 @@ namespace Client
         public string name;
         string number;
         string room;
-        string[] played;
+        public string[] played;
         GameForm game;
         public Status playerStatus;
         public Player()
@@ -198,23 +198,19 @@ namespace Client
                             game = new GameForm(this, 3);
                             this.game.GamePanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.Mouse);
 
-                            foreach (string item in played)
-                            {
-                                if (item != "")
-                                {
-                                    string playedrow = item.Substring(0, 1);
-                                    string playedcol = item.Substring(1, 1);
 
-                                    game.adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
-                                }
-
-                            }
 
                         }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         Thread thread = new Thread(() =>
                         {
                             Application.Run(game);
+
+
+
+
+
+
                         });
                         thread.Start();
                     }
@@ -302,6 +298,9 @@ namespace Client
         {
             writer.WriteAsync("Room3");
         }
+
+
+
 
 
     }
