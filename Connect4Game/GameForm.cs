@@ -41,7 +41,7 @@ namespace Connect4Game
             turn = 1;
             Player1Brush = new SolidBrush(Color.Pink);
             Player2Brush = new SolidBrush(Color.Yellow);
-            PanelBrush = new SolidBrush(Color.Cyan);
+            PanelBrush = new SolidBrush(Color.Blue);
             //================ Panel =================//
             GamePanel.Width = Ncols * Size;
             GamePanel.Height = Nrows * Size;
@@ -49,6 +49,64 @@ namespace Connect4Game
             GamePanel.Location = new Point(50, 50);
         }
 
+        private void smallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Nrows = 4;
+            Ncols=5;
+            for (int i = 0; i < Nrows; i++)
+            {
+                for (int j = 0; j < Ncols; j++)
+                {
+                    DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                    points[i, j] = new Point(j * Size, i * Size);
+                }
+            }
+         
+            GamePanel.Width = Ncols * Size;
+            GamePanel.Height = Nrows * Size;
+            Invalidate();   
 
+        }
+
+        private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Nrows = 5;
+            Ncols = 6;
+           
+            for (int i = 0; i < Nrows; i++)
+            {
+                for (int j = 0; j < Ncols; j++)
+                {
+                    DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                    points[i, j] = new Point(j * Size, i * Size);
+                }
+            }
+
+            GamePanel.Width = Ncols * Size;
+            GamePanel.Height = Nrows * Size;
+            Invalidate();
+
+
+        }
+
+        private void largePanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Nrows = 6;
+            Ncols = 7;
+         
+            for (int i = 0; i < Nrows; i++)
+            {
+                for (int j = 0; j < Ncols; j++)
+                {
+                    DrawCircle(PanelBrush, j * Size, i * Size, Size);
+                    points[i, j] = new Point(j * Size, i * Size);
+                }
+            }
+
+            GamePanel.Width = Ncols * Size;
+            GamePanel.Height = Nrows * Size;
+            Invalidate();
+
+        }
     }
 }

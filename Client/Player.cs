@@ -45,25 +45,35 @@ namespace Client
 
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
-            client = new TcpClient("127.0.0.1", 5000);
-            stream = client.GetStream();
+            //Validation
+            if(namebox.Text=="" || numberbox.Text=="")
+            {
+                MessageBox.Show("Please Enter Your name and Number","Invalid Input");
+            }
+            else
+            {
+                client = new TcpClient("127.0.0.1", 10000);
+                stream = client.GetStream();
 
-            writer = new StreamWriter(stream);
-            writer.AutoFlush = true;
-            name = namebox.Text;
-            number = numberbox.Text;
-            writer.Write($"{name},{number}");
+                writer = new StreamWriter(stream);
+                writer.AutoFlush = true;
+                name = namebox.Text;
+                number = numberbox.Text;
+                writer.Write($"{name},{number}");
 
-            context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
-            context.Post((object obj) => StatusBox.Text = "Connected..", null);
+                context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+                context.Post((object obj) => StatusBox.Text = "Connected..", null);
 
 
-            reader = new StreamReader(stream);
+                reader = new StreamReader(stream);
 
-            Task.Run(() => ReceiveMessages());
-            room1.Visible = true;
-            room2.Visible = true;
-            room3.Visible = true;
+                Task.Run(() => ReceiveMessages());
+                room1.Visible = true;
+                room2.Visible = true;
+                room3.Visible = true;
+
+            }
+           
 
         }
         private async void ReceiveMessages()
@@ -176,6 +186,6 @@ namespace Client
             writer.WriteAsync("Room3");
         }
 
-
+     
     }
 }

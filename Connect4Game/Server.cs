@@ -33,7 +33,7 @@ namespace Connect4Game
             InitializeComponent();
 
             IPAddress ip = new IPAddress(new byte[] { 127, 0, 0, 1 });
-            listener = new TcpListener(ip, 5000);
+            listener = new TcpListener(ip, 10000);
             context = SynchronizationContext.Current;
             clients = new List<Client>();
             room1 = new Room();

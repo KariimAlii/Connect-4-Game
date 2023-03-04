@@ -73,3 +73,16 @@ E:\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource
 E:\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 E:\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
 E:\C4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe.config
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Room.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
