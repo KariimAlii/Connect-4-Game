@@ -37,19 +37,7 @@ namespace Client
                     Board[row, i + 2] == playerIdentifier &&
                     Board[row, i + 3] == playerIdentifier)
                 {
-
-                    DialogBox dlg_Box = new DialogBox();
-                    //dlg_Box.LabelText = "kk";
-                    if (this.challenger == this.player.name) dlg_Box.setLabelText("You Won !");
-                    else dlg_Box.setLabelText("You Lose !");
-                    DialogResult dlg_Result = dlg_Box.ShowDialog();
-                    if (dlg_Result == DialogResult.OK)
-                    {
-                        MessageBox.Show("PlayAgain!");
-                    }
-                    //if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    //else MessageBox.Show($"You Lose !");
-                    //this.GamePanel.Enabled = false;
+                    WinOrLoseResponce();
                 }
 
             }
@@ -62,9 +50,7 @@ namespace Client
                     Board[i + 3, col] == playerIdentifier)
                 {
 
-                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
-                    this.GamePanel.Enabled = false;
+                    WinOrLoseResponce();
                 }
 
             }
@@ -90,9 +76,7 @@ namespace Client
                     Board[i + 3, j - 3] == playerIdentifier)
                 {
 
-                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
-                    this.GamePanel.Enabled = false;
+                    WinOrLoseResponce();
                 }
 
             }
@@ -112,9 +96,7 @@ namespace Client
                     Board[i + 3, j + 3] == playerIdentifier)
                 {
 
-                    if (this.challenger == this.player.name) MessageBox.Show($"You Won !");
-                    else MessageBox.Show($"You Lose !");
-                    this.GamePanel.Enabled = false;
+                    WinOrLoseResponce();
                 }
 
             }
@@ -152,7 +134,38 @@ namespace Client
                 }
             }
         }
+        public void WinOrLoseResponce()
+        {
+            this.GamePanel.Enabled = false;
+            DialogBox dlg_Box = new DialogBox();
+            if (this.challenger == this.player.name) dlg_Box.setLabelText("You Won !");
+            else dlg_Box.setLabelText("You Lose !");
+            DialogResult dlg_Result = dlg_Box.ShowDialog();
+            if (dlg_Result == DialogResult.OK)
+            {
+                MessageBox.Show("PlayAgain!");
+                if (this.player.playerStatus == Status.Host)
+                {
+                    Board = new int[Nrows, Ncols];
+                    DrawGamePanel();
+                    //this.player.myRo
+                    this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
+                }
+                else // GUEST
+                {
+                    Board = new int[Nrows, Ncols];
+                    DrawGamePanel();
+                }
+            }
+            else
+            {
+                this.player.writer.Write("Exit-" + this.player.playerStatus.ToString());
+                this.player.client.Close();
+                this.player.Dispose();
+                this.Close();
+            }
 
+        }
 
     }
 }

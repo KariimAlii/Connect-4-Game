@@ -188,7 +188,7 @@ namespace Connect4Game
                         }
 
                     }
-                    ////////broadcasting to client to update their lists//////////
+                    //========Broadcasting to All Players to update their Room Lists========//
 
                     if (room1.getHost() != null && room1.getGuest() != null)
                     {
@@ -212,6 +212,7 @@ namespace Connect4Game
                     {
                         clients_list.Items.Remove(client.name);
                         clients.Remove(client);
+                        client.tcpClient.Dispose();
                     }, null);
                 }
 

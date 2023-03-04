@@ -17,15 +17,16 @@ namespace Connect4Game
         public TcpClient tcpClient;
         public string name { get; set; }
         public string room { get; set; }
-        public Room myRoom;
-        public Server server;
 
+        public Room myRoom;
+
+        public Server server;
 
         NetworkStream stream;
         public StreamWriter writer { get; }
         public StreamReader reader { get; }
         Thread streamingThread;
-
+        bool isConnected = true;
         public BackgroundWorker backgroundWorker2;
 
         public Client(TcpClient tcpClient)
@@ -57,7 +58,7 @@ namespace Connect4Game
 
         private void ReceiveMessages()
         {
-            while (true)
+            while (isConnected)
             {
                 if (stream != null)
                 {
@@ -122,6 +123,36 @@ namespace Connect4Game
                                 this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
                             }
 
+                        }
+                        if (str.StartsWith("PlayAgain"))
+                        {
+                            //string status = str.Split('-')[1];
+                            //switch (status)
+                            //{
+                            //    case "Host":
+                            //        this.myRoom.setHost(ref this);
+                            //        break;
+                            //    case "Guest":
+
+                            //        break;
+                            //}
+                        }
+                        if (str.StartsWith("Exit"))
+                        {
+                            //string status = str.Split('-')[1];
+                            //switch (status)
+                            //{
+                            //    case "Host":
+                            //        this.myRoom.setHost(null);
+                            //        break;
+                            //    case "Guest":
+                            //        this.myRoom.setGuest(null);
+                            //        break;
+                            //}
+
+                            this.tcpClient.Close();
+                            this.tcpClient.Dispose();
+                            isConnected = false;
                         }
                     }
 

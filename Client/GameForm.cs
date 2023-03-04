@@ -96,9 +96,6 @@ namespace Client
                                 adjustPlay(int.Parse(row), int.Parse(col), 2);
 
                             }
-
-
-
                         }
                     }
                 }
