@@ -86,3 +86,16 @@ F:\Coc4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResour
 F:\Coc4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 F:\Coc4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
 F:\Coc4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb
+F:\C#4Karim\Karim-Gameplay\Connect4Game\bin\Debug\Connect4Game.exe.config
+F:\C#4Karim\Karim-Gameplay\Connect4Game\bin\Debug\Connect4Game.exe
+F:\C#4Karim\Karim-Gameplay\Connect4Game\bin\Debug\Connect4Game.pdb
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.Room.resources
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.Server.resources
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.exe
+F:\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.pdb

@@ -82,3 +82,16 @@ F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.exe
 F:\Coc4\Connect-4-Game\Client\obj\Debug\Client.pdb
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.Player.resources
 D:\Web\My Github\Connect-4-Game\Client\obj\Debug\Client.DialogBox.resources
+F:\C#4Karim\Karim-Gameplay\Client\bin\Debug\Client.exe.config
+F:\C#4Karim\Karim-Gameplay\Client\bin\Debug\Client.exe
+F:\C#4Karim\Karim-Gameplay\Client\bin\Debug\Client.pdb
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.DialogBox.resources
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.GameForm.resources
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.Player.resources
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.Properties.Resources.resources
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.GenerateResource.cache
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.exe
+F:\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.pdb

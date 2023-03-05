@@ -78,6 +78,14 @@ namespace Connect4Game
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
+                        if (myRoom.getHost() == this)
+                        {
+                            this.server.needHost1 = true;
+                            myRoom.setHost(null);
+                            myRoom.setGuest(null);
+                        }
+                        if (myRoom.getGuest() == this) { this.server.needGuest1 = true; myRoom.setGuest(null); }
+
                         this.tcpClient.Dispose();
                         streamingThread.Abort();
                         //this.tcpClient.Close();
@@ -124,12 +132,32 @@ namespace Connect4Game
                             if (row.StartsWith("G"))
                             {
                                 row = row.Trim('G');
+                                myRoom.Board.Add(row + col + '/');
                                 this.server.room1.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.WriteLine($"H%{row}/{col}*{playerName}");
+                                        string combinedString = string.Join("", this.myRoom.Board);
+                                        this.writer.Write($"^^{combinedString}");
+                                    }
+
+                                }
                             }
                             else if (row.StartsWith("H"))
                             {
                                 row = row.Trim('H');
+                                myRoom.Board.Add(row + col + '/');
                                 this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.WriteLine($"G%{row}/{col}*{playerName}");
+                                    }
+
+                                }
                             }
 
                         }
@@ -142,19 +170,21 @@ namespace Connect4Game
                             string status = str.Split('-')[1];
                             if (status.Contains("Host"))
                             {
-                                this.server.needHost1 = true;
-                                this.server.needGuest1 = true;
+
                                 this.server.clients.Remove(this.myRoom.getGuest());
                                 this.server.clients.Remove(this);
                                 this.myRoom.getGuest().writer.Write("CloseYourApp");
-                                Thread.Sleep(2000);
+                                Thread.Sleep(500);
                                 this.myRoom.getGuest().tcpClient.Close();
-                                MessageBox.Show("Set Host to null");
+                                this.myRoom.getGuest().isConnected = false;
+                                this.myRoom.setHost(null);
+                                this.myRoom.setGuest(null);
+
                             }
                             else if (status.Contains("Guest"))
                             {
-                                this.server.needGuest1 = true;
                                 this.server.clients.Remove(this);
+                                this.myRoom.setGuest(null);
                                 MessageBox.Show("Set Guest to null");
                             }
                             isConnected = false;

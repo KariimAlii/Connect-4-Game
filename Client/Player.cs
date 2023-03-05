@@ -33,11 +33,11 @@ namespace Client
         public StreamWriter writer;
 
         public SynchronizationContext context;
-
+        public Thread thread;
         public string name;
         string number;
         string room;
-
+        public string[] played;
         GameForm game;
         public Status playerStatus;
         public Player()
@@ -69,7 +69,7 @@ namespace Client
             room3.Visible = true;
 
         }
-        private async void ReceiveMessages()
+        private void ReceiveMessages()
         {
             while (true)
             {
@@ -79,15 +79,15 @@ namespace Client
                     char[] charArr = new char[100];
                     try
                     {
-                        int x = await reader.ReadAsync(charArr, 0, 100);
+                        int x = reader.Read(charArr, 0, 100);
                     }
                     catch (Exception)
                     {
 
-
                     }
 
                     string str = new string(charArr);
+                    //MessageBox.Show(str);
                     List(str);
                     if (str.Contains("Connected"))
                     {
@@ -118,6 +118,11 @@ namespace Client
                         {
                             string name = str.Split('G')[1].Split('*')[0];
                             this.playerStatus = Status.Guest;
+                        }
+                        if (str.StartsWith("R1W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
                         }
                     }
                     //else if (str.StartsWith("Room1"))
@@ -157,12 +162,24 @@ namespace Client
                             this.playerStatus = Status.Guest;
                         }
                     }
+                    if (str.Contains("^^"))
+                    {
+                        str = str.Remove(0, 2);
+                        played = str.Split('/');
+
+                    }
                     if (str.Contains("Open"))
                     {
-                        if (this.playerStatus == Status.Host) { MessageBox.Show("Hello from the Host"); game = new GameForm(this, 2); }
-                        if (this.playerStatus == Status.Guest) { MessageBox.Show("Hello from the Guest"); game = new GameForm(this, 1); }
+                        MessageBox.Show(str);
+                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
+                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
+                        if (this.playerStatus == Status.Watcher)
+                        {
+                            game = new GameForm(this, 3);
+                            this.game.GamePanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.Mouse);
+                        }
                         this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
-                        Thread thread = new Thread(() =>
+                        thread = new Thread(() =>
                         {
                             Application.Run(game);
                         });

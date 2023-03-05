@@ -145,15 +145,15 @@ namespace Client
             {
                 MessageBox.Show("PlayAgain!");
                 Board = new int[Nrows, Ncols];
-                DrawGamePanel();
                 this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
                 this.GamePanel.Enabled = true;
-
+                DrawGamePanel();
             }
             else
             {
                 this.player.writer.Write("Exit-" + this.player.playerStatus.ToString());
                 this.Close();
+
             }
 
         }
