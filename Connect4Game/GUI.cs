@@ -9,40 +9,60 @@ namespace Connect4Game
 {
     public partial class GameForm : Form
     {
-        //public void DrawRectangle(Color color, int penSize, int x, int y, int width, int height)
-        //{
-        //    Rect_Color = color;
-        //    Rect_Pen = new Pen(color, penSize);
-        //    Rect = new Rectangle(x, y, width, height);
-        //    Graphics g = this.CreateGraphics();
-        //    g.DrawRectangle(Rect_Pen, Rect);
-        //}
-        //public void DrawFilledRectangle(Color color, int penSize, int x, int y, int width, int height)
-        //{
-        //    Rect_Color = color;
-        //    Rect_Brush = new HatchBrush(HatchStyle.BackwardDiagonal, color, Color.Empty);
-        //    Rect = new Rectangle(x, y, width, height);
-        //    Graphics g = this.CreateGraphics();
-        //    g.FillRectangle(Rect_Brush, Rect);
-        //}
+      
         public void DrawCircle(Brush playerBrush, int x, int y, int size)
         {
             Graphics g = GamePanel.CreateGraphics();
+              
             g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
+        }
+        public void DrawPlay1(Brush playerBrush, int x, int y, int size)
+        {
+            Graphics g = GamePanel.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13;
+            ForeColor1 =Color.White;
+            BackColor1=Color.Red;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            playerBrush = new HatchBrush(circleStyle,ForeColor1,BackColor1);
+            g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
+            playerBrush = new SolidBrush(Color.Red);
+            g.FillEllipse(playerBrush, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+
+
+
+        }
+        public void DrawPlay2(Brush playerBrush, int x, int y, int size)
+        {
+            Graphics g = GamePanel.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13; 
+            
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Green;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            playerBrush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+            g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
+            playerBrush = new SolidBrush(Color.Green);
+            g.FillEllipse(playerBrush, x + padding+Xspace, y + padding+Yspace, 75 - 2 * padding, 75 - 2 * padding);
+
+
         }
         public void DrawGamePanel()
         {
+            Graphics g = GamePanel.CreateGraphics();
             for (int i = 0; i < Nrows; i++)
             {
                 for (int j = 0; j < Ncols; j++)
                 {
+                  
                     DrawCircle(PanelBrush, j * Size, i * Size,Size);
                     points[i, j] = new Point(j * Size, i * Size);
                 }
             }
 
             // Draw border
-            Graphics g = GamePanel.CreateGraphics();
+           
             Pen borderPen = new Pen(Color.Black, 6);
             g.DrawRectangle(borderPen, 0, 0, GamePanel.Width - 1, GamePanel.Height - 1);
 
@@ -62,11 +82,22 @@ namespace Connect4Game
         public void Fill_Player1()
         {
             Graphics g = this.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13;
+
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Red;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            Brush playerBrush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+
+            //fill rectangle
+            g.FillRectangle(P1RectBrush,P1Rect);
             //draw circle
-            Player1 = new Pen(Player1Color);
-            Player1.Width = 2;
-            g.DrawEllipse(Player1, 200, 320, 100, 100);
-            g.FillEllipse(Player1Brush, 200, 320, 100, 100);
+            g.FillEllipse(playerBrush, 200 + padding, 320 + padding, 100 - 2 * padding, 100 - 2 * padding);
+            playerBrush = new SolidBrush(Color.Red);
+            g.FillEllipse(playerBrush, 200 + padding + Xspace, 320 + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+
+           
             //draw text 
             Player1_brushStr = new SolidBrush(Player1_colorstr);
             Player1_Location = new Point(200, 450);
@@ -74,6 +105,8 @@ namespace Connect4Game
 
 
         }
+
+       
 
         public void Player2_Rectangle()
         {
@@ -90,11 +123,21 @@ namespace Connect4Game
         public void Fill_Player2()
         {
             Graphics g = this.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13;
+
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Green;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            Brush playerBrush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+           
+            //fill rectangle
+            g.FillRectangle(P2RectBrush, P2Rect);
             //draw circle
-            Player2 = new Pen(Player2Color);
-            Player2.Width = 2;
-            g.DrawEllipse(Player2, 1200, 320, 100, 100);
-            g.FillEllipse(Player2Brush, 1200, 320, 100, 100);
+            g.FillEllipse(playerBrush, 1200 + padding, 320 + padding, 100 - 2 * padding, 100 - 2 * padding);
+            playerBrush = new SolidBrush(Color.Green);
+            g.FillEllipse(playerBrush, 1200 + padding + Xspace, 320 + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+           
             //draw text 
             Player2_brushStr = new SolidBrush(Player2_colorstr);
             Player2_Location = new Point(1200, 450);
@@ -107,18 +150,20 @@ namespace Connect4Game
         {
             Graphics g = this.CreateGraphics();
             // Create a semi-transparent overlay
-            SolidBrush overlayBrush = new SolidBrush(Color.FromArgb(128, Color.Black));
+            
             g.FillRectangle(overlayBrush, P1Rect);
-
             Player2_Rectangle();
             Fill_Player2();
+
+
         }
+      
 
         public void Dim_Player2()
         {
             Graphics g = this.CreateGraphics();
             // Create a semi-transparent overlay
-            SolidBrush overlayBrush = new SolidBrush(Color.FromArgb(128, Color.Black));
+           
             g.FillRectangle(overlayBrush, roundedRectangle2);
 
             Player1_Rectangle();

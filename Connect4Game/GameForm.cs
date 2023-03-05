@@ -30,6 +30,7 @@ namespace Connect4Game
         Rectangle P1Rect;
         Rectangle roundedRectangle1;
         Color P1RectColor;
+        Brush P1RectBrush;
         Pen P1RectPen;
         //player1 circle
         Pen Player1;
@@ -51,6 +52,7 @@ namespace Connect4Game
         Rectangle roundedRectangle2;
         Color P2RectColor;
         Pen P2RectPen;
+        Brush P2RectBrush;
         //player2 circle
         Pen Player2;
         Color Player2Color;
@@ -63,6 +65,15 @@ namespace Connect4Game
         Color Player2_colorstr;
         Point Player2_Location;
         FontStyle Player2_style;
+        SolidBrush overlayBrush;
+        HatchStyle circleStyle;
+        Color ForeColor1;
+        Color BackColor1;
+        Color ForeColor2;
+        Color BackColor2;
+
+
+
         public GameForm()
         {
             InitializeComponent();
@@ -78,8 +89,17 @@ namespace Connect4Game
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
             turn = 1;
-            Player1Brush = new SolidBrush(Color.Red);
-            Player2Brush = new SolidBrush(Color.Yellow);
+            //Player1Brush = new SolidBrush(Color.Red);
+            //Player2Brush = new SolidBrush(Color.Yellow);
+            ForeColor1 = Color.White;
+            BackColor1 = Color.Red;
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Yellow;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            Player1Brush = new HatchBrush(circleStyle, ForeColor1, BackColor1);
+            Player2Brush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+           
+
             PanelBrush = new SolidBrush(Color.Blue);
             //================ Panel =================//
             GamePanel.Width = Ncols * Size;
@@ -88,6 +108,7 @@ namespace Connect4Game
             GamePanel.Location = new Point(400, 100);
             //Player1 Rectangle 
             P1RectColor = Color.Black;
+            P1RectBrush=new SolidBrush(Color.White);
             //player1 circle
             Player1Color = Color.Red;
             Player1BackColor = Color.Gray;
@@ -101,6 +122,7 @@ namespace Connect4Game
 
             //Player2 Rectangle 
             P2RectColor = Color.Black;
+            P2RectBrush = new SolidBrush(Color.White);
             //player2 circle
             Player2Color = Color.Yellow;
 
@@ -110,8 +132,13 @@ namespace Connect4Game
             Player2_style = FontStyle.Bold;
             Player2_font = new Font("courier", 20, Player2_style);
             Player2_colorstr = Color.Black;
+            overlayBrush = new SolidBrush(Color.FromArgb(128, Color.Black));
+           
+           
+
+
         }
 
-
+       
     }
 }

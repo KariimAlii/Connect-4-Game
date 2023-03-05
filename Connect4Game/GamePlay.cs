@@ -33,9 +33,11 @@ namespace Connect4Game
                 {
                     case 1:
                         
-                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
+                        DrawPlay1(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
                         Board[col_num, row_num] = 1;
+                       
                         Dim_Player2();
+                       
                         turn = 2;
 
                         Horizontal_Vertical_Checker(col_num, row_num, 1);
@@ -43,9 +45,11 @@ namespace Connect4Game
                         break;
                     case 2:
                         
-                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
+                        DrawPlay2(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y,Size);
                         Board[col_num, row_num] = 2;
+                      
                         Dim_Player1();
+                       
                         turn = 1;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);
@@ -134,7 +138,12 @@ namespace Connect4Game
 
 
         }
-
+        private void GamePanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point target = e.Location;
+        
+             
+        }
 
     }
 }
