@@ -189,8 +189,6 @@ namespace Connect4Game
                             }
                             isConnected = false;
                             this.tcpClient.Close();
-                            //this.tcpClient.Dispose();
-
                         }
 
                     }

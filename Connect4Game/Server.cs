@@ -145,7 +145,6 @@ namespace Connect4Game
                             room1.getGuest().writer.Write($"R1G{client.name}*");
                             room1.getHost().writer.Write("Open");
                             room1.getGuest().writer.Write("Open");
-                            MessageBox.Show("Send Open");
                             needGuest1 = false;
 
                         }

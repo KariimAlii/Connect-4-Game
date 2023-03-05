@@ -17,6 +17,7 @@ namespace Client
             challenger = this.player.name;
             CheckScore(e.Location);
 
+
         }
 
         public void CheckScore(Point target)
@@ -133,6 +134,7 @@ namespace Client
                         break;
                 }
             }
+            Shroud();
         }
         public void WinOrLoseResponce()
         {
