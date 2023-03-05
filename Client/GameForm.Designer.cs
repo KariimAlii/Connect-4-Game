@@ -33,9 +33,9 @@
             // 
             // GamePanel
             // 
-            this.GamePanel.Location = new System.Drawing.Point(0, 0);
+            this.GamePanel.Location = new System.Drawing.Point(-1, 0);
             this.GamePanel.Name = "GamePanel";
-            this.GamePanel.Size = new System.Drawing.Size(596, 446);
+            this.GamePanel.Size = new System.Drawing.Size(1011, 517);
             this.GamePanel.TabIndex = 0;
             this.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GamePanel_MouseClick);
             // 
@@ -45,7 +45,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 541);
             this.Controls.Add(this.GamePanel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameForm";
             this.Text = "Connect 4 Game";
             this.Resize += new System.EventHandler(this.GameForm_Resize);

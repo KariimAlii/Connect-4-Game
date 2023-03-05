@@ -16,6 +16,7 @@ namespace Client
         {
             challenger = this.player.name;
             CheckScore(e.Location);
+            Dim();
 
 
         }
@@ -50,7 +51,6 @@ namespace Client
                     Board[i + 2, col] == playerIdentifier &&
                     Board[i + 3, col] == playerIdentifier)
                 {
-
                     WinOrLoseResponce();
                 }
 
@@ -76,7 +76,6 @@ namespace Client
                     Board[i + 2, j - 2] == playerIdentifier &&
                     Board[i + 3, j - 3] == playerIdentifier)
                 {
-
                     WinOrLoseResponce();
                 }
 
@@ -98,6 +97,7 @@ namespace Client
                 {
 
                     WinOrLoseResponce();
+
                 }
 
             }
@@ -107,6 +107,7 @@ namespace Client
 
         public void adjustPlay(int row_num, int col_num, int turn)
         {
+
 
             while (col_num >= 0 && Board[col_num, row_num] > 0)
             {
@@ -120,21 +121,21 @@ namespace Client
 
                     case 1:
 
-                        DrawCircle(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        DrawPlay1(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 1;
                         Horizontal_Vertical_Checker(col_num, row_num, 1);
                         Diagonal_Checker(col_num, row_num, 1);
                         break;
                     case 2:
 
-                        DrawCircle(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        DrawPlay2(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 2;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);
                         break;
                 }
             }
-            Shroud();
+
         }
         public void WinOrLoseResponce()
         {
@@ -150,6 +151,8 @@ namespace Client
                 this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
                 this.GamePanel.Enabled = true;
                 DrawGamePanel();
+
+
             }
             else
             {

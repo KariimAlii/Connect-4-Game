@@ -36,6 +36,60 @@ namespace Client
             Graphics g = GamePanel.CreateGraphics();
             g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
         }
+        //=====================================================================================\\
+        public void DrawPlay1(Brush playerBrush, int x, int y, int size)
+        {
+            Graphics g = GamePanel.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13;
+            ForeColor1 = Color.White;
+            BackColor1 = Color.Red;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            playerBrush = new HatchBrush(circleStyle, ForeColor1, BackColor1);
+            g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
+            playerBrush = new SolidBrush(Color.Red);
+            g.FillEllipse(playerBrush, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+
+
+
+        }
+        public void DrawPlay2(Brush playerBrush, int x, int y, int size)
+        {
+            Graphics g = GamePanel.CreateGraphics();
+            int Xspace = 13;
+            int Yspace = 13;
+
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Green;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            playerBrush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+            g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
+            playerBrush = new SolidBrush(Color.Green);
+            g.FillEllipse(playerBrush, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //======================================================================================================\\
         public void DrawGamePanel()
         {
             for (int i = 0; i < Nrows; i++)
@@ -71,8 +125,6 @@ namespace Client
             Fill_Player1();
             Player2_Rectangle();
             Fill_Player2();
-            if (true == _isShrouded && null != _background)
-                e.Graphics.DrawImage(_background, 0, 0);
         }
 
         private void GameForm_Resize(object sender, EventArgs e)
@@ -133,63 +185,15 @@ namespace Client
 
 
         }
-
-        private Bitmap _background;
-        private bool _isShrouded;
-
-
-
-        public void Shroud()
+        public void Dim()
         {
-            if (false == _isShrouded)
-            {
-                CreateScreenshot();
 
-                HideControls();
-
-                _isShrouded = true;
-
-                this.Invalidate();
-            }
-        }
-        public void Unshroud()
-        {
-            if (true == _isShrouded)
-            {
-                ShowControls();
-
-                _isShrouded = false;
-
-                this.Invalidate();
-            }
-
-
-        }
-        private void ShowControls()
-        {
-            foreach (Control control in this.Controls)
-                control.Visible = true;
-        }
-
-        private void HideControls()
-        {
-            foreach (Control control in this.Controls)
-                control.Visible = false;
-        }
-        private void CreateScreenshot()
-        {
+            Graphics g = this.CreateGraphics();
             Rectangle area = this.RectangleToScreen(this.ClientRectangle);
-            Bitmap screenGrab = new Bitmap(area.Width, area.Height);
-
             Brush dark = new SolidBrush(Color.FromArgb(128, Color.Black));
-
-            Graphics g = Graphics.FromImage(screenGrab);
-            g.CopyFromScreen(area.Location, Point.Empty, area.Size);
             g.FillRectangle(dark, 0, 0, area.Width, area.Height);
-            g.Dispose();
-
-            _background = screenGrab;
         }
+
 
     }
 

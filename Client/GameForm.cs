@@ -33,9 +33,11 @@ namespace Client
         Player player;
         //==================Players================//
         //Player1 Rectangle
+        //Player1 Rectangle
         Rectangle P1Rect;
         Rectangle roundedRectangle1;
         Color P1RectColor;
+        Brush P1RectBrush;
         Pen P1RectPen;
         //player1 circle
         Pen Player1;
@@ -49,11 +51,15 @@ namespace Client
         Color Player1_colorstr;
         Point Player1_Location;
         FontStyle Player1_style;
+
+
+
         //Player2 Rectangle
         Rectangle P2Rect;
         Rectangle roundedRectangle2;
         Color P2RectColor;
         Pen P2RectPen;
+        Brush P2RectBrush;
         //player2 circle
         Pen Player2;
         Color Player2Color;
@@ -66,6 +72,12 @@ namespace Client
         Color Player2_colorstr;
         Point Player2_Location;
         FontStyle Player2_style;
+        SolidBrush overlayBrush;
+        HatchStyle circleStyle;
+        Color ForeColor1;
+        Color BackColor1;
+        Color ForeColor2;
+        Color BackColor2;
 
         //=====================Redrawing==============//
         Boolean drawn;
@@ -81,12 +93,20 @@ namespace Client
             Nrows = 6;
             Ncols = 7;
             Size = 100;
+            padding = 3;
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
             turn = turns;
-            Player1Brush = new SolidBrush(Color.Pink);
-            Player2Brush = new SolidBrush(Color.Yellow);
-            PanelBrush = new SolidBrush(Color.Cyan);
+            //Player1Brush = new SolidBrush(Color.Pink);
+            //Player2Brush = new SolidBrush(Color.Yellow);
+            ForeColor1 = Color.White;
+            BackColor1 = Color.Red;
+            ForeColor2 = Color.White;
+            BackColor2 = Color.Yellow;
+            circleStyle = HatchStyle.ForwardDiagonal;
+            Player1Brush = new HatchBrush(circleStyle, ForeColor1, BackColor1);
+            Player2Brush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
+            PanelBrush = new SolidBrush(Color.Blue);
             //================ Panel =================//
             GamePanel.Width = Ncols * Size;
             GamePanel.Height = Nrows * Size;
@@ -96,7 +116,9 @@ namespace Client
             drawn = true;
             //=================Player=================//
             //Player1 Rectangle 
+            //Player1 Rectangle 
             P1RectColor = Color.Black;
+            P1RectBrush = new SolidBrush(Color.White);
             //player1 circle
             Player1Color = Color.Red;
             Player1BackColor = Color.Gray;
@@ -110,6 +132,7 @@ namespace Client
 
             //Player2 Rectangle 
             P2RectColor = Color.Black;
+            P2RectBrush = new SolidBrush(Color.White);
             //player2 circle
             Player2Color = Color.Yellow;
 
@@ -119,6 +142,7 @@ namespace Client
             Player2_style = FontStyle.Bold;
             Player2_font = new Font("courier", 20, Player2_style);
             Player2_colorstr = Color.Black;
+            overlayBrush = new SolidBrush(Color.FromArgb(128, Color.Black));
             //=========setting the host to start========//
             if (this.player.playerStatus == Status.Guest) { this.GamePanel.Enabled = false; }
             Thread thread = new Thread(async () =>
@@ -152,17 +176,19 @@ namespace Client
                             if (this.player.playerStatus == Status.Host)
                             {
                                 GamePanel.Enabled = true;
+
                                 DrawGamePanel();
                                 adjustPlay(int.Parse(row), int.Parse(col), 1);
-                                Unshroud();
+                                Invalidate();
 
                             }
                             if (this.player.playerStatus == Status.Guest)
                             {
                                 GamePanel.Enabled = true;
+
                                 DrawGamePanel();
                                 adjustPlay(int.Parse(row), int.Parse(col), 2);
-                                Unshroud();
+                                Invalidate();
 
                             }
                         }
