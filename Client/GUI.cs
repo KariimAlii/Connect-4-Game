@@ -47,8 +47,8 @@ namespace Client
             circleStyle = HatchStyle.ForwardDiagonal;
             playerBrush = new HatchBrush(circleStyle, ForeColor1, BackColor1);
             g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
-            playerBrush = new SolidBrush(Color.Red);
-            g.FillEllipse(playerBrush, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+            Brush playerBrush1 = new SolidBrush(Color.Black);
+            g.FillEllipse(playerBrush1, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
 
 
 
@@ -64,8 +64,8 @@ namespace Client
             circleStyle = HatchStyle.ForwardDiagonal;
             playerBrush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
             g.FillEllipse(playerBrush, x + padding, y + padding, size - 2 * padding, size - 2 * padding);
-            playerBrush = new SolidBrush(Color.Green);
-            g.FillEllipse(playerBrush, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
+            Brush playerBrush1 = new SolidBrush(Color.Green);
+            g.FillEllipse(playerBrush1, x + padding + Xspace, y + padding + Yspace, 75 - 2 * padding, 75 - 2 * padding);
 
 
         }

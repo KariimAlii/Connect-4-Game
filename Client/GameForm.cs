@@ -84,7 +84,6 @@ namespace Client
         public GameForm(Player player, int turns)
         {
             InitializeComponent();
-
             //================ Adjust Window =================//
             this.Width = Screen.PrimaryScreen.Bounds.Width;
             this.Height = Screen.PrimaryScreen.Bounds.Height;
@@ -122,7 +121,6 @@ namespace Client
             //player1 circle
             Player1Color = Color.Red;
             Player1BackColor = Color.Gray;
-            Player1Brush = new SolidBrush(Player1Color);
             //player1 text
             // First Title
             Player1_string = "Player 1";
@@ -135,8 +133,6 @@ namespace Client
             P2RectBrush = new SolidBrush(Color.White);
             //player2 circle
             Player2Color = Color.Yellow;
-
-            Player2Brush = new SolidBrush(Player2Color);
             // Second Title
             Player2_string = "Player 2";
             Player2_style = FontStyle.Bold;
@@ -200,8 +196,6 @@ namespace Client
                             string col = full.Split('/')[1];
                             DrawGamePanel();
                             adjustPlay(int.Parse(row), int.Parse(col), 1);
-
-
                         }
                         if (str.StartsWith("G%") && this.player.playerStatus == Status.Watcher)
                         {
@@ -212,7 +206,6 @@ namespace Client
                             DrawGamePanel();
                             adjustPlay(int.Parse(row), int.Parse(col), 2);
                         }
-
                         if (str.StartsWith("CloseYourApp"))
                         {
                             this.Close();

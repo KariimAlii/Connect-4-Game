@@ -19,7 +19,6 @@ namespace Connect4Game
         public string room { get; set; }
 
         public Room myRoom;
-
         public Server server;
 
         NetworkStream stream;
@@ -185,7 +184,6 @@ namespace Connect4Game
                             {
                                 this.server.clients.Remove(this);
                                 this.myRoom.setGuest(null);
-                                MessageBox.Show("Set Guest to null");
                             }
                             isConnected = false;
                             this.tcpClient.Close();
