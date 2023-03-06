@@ -166,6 +166,7 @@ namespace Connect4Game
                         {
                             this.myRoom.Board = new List<string>();
                             this.myRoom.watcherList = new List<Client>();
+                            server.ListenForClientMessages();
                         }
                         #endregion
                         #region Client Exit

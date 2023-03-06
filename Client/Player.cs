@@ -54,7 +54,7 @@ namespace Client
             }
             else
             {
-                client = new TcpClient("127.0.0.1", 5000);
+                client = new TcpClient("127.0.0.1", 10000);
                 stream = client.GetStream();
 
                 writer = new StreamWriter(stream);

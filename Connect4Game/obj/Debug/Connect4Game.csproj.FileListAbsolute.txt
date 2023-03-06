@@ -111,3 +111,15 @@ F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.cs
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.exe
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.pdb
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe.config
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Room.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
+E:\PWD\C#\Connect 4\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb

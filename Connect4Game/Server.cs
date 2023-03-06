@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -16,8 +17,13 @@ namespace Connect4Game
         TcpListener listener;
         public List<Client> clients;
         SynchronizationContext context;
+        StreamReader reader;
+        Stream stream;
+      
+        SerializedClass sr;
         Thread receivethread;
         bool isListening = true;
+       
         public Room room1 { get; set; }
         public Room room2 { get; set; }
         public Room room3 { get; set; }
@@ -39,8 +45,9 @@ namespace Connect4Game
             InitializeComponent();
 
             IPAddress ip = new IPAddress(new byte[] { 127, 0, 0, 1 });
-            listener = new TcpListener(ip, 5000);
+            listener = new TcpListener(ip, 10000);
             context = SynchronizationContext.Current;
+            sr = new SerializedClass();
             clients = new List<Client>();
             room1 = new Room();
             room2 = new Room();
@@ -92,6 +99,16 @@ namespace Connect4Game
             Task.Run(() => AcceptConnections());
             context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
             context.Post((object obj) => StatusBox.Text = "Listening...", null);
+            if (sr.lastPlayed != null)
+            {
+                sr = SerializedClass.deserialize(@"E:\lastPlayed.txt");
+                last_played_list.Items.Add(sr.lastPlayed);
+            }
+            else
+            {
+                last_played_list.Items.Clear();
+            }
+           
 
             receivethread = new Thread(() =>
             {
@@ -244,6 +261,32 @@ namespace Connect4Game
                 }
 
             });
+        }
+
+        public void ListenForClientMessages()
+        {
+            while (true)
+            {
+                try
+                {
+                    // Wait for a message from the client
+                    string message = this.reader.ReadLine();
+
+                    // Check if the message is the "Name of last played" message
+                    if (message.StartsWith("Name of last played: "))
+                    {
+                        string playerName = message.Substring("Name of last played: ".Length);
+                        sr.lastPlayed = playerName;
+                        sr.serialize(@"E:\lastPlayed.txt");
+                                      
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    break;
+                }
+            }
         }
     }
 }

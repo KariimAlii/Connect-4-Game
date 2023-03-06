@@ -55,6 +55,7 @@
     <Compile Include="Room.Designer.cs">
       <DependentUpon>Room.cs</DependentUpon>
     </Compile>
+    <Compile Include="SerializedClass.cs" />
     <Compile Include="Server.cs">
       <SubType>Form</SubType>
     </Compile>

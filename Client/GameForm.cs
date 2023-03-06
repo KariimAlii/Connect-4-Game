@@ -77,6 +77,7 @@ namespace Client
 
         //=====================Redrawing==============//
         Boolean drawn;
+       
         public GameForm(Player player, int turns)
         {
             InitializeComponent();
@@ -140,6 +141,7 @@ namespace Client
             Player2_font = new Font("courier", 20, Player2_style);
             Player2_colorstr = Color.Black;
             overlayBrush = new SolidBrush(Color.FromArgb(128, Color.Black));
+          
             //=========setting the host to start========//
             if (this.player.playerStatus == Status.Guest) { this.GamePanel.Enabled = false; }
             Thread thread = new Thread(async () =>

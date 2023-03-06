@@ -149,6 +149,9 @@ namespace Client
                 MessageBox.Show("PlayAgain!");
                 Board = new int[Nrows, Ncols];
                 this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
+                string date = DateTime.Now.ToString("yyy-MM-dd HH:mm:ss"); //Get current time
+                this.player.writer.Write("Name of last played: "+this.player.name.ToString()+" "+" Date is: "+date);
+                
                 this.GamePanel.Enabled = true;
                 DrawGamePanel();
 
