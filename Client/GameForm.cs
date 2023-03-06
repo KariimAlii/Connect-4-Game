@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using System.Diagnostics.Eventing.Reader;
 
 //=====================Game Fields & Constructor====================//
 namespace Client
@@ -209,7 +210,16 @@ namespace Client
 
                         if (str.StartsWith("CloseYourApp"))
                         {
-                            this.Close();
+                            if (this.player.playerStatus == Status.Host)
+                            {
+                                Thread recievingthread = new Thread(() => this.player.ReceiveMessages());
+                                recievingthread.Start();
+                                this.GamePanel.Enabled = true;
+                                Board = new int[Nrows, Ncols];
+                                DrawGamePanel();
+                            }
+                            else { this.Dispose(); }
+
                         }
                     }
                 }
@@ -234,11 +244,11 @@ namespace Client
                         {
                             if (disk % 2 == 0)
                             {
-                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 1);
+                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
                             }
                             else
                             {
-                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
+                                adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 1);
                             }
                             disk++;
                         }

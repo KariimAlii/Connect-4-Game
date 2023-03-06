@@ -56,10 +56,10 @@ namespace Client
                             DrawCircle(PanelBrush, j * Size, i * Size, Size);
                             break;
                         case 1:
-                            DrawCircle(Player1Brush, j * Size, i * Size, Size);
+                            DrawPlay1(Player1Brush, j * Size, i * Size, Size);
                             break;
                         case 2:
-                            DrawCircle(Player2Brush, j * Size, i * Size, Size);
+                            DrawPlay2(Player2Brush, j * Size, i * Size, Size);
                             break;
                     }
 
@@ -133,11 +133,13 @@ namespace Client
         }
         public void Dim()
         {
-
-            Graphics g = this.CreateGraphics();
-            Rectangle area = this.RectangleToScreen(this.ClientRectangle);
-            Brush dark = new SolidBrush(Color.FromArgb(128, Color.Black));
-            g.FillRectangle(dark, 0, 0, area.Width, area.Height);
+            if (this.player.playerStatus != Status.Watcher)
+            {
+                Graphics g = this.CreateGraphics();
+                Rectangle area = this.RectangleToScreen(this.ClientRectangle);
+                Brush dark = new SolidBrush(Color.FromArgb(128, Color.Black));
+                g.FillRectangle(dark, 0, 0, area.Width, area.Height);
+            }
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -21,16 +22,6 @@ namespace Connect4Game
         public Room room1 { get; set; }
         public Room room2 { get; set; }
         public Room room3 { get; set; }
-
-
-        public bool needHost1 = true;
-        public bool needHost2 = true;
-        public bool needHost3 = true;
-
-
-        public bool needGuest1 = true;
-        public bool needGuest2 = true;
-        public bool needGuest3 = true;
         #endregion
 
         #region Constructor
@@ -128,7 +119,7 @@ namespace Connect4Game
                         {
                             room1.setHost(client);
                             client.writer.Write($"R1H{client.name}*");
-                            needHost1 = false;
+
                         }
                         else if (room1.getGuest() == null && room1.getHost() != client) //room1.getGuest() == null && room1.getHost() != client
                         {
@@ -136,7 +127,7 @@ namespace Connect4Game
                             room1.getGuest().writer.Write($"R1G{client.name}*");
                             room1.getHost().writer.Write("Open");
                             room1.getGuest().writer.Write("Open");
-                            needGuest1 = false;
+
 
                         }
                         else if (room1.getHost() != client && room1.getGuest() != client) //room1.getGuest() != client  && room1.getHost() != client
@@ -146,55 +137,103 @@ namespace Connect4Game
                                 string combinedString = string.Join("", client.myRoom.Board);
                                 client.writer.Write($"^^{combinedString}");
                                 room1.watcherList.Add(client);
-                                room1.watcherList[0].writer.Write($"R1W{client.name}*");
-                                room1.watcherList[0].writer.Write("Open");
+                                room1.watcherList.ToList().ForEach((watcher) =>
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.Write($"R1W{client.name}*");
+                                        watcher.writer.Write("Open");
+                                    }
+
+                                });
+
+
+
+
 
 
                             }
-                            needGuest1 = false;
+
                         }
 
                     }
                     else if (client.room == "2")
                     {
-                        if (room2.getHost() == null)
+                        if (room2.getHost() == null) //room1.getHost() == null
                         {
-                            room2.setHost(client);
+                            room1.setHost(client);
                             client.writer.Write($"R2H{client.name}*");
 
-
                         }
-                        else if (room2.getGuest() == null && room2.getHost() != client)
+                        else if (room2.getGuest() == null && room2.getHost() != client) //room1.getGuest() == null && room1.getHost() != client
                         {
                             room2.setGuest(client);
                             room2.getGuest().writer.Write($"R2G{client.name}*");
                             room2.getHost().writer.Write("Open");
                             room2.getGuest().writer.Write("Open");
 
+
                         }
-                        else if (room2.getGuest() != client && room2.getHost() != client)
+                        else if (room2.getHost() != client && room2.getGuest() != client) //room1.getGuest() != client  && room1.getHost() != client
                         {
-                            room2.watcherList.Add(client);
+                            if (!room2.watcherList.Contains(client))
+                            {
+                                string combinedString = string.Join("", client.myRoom.Board);
+                                client.writer.Write($"^^{combinedString}");
+                                room2.watcherList.Add(client);
+                                room2.watcherList.ToList().ForEach((watcher) =>
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.Write($"R2W{client.name}*");
+                                        watcher.writer.Write("Open");
+                                    }
+
+                                });
+
+
+                            }
+
                         }
+
                     }
-                    else if (client.room == "3")
+                    if (client.room == "3")
                     {
-                        if (room3.getHost() == null)
+                        if (room3.getHost() == null) //room1.getHost() == null
                         {
                             room3.setHost(client);
                             client.writer.Write($"R3H{client.name}*");
+
                         }
-                        else if (room3.getGuest() == null && room3.getHost() != client)
+                        else if (room3.getGuest() == null && room3.getHost() != client) //room1.getGuest() == null && room1.getHost() != client
                         {
                             room3.setGuest(client);
                             room3.getGuest().writer.Write($"R3G{client.name}*");
                             room3.getHost().writer.Write("Open");
                             room3.getGuest().writer.Write("Open");
 
+
                         }
-                        else if (room3.getGuest() != client && room3.getHost() != client)
+                        else if (room3.getHost() != client && room3.getGuest() != client) //room1.getGuest() != client  && room1.getHost() != client
                         {
-                            room3.watcherList.Add(client);
+                            if (!room3.watcherList.Contains(client))
+                            {
+                                string combinedString = string.Join("", client.myRoom.Board);
+                                client.writer.Write($"^^{combinedString}");
+                                room3.watcherList.Add(client);
+                                room3.watcherList.ToList().ForEach((watcher) =>
+                                {
+                                    if (watcher.tcpClient.Connected)
+                                    {
+                                        watcher.writer.Write($"R3W{client.name}*");
+                                        watcher.writer.Write("Open");
+                                    }
+
+                                });
+
+
+                            }
+
                         }
 
                     }

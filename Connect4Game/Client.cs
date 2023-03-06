@@ -79,11 +79,11 @@ namespace Connect4Game
                         MessageBox.Show("Your Client Stopped Playing!!");
                         if (myRoom.getHost() == this)
                         {
-                            this.server.needHost1 = true;
+
                             myRoom.setHost(null);
                             myRoom.setGuest(null);
                         }
-                        if (myRoom.getGuest() == this) { this.server.needGuest1 = true; myRoom.setGuest(null); }
+                        if (myRoom.getGuest() == this) {; myRoom.setGuest(null); }
 
                         this.tcpClient.Dispose();
                         streamingThread.Abort();
@@ -132,8 +132,8 @@ namespace Connect4Game
                             {
                                 row = row.Trim('G');
                                 myRoom.Board.Add(row + col + '/');
-                                this.server.room1.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
-                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                this.myRoom.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.myRoom.watcherList.ToList())
                                 {
                                     if (watcher.tcpClient.Connected)
                                     {
@@ -148,7 +148,8 @@ namespace Connect4Game
                             {
                                 row = row.Trim('H');
                                 myRoom.Board.Add(row + col + '/');
-                                this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                if (this.myRoom.getGuest() != null)
+                                    this.myRoom.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
                                 foreach (Client watcher in this.server.room1.watcherList.ToList())
                                 {
                                     if (watcher.tcpClient.Connected)
@@ -187,8 +188,10 @@ namespace Connect4Game
                             }
                             else if (status.Contains("Guest"))
                             {
+                                this.myRoom.getHost().writer.Write("CloseYourApp");
                                 this.server.clients.Remove(this);
                                 this.myRoom.setGuest(null);
+
                                 MessageBox.Show("Set Guest to null");
                             }
                             isConnected = false;

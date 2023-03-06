@@ -25,7 +25,6 @@ namespace Client
         public StreamWriter writer;
 
         public SynchronizationContext context;
-        public Thread thread;
         public string name;
         string number;
         string room;
@@ -33,6 +32,8 @@ namespace Client
         GameForm game;
         public Status playerStatus;
         bool isConnected = true;
+        public Thread recievingthread;
+        public bool isPlaying = false;
         #endregion
 
         #region Constructor
@@ -68,9 +69,8 @@ namespace Client
 
 
                 reader = new StreamReader(stream);
-
-                Task.Run(() => ReceiveMessages());
-
+                recievingthread = new Thread(() => ReceiveMessages());
+                recievingthread.Start();
                 room1.Visible = true;
                 room2.Visible = true;
                 room3.Visible = true;
@@ -97,8 +97,9 @@ namespace Client
             writer.WriteAsync("Room3");
         }
         #endregion
-        private void ReceiveMessages()
+        public void ReceiveMessages()
         {
+            MessageBox.Show("I`m Active");
             while (isConnected)
             {
                 if (stream != null)
@@ -169,6 +170,11 @@ namespace Client
                             string name = str.Split('G')[1].Split('*')[0];
                             this.playerStatus = Status.Guest;
                         }
+                        if (str.StartsWith("R2W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
+                        }
                     }
                     else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
                     {
@@ -183,6 +189,11 @@ namespace Client
                         {
                             string name = str.Split('G')[1].Split('*')[0];
                             this.playerStatus = Status.Guest;
+                        }
+                        if (str.StartsWith("R3W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
                         }
                     }
                     #endregion
@@ -205,8 +216,10 @@ namespace Client
                         {
                             this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
                         }
-                        thread = new Thread(() => { Application.Run(game); });
+                        Thread thread = new Thread(() => { Application.Run(game); });
                         thread.Start();
+                        recievingthread.Abort();
+
                     }
                     #endregion
                 }
