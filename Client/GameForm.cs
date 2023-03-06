@@ -25,11 +25,7 @@ namespace Client
         Brush PanelBrush;
         public int row_num { get; set; }
         public int col_num { get; set; }
-        //================ Rectangle =================//
-        Color Rect_Color;
-        Rectangle Rect;
-        Pen Rect_Pen;
-        HatchBrush Rect_Brush;
+
         Player player;
         //==================Players================//
         //Player1 Rectangle
@@ -97,13 +93,14 @@ namespace Client
             Board = new int[Nrows, Ncols];
             points = new Point[Nrows, Ncols];
             turn = turns;
-            //Player1Brush = new SolidBrush(Color.Pink);
-            //Player2Brush = new SolidBrush(Color.Yellow);
+
             ForeColor1 = Color.White;
             BackColor1 = Color.Red;
             ForeColor2 = Color.White;
             BackColor2 = Color.Yellow;
             circleStyle = HatchStyle.ForwardDiagonal;
+
+
             Player1Brush = new HatchBrush(circleStyle, ForeColor1, BackColor1);
             Player2Brush = new HatchBrush(circleStyle, ForeColor2, BackColor2);
             PanelBrush = new SolidBrush(Color.Blue);
@@ -163,9 +160,6 @@ namespace Client
                         }
 
                         string str = new string(charArr);
-
-
-
                         if (str.Contains("@"))
                         {
 
@@ -241,17 +235,12 @@ namespace Client
                             if (disk % 2 == 0)
                             {
                                 adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 1);
-
                             }
                             else
                             {
                                 adjustPlay(int.Parse(playedrow), int.Parse(playedcol), 2);
-
                             }
                             disk++;
-
-
-
                         }
                     }
 
@@ -260,6 +249,9 @@ namespace Client
             }
         }
 
-
+        private void GameForm_Resize(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
     }
 }

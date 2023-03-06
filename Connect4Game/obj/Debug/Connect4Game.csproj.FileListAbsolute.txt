@@ -15,7 +15,6 @@ D:\Web\My Github\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
 D:\Web\My Github\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
-D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache

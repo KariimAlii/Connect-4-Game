@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,10 +12,12 @@ namespace Connect4Game
 {
     public partial class Server : Form
     {
+        #region Fields
         TcpListener listener;
         public List<Client> clients;
         SynchronizationContext context;
         Thread receivethread;
+        bool isListening = true;
         public Room room1 { get; set; }
         public Room room2 { get; set; }
         public Room room3 { get; set; }
@@ -35,8 +31,9 @@ namespace Connect4Game
         public bool needGuest1 = true;
         public bool needGuest2 = true;
         public bool needGuest3 = true;
+        #endregion
 
-
+        #region Constructor
         public Server()
         {
             InitializeComponent();
@@ -48,14 +45,13 @@ namespace Connect4Game
             room1 = new Room();
             room2 = new Room();
             room3 = new Room();
-
         }
+        #endregion
 
-
-
+        #region Accepting Client Connections
         private void AcceptConnections()
         {
-            while (true)
+            while (isListening)
             {
                 try
                 {
@@ -73,10 +69,24 @@ namespace Connect4Game
 
             }
         }
+        #endregion
 
+        #region Stop Server Listening
+        private void StopListening()
+        {
+            this.isListening = false;
+            clients.ForEach((client) => client.tcpClient.Dispose());
+            receivethread.Abort();
+            listener.Stop();
+            context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
+            context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
+        }
+        #endregion
 
+        #region Controls
         private void ListenBtn_Click(object sender, EventArgs e)
         {
+            isListening = true;
             listener.Start();
 
             Task.Run(() => AcceptConnections());
@@ -97,29 +107,11 @@ namespace Connect4Game
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
-            //clients.ForEach(item => { MessageBox.Show(item.ToString()); });
-
             StopListening();
         }
-        private void StopListening()
-        {
-            //writer.Write("ServerStopped");
-            //Thread.Sleep(5000);
-            //backgroundWorker1.CancelAsync();
-            clients.ForEach((client) =>
-            {
-                //client.backgroundWorker2.CancelAsync();
-                client.tcpClient.Dispose();
+        #endregion
 
-            });
-            receivethread.Abort();
-            listener.Stop();
-            context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-            context.Post((object obj) => StatusBox.Text = "Server Stopped...", null);
-        }
-
-
-
+        #region Updating Clients & Rooms Info 
         public void UpdateClients()
         {
             context.Post((object obj) => clients_list.Items.Clear(), null);
@@ -129,8 +121,7 @@ namespace Connect4Game
                 if (client.tcpClient.Connected)
                 {
                     context.Post((object obj) => clients_list.Items.Add(client.name), null);
-
-                    ////////////////assign host and guest to client depending on their room;/////////////// 
+                    #region Assigning Each Room Guest & Host
                     if (client.room == "1")
                     {
                         if (room1.getHost() == null) //room1.getHost() == null
@@ -207,45 +198,33 @@ namespace Connect4Game
                         }
 
                     }
-                    //========Broadcasting to All Players to update their Room Lists========//
-
+                    #endregion
+                    #region Broadcast to All Players to Update Their Room Lists
                     if (room1.getHost() != null && room1.getGuest() != null)
                     {
                         client.writer.Write($"Room1{room1.getHost().name},{room1.getGuest().name}*");
-
                     }
                     if (room2.getHost() != null && room2.getGuest() != null)
                     {
                         client.writer.Write($"Room2{room2.getHost().name},{room2.getGuest().name}*");
-
                     }
                     if (room3.getHost() != null && room3.getGuest() != null)
                     {
                         client.writer.Write($"Room3{room3.getHost().name},{room3.getGuest().name}*");
-
                     }
+                    #endregion
                 }
                 else
                 {
-                    context.Post((object obj) =>
-                    {
-                        clients_list.Items.Remove(client.name);
-                        clients.Remove(client);
-                        client.tcpClient.Dispose();
-                    }, null);
+                    context.Post((object obj) => clients_list.Items.Remove(client.name), null);
+                    clients.Remove(client);
+                    client.tcpClient.Dispose();
                 }
-
-
-
-
             });
-
         }
+        #endregion
 
-        private void OpenGame_Click(object sender, EventArgs e)
-        {
-            Task.Run(() => Application.Run(new GameForm()));
-        }
+
 
         private void connected_clients_Click(object sender, EventArgs e)
         {

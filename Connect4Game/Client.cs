@@ -14,6 +14,7 @@ namespace Connect4Game
 {
     public class Client
     {
+        #region Fields
         public TcpClient tcpClient;
         public string name { get; set; }
         public string room { get; set; }
@@ -25,14 +26,16 @@ namespace Connect4Game
         NetworkStream stream;
         public StreamWriter writer { get; }
         public StreamReader reader { get; }
-        Thread streamingThread;
-        bool isConnected = true;
-        public BackgroundWorker backgroundWorker2;
 
+        Thread streamingThread;
+
+        bool isConnected = true;
+        #endregion
+
+        #region Constructor
         public Client(TcpClient tcpClient)
         {
             this.tcpClient = tcpClient;
-
 
             stream = tcpClient.GetStream();
 
@@ -40,21 +43,14 @@ namespace Connect4Game
             writer.AutoFlush = true;
             writer.Write("Connected");
 
-
             reader = new StreamReader(stream);
 
-            //Task.Run(() => ReceiveMessages());
             streamingThread = new Thread(() => ReceiveMessages());
             streamingThread.IsBackground = true;
             streamingThread.Start();
 
-
         }
-        //~Client() {
-        //    backgroundWorker2.CancelAsync();
-        //    tcpClient.Close();
-        //}
-
+        #endregion
 
         private void ReceiveMessages()
         {
@@ -62,6 +58,8 @@ namespace Connect4Game
             {
                 if (stream != null)
                 {
+
+                    #region Reading Message
                     char[] charArr = new char[100];
                     string str = "";
                     try
@@ -73,8 +71,9 @@ namespace Connect4Game
                     {
 
                     }
+                    #endregion
 
-                    //string str = await reader.ReadLineAsync();
+                    #region Client Disconnect
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
@@ -88,21 +87,19 @@ namespace Connect4Game
 
                         this.tcpClient.Dispose();
                         streamingThread.Abort();
-                        //this.tcpClient.Close();
-
-                        //MessageBox.Show(this.tcpClient.Connected.ToString());
                     }
+                    #endregion
 
+                    #region Client Connect
                     else if (str.Contains(","))
                     {
-
                         string[] temp = str.Split(',');
                         name = temp[0];
-
                         //room = temp[1];
-                        /*MessageBox.Show(str);*/
                     }
-                    ////////////////////////accepting their request to join the room////////////////
+                    #endregion
+
+                    #region Client Request to Join a Room
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
@@ -118,13 +115,15 @@ namespace Connect4Game
                         this.room = "3";
                         this.myRoom = this.server.room2;
                     }
-                    //////////////////////////////////////////////////////////////////////
-                    if (this.room == "1")
-                    {
+                    #endregion
 
+
+                    if (this.room == "1" || this.room == "2" || this.room == "3")
+                    {
+                        #region Client make a Play
+                        // ($Grow/col*playerName)
                         if (str.StartsWith("$"))
                         {
-
                             string full = str.Split('*')[0].Trim('$');
                             string playerName = str.Split('*')[1];
                             string row = full.Split('/')[0];
@@ -161,10 +160,15 @@ namespace Connect4Game
                             }
 
                         }
+                        #endregion
+                        #region Client Play Again
                         if (str.StartsWith("PlayAgain"))
                         {
-
+                            this.myRoom.Board = new List<string>();
+                            this.myRoom.watcherList = new List<Client>();
                         }
+                        #endregion
+                        #region Client Exit
                         if (str.StartsWith("Exit"))
                         {
                             string status = str.Split('-')[1];
@@ -190,6 +194,7 @@ namespace Connect4Game
                             isConnected = false;
                             this.tcpClient.Close();
                         }
+                        #endregion
 
                     }
 
@@ -202,16 +207,3 @@ namespace Connect4Game
     }
 }
 
-
-//switch (status)
-//{
-//    case "Host":
-
-//        break;
-//    case "Guest":
-
-//        break;
-//    default:
-
-//        break;
-//}

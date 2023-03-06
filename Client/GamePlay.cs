@@ -107,7 +107,7 @@ namespace Client
 
         public void adjustPlay(int row_num, int col_num, int turn)
         {
-
+            //MessageBox.Show($"row:${row_num},col:${col_num}");
 
             while (col_num >= 0 && Board[col_num, row_num] > 0)
             {
