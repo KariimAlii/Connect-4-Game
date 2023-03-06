@@ -69,7 +69,6 @@ namespace Client
                 r_row--;
                 r_col++;
             }
-            //MessageBox.Show(row.ToString() + "," + col.ToString());
             for (int i = r_row, j = r_col; i < Nrows - 3 && (j > 3); i++, j--)
             {
                 if (Board[i, j] == playerIdentifier &&
@@ -88,7 +87,6 @@ namespace Client
                 l_row--;
                 l_col--;
             }
-            //MessageBox.Show(l_row.ToString()+","+l_col.ToString());
             for (int i = l_row, j = l_col; i < Nrows - 3 && (j < Ncols - 3); i++, j++)
             {
                 if (Board[i, j] == playerIdentifier &&
@@ -119,14 +117,14 @@ namespace Client
 
                     case 1:
 
-                        DrawPlay1(Player1Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        DrawPlay(BackColor1, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 1;
                         Horizontal_Vertical_Checker(col_num, row_num, 1);
                         Diagonal_Checker(col_num, row_num, 1);
                         break;
                     case 2:
 
-                        DrawPlay2(Player2Brush, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
+                        DrawPlay(BackColor2, points[col_num, row_num].X, points[col_num, row_num].Y, Size);
                         Board[col_num, row_num] = 2;
                         Horizontal_Vertical_Checker(col_num, row_num, 2);
                         Diagonal_Checker(col_num, row_num, 2);

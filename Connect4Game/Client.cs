@@ -225,7 +225,7 @@ namespace Connect4Game
         public void WritingToFile(string text)
         {
             string fullPath = Path.GetFullPath(".");
-            File.AppendAllText($"{fullPath}" + @"\Scaore.txt", text);
+            File.AppendAllText($"{fullPath}" + @"\Score.txt", text);
         }
 
     }

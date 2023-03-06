@@ -223,6 +223,7 @@ namespace Client
             }
         }
 
+        #region Updating Rooms Listboxes
         public void List(string str)
         {
             // (Room1{Host},{Guest}*)
@@ -251,6 +252,8 @@ namespace Client
                 if (!listBox3.Items.Contains(guestName)) { listBox3.Items.Add(guestName); }
             }
         }
+        #endregion
+        #region Sending Play Location & Player Name to Server
         private void Mouse(object sender, MouseEventArgs e)
         {
             if (this.playerStatus == Status.Host)
@@ -268,6 +271,8 @@ namespace Client
 
             }
         }
+        #endregion
+        #region Disconnecting Connection with Server
         private async void Disconnect()
         {
             isConnected = false;
@@ -276,5 +281,6 @@ namespace Client
             await writer.WriteAsync("ClientStopped");
             client.Close();
         }
+        #endregion
     }
 }
