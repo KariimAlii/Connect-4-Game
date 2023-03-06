@@ -108,3 +108,16 @@ F:\Full C# Projec\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.Generat
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.exe
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Client\obj\Debug\Client.pdb
+F:\Full C# Projec\Connect-4-Game\Client\bin\Debug\Client.exe.config
+F:\Full C# Projec\Connect-4-Game\Client\bin\Debug\Client.exe
+F:\Full C# Projec\Connect-4-Game\Client\bin\Debug\Client.pdb
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.DialogBox.resources
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.GameForm.resources
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.Player.resources
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.Properties.Resources.resources
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.csproj.GenerateResource.cache
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.exe
+F:\Full C# Projec\Connect-4-Game\Client\obj\Debug\Client.pdb

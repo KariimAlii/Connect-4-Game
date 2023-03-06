@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Deployment.Application;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace Client
 {
@@ -26,6 +17,7 @@ namespace Client
     }
     public partial class Player : Form
     {
+        #region Fields
         public TcpClient client;
 
         public Stream stream;
@@ -33,21 +25,29 @@ namespace Client
         public StreamWriter writer;
 
         public SynchronizationContext context;
-        public Thread thread;
         public string name;
         string number;
         string room;
         public string[] played;
         GameForm game;
         public Status playerStatus;
+        bool isConnected = true;
+        public Thread recievingthread;
+        public bool isPlaying = false;
+        #endregion
+
+        #region Constructor
         public Player()
         {
             InitializeComponent();
             context = SynchronizationContext.Current;
         }
+        #endregion
 
+        #region Controls
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
+            isConnected = true;
             //Validation
             if (namebox.Text == "" || numberbox.Text == "")
             {
@@ -69,187 +69,13 @@ namespace Client
 
 
                 reader = new StreamReader(stream);
-
-                Task.Run(() => ReceiveMessages());
-
+                recievingthread = new Thread(() => ReceiveMessages());
+                recievingthread.Start();
                 room1.Visible = true;
                 room2.Visible = true;
                 room3.Visible = true;
             }
 
-        }
-        private void ReceiveMessages()
-        {
-            while (true)
-            {
-                if (stream != null)
-                {
-
-                    char[] charArr = new char[100];
-                    try
-                    {
-                        int x = reader.Read(charArr, 0, 100);
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-
-                    string str = new string(charArr);
-                    //MessageBox.Show(str);
-                    List(str);
-                    if (str.Contains("Connected"))
-                    {
-                        context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
-                        context.Post((object obj) => StatusBox.Text = str, null);
-
-                    }
-                    else if (str.Contains("ServerStopped"))
-                    {
-                        context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-                        context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-                        MessageBox.Show("Server Stopped!");
-                        Disconnect();
-                    }
-                    //==================Receiveing The Broadcast From The Server To Update Room List==================//
-                    else if (str.StartsWith("R1") && !str.Contains("R2") && !str.Contains("R3"))
-                    {
-
-
-                        this.room = "1";
-                        string temp = str.Substring(3).Split('*')[0];
-                        if (str.StartsWith("R1H") && str.Contains("*"))
-                        {
-                            string name = str.Split('H')[1].Split('*')[0];
-                            this.playerStatus = Status.Host;
-                        }
-                        if (str.StartsWith("R1G") && str.Contains("*"))
-                        {
-                            string name = str.Split('G')[1].Split('*')[0];
-                            this.playerStatus = Status.Guest;
-                        }
-                        if (str.StartsWith("R1W") && str.Contains("*"))
-                        {
-                            string name = str.Split('W')[1].Split('*')[0];
-                            this.playerStatus = Status.Watcher;
-                        }
-                    }
-                    //else if (str.StartsWith("Room1"))
-                    //{
-                    //    string temp1 = str.Substring(5).Split(',')[0];
-                    //    string temp2 = str.Substring(5).Split(',')[1];
-                    //    if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
-                    //    if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
-                    //}
-                    else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
-                    {
-                        this.room = "2";
-                        string temp = str.Substring(3).Split('*')[0];
-                        if (str.StartsWith("R2H") && str.Contains("*"))
-                        {
-                            string name = str.Split('H')[1].Split('*')[0];
-                            this.playerStatus = Status.Host;
-                        }
-                        if (str.StartsWith("R2G") && str.Contains("*"))
-                        {
-                            string name = str.Split('G')[1].Split('*')[0];
-                            this.playerStatus = Status.Guest;
-                        }
-                    }
-                    else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
-                    {
-                        this.room = "3";
-                        string temp = str.Substring(3).Split('*')[0];
-                        if (str.StartsWith("R3H") && str.Contains("*"))
-                        {
-                            string name = str.Split('H')[1].Split('*')[0];
-                            this.playerStatus = Status.Host;
-                        }
-                        if (str.StartsWith("R3G") && str.Contains("*"))
-                        {
-                            string name = str.Split('G')[1].Split('*')[0];
-                            this.playerStatus = Status.Guest;
-                        }
-                    }
-                    if (str.Contains("^^"))
-                    {
-                        str = str.Remove(0, 2);
-                        played = str.Split('/');
-
-                    }
-                    if (str.Contains("Open"))
-                    {
-                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
-                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
-                        if (this.playerStatus == Status.Watcher)
-                        {
-                            game = new GameForm(this, 3);
-                            this.game.GamePanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.Mouse);
-                        }
-                        this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
-                        thread = new Thread(() =>
-                        {
-                            Application.Run(game);
-                        });
-                        thread.Start();
-                    }
-                }
-
-            }
-        }
-        public void List(string str)
-        {
-            if (str.StartsWith("Room1"))
-            {
-                string room1 = str.Split('*')[0];
-                string temp1 = room1.Substring(5).Split(',')[0];
-                string temp2 = room1.Substring(5).Split(',')[1];
-                if (!listBox1.Items.Contains(temp1)) { listBox1.Items.Add(temp1); }
-                if (!listBox1.Items.Contains(temp2)) { listBox1.Items.Add(temp2); }
-            }
-            if (str.StartsWith("Room2"))
-            {
-                string room2 = str.Split('*')[0];
-                string temp1 = room2.Substring(5).Split(',')[0];
-                string temp2 = room2.Substring(5).Split(',')[1];
-                if (!listBox2.Items.Contains(temp1)) { listBox2.Items.Add(temp1); }
-                if (!listBox2.Items.Contains(temp2)) { listBox2.Items.Add(temp2); }
-            }
-            if (str.StartsWith("Room3"))
-            {
-                string room3 = str.Split('*')[0];
-                string temp1 = room3.Substring(5).Split(',')[0];
-                string temp2 = room3.Substring(5).Split(',')[1];
-                if (!listBox3.Items.Contains(temp1)) { listBox3.Items.Add(temp1); }
-                if (!listBox3.Items.Contains(temp2)) { listBox3.Items.Add(temp2); }
-            }
-        }
-        private void Mouse(object sender, MouseEventArgs e)
-        {
-            if (this.playerStatus == Status.Host)
-            {
-                writer.WriteLine($"$H{this.game.row_num}/{this.game.col_num}*{this.name}");
-                game.GamePanel.Enabled = false;
-                game.DrawGamePanel();
-
-            }
-            else if (this.playerStatus == Status.Guest)
-            {
-                writer.WriteLine($"$G{this.game.row_num}/{this.game.col_num}*{this.name}");
-                game.GamePanel.Enabled = false;
-                game.DrawGamePanel();
-
-            }
-
-
-        }
-        private async void Disconnect()
-        {
-            context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
-            context.Post((object obj) => StatusBox.Text = "Disconnected", null);
-            await writer.WriteAsync("ClientStopped");
-
-            client.Close();
         }
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
@@ -270,7 +96,185 @@ namespace Client
         {
             writer.WriteAsync("Room3");
         }
+        #endregion
+        public void ReceiveMessages()
+        {
+            while (isConnected)
+            {
+                if (stream != null)
+                {
 
+                    char[] charArr = new char[100];
+                    try
+                    {
+                        int x = reader.Read(charArr, 0, 100);
+                    }
+                    catch (Exception)
+                    {
 
+                    }
+                    string str = new string(charArr);
+
+                    #region Updating Room Listboxes
+                    List(str);
+                    #endregion
+                    #region Responding if PLayer Connected to Server
+                    if (str.Contains("Connected"))
+                    {
+                        context.Post((object obj) => StatusBox.BackColor = Color.Chartreuse, null);
+                        context.Post((object obj) => StatusBox.Text = str, null);
+
+                    }
+                    #endregion
+                    #region Responding if Server Stopped Listening
+                    else if (str.Contains("ServerStopped"))
+                    {
+                        MessageBox.Show("Server Stopped!");
+                        Disconnect();
+                    }
+                    #endregion
+                    #region Receiving Info from Server (room , player_name , player_status)
+                    // ( R1H{client_name}* )
+                    else if (str.StartsWith("R1") && !str.Contains("R2") && !str.Contains("R3"))
+                    {
+                        this.room = "1";
+                        if (str.StartsWith("R1H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
+                        }
+                        if (str.StartsWith("R1G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
+                        if (str.StartsWith("R1W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
+                        }
+                    }
+                    else if (str.Contains("R2") && !str.Contains("R1") && !str.Contains("R3"))
+                    {
+                        this.room = "2";
+                        if (str.StartsWith("R2H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
+                        }
+                        if (str.StartsWith("R2G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
+                        if (str.StartsWith("R2W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
+                        }
+                    }
+                    else if (str.Contains("R3") && !str.Contains("R1") && !str.Contains("R2"))
+                    {
+                        this.room = "3";
+                        if (str.StartsWith("R3H") && str.Contains("*"))
+                        {
+                            string name = str.Split('H')[1].Split('*')[0];
+                            this.playerStatus = Status.Host;
+                        }
+                        if (str.StartsWith("R3G") && str.Contains("*"))
+                        {
+                            string name = str.Split('G')[1].Split('*')[0];
+                            this.playerStatus = Status.Guest;
+                        }
+                        if (str.StartsWith("R3W") && str.Contains("*"))
+                        {
+                            string name = str.Split('W')[1].Split('*')[0];
+                            this.playerStatus = Status.Watcher;
+                        }
+                    }
+                    #endregion
+                    #region For Watcher , Updating the Played Info Array
+                    if (str.Contains("^^"))
+                    {
+                        str = str.Remove(0, 2);
+                        played = str.Split('/');
+
+                    }
+                    #endregion
+                    #region Receiving instruction to open the game
+                    if (str.Contains("Open"))
+                    {
+
+                        if (this.playerStatus == Status.Host) { game = new GameForm(this, 2); }
+                        if (this.playerStatus == Status.Guest) { game = new GameForm(this, 1); }
+                        if (this.playerStatus == Status.Watcher) { game = new GameForm(this, 3); }
+                        if (this.playerStatus != Status.Watcher)
+                        {
+                            this.game.GamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mouse);
+                        }
+                        Thread thread = new Thread(() => { Application.Run(game); });
+                        thread.Start();
+                        recievingthread.Abort();
+
+                    }
+                    #endregion
+                }
+
+            }
+        }
+
+        public void List(string str)
+        {
+            // (Room1{Host},{Guest}*)
+            if (str.StartsWith("Room1"))
+            {
+                string room1 = str.Split('*')[0];
+                string hostName = room1.Substring(5).Split(',')[0];
+                string guestName = room1.Substring(5).Split(',')[1];
+                if (!listBox1.Items.Contains(hostName)) { listBox1.Items.Add(hostName); }
+                if (!listBox1.Items.Contains(guestName)) { listBox1.Items.Add(guestName); }
+            }
+            if (str.StartsWith("Room2"))
+            {
+                string room2 = str.Split('*')[0];
+                string hostName = room2.Substring(5).Split(',')[0];
+                string guestName = room2.Substring(5).Split(',')[1];
+                if (!listBox2.Items.Contains(hostName)) { listBox2.Items.Add(hostName); }
+                if (!listBox2.Items.Contains(guestName)) { listBox2.Items.Add(guestName); }
+            }
+            if (str.StartsWith("Room3"))
+            {
+                string room3 = str.Split('*')[0];
+                string hostName = room3.Substring(5).Split(',')[0];
+                string guestName = room3.Substring(5).Split(',')[1];
+                if (!listBox3.Items.Contains(hostName)) { listBox3.Items.Add(hostName); }
+                if (!listBox3.Items.Contains(guestName)) { listBox3.Items.Add(guestName); }
+            }
+        }
+        private void Mouse(object sender, MouseEventArgs e)
+        {
+            if (this.playerStatus == Status.Host)
+            {
+                writer.WriteLine($"$H{this.game.row_num}/{this.game.col_num}*{this.name}");
+                game.GamePanel.Enabled = false;
+                game.DrawGamePanel();
+
+            }
+            else if (this.playerStatus == Status.Guest)
+            {
+                writer.WriteLine($"$G{this.game.row_num}/{this.game.col_num}*{this.name}");
+                game.GamePanel.Enabled = false;
+                game.DrawGamePanel();
+
+            }
+        }
+        private async void Disconnect()
+        {
+            isConnected = false;
+            context.Post((object obj) => StatusBox.BackColor = Color.IndianRed, null);
+            context.Post((object obj) => StatusBox.Text = "Disconnected", null);
+            await writer.WriteAsync("ClientStopped");
+            client.Close();
+        }
     }
 }

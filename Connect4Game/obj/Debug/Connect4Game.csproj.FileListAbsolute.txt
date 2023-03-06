@@ -15,7 +15,6 @@ D:\Web\My Github\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
 D:\Web\My Github\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
-D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.GameForm.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
 D:\Web\My Github\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
@@ -112,3 +111,15 @@ F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.cs
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.exe
 F:\Full C# Projec\C#4Karim\Karim-Gameplay\Connect4Game\obj\Debug\Connect4Game.pdb
+F:\Full C# Projec\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe.config
+F:\Full C# Projec\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.exe
+F:\Full C# Projec\Connect-4-Game\Connect4Game\bin\Debug\Connect4Game.pdb
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.AssemblyReference.cache
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.SuggestedBindingRedirects.cache
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Properties.Resources.resources
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Room.resources
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.Server.resources
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.GenerateResource.cache
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.csproj.CoreCompileInputs.cache
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.exe
+F:\Full C# Projec\Connect-4-Game\Connect4Game\obj\Debug\Connect4Game.pdb

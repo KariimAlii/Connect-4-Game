@@ -14,6 +14,7 @@ namespace Connect4Game
 {
     public class Client
     {
+        #region Fields
         public TcpClient tcpClient;
         public string name { get; set; }
         public string room { get; set; }
@@ -24,14 +25,16 @@ namespace Connect4Game
         NetworkStream stream;
         public StreamWriter writer { get; }
         public StreamReader reader { get; }
-        Thread streamingThread;
-        bool isConnected = true;
-        public BackgroundWorker backgroundWorker2;
 
+        Thread streamingThread;
+
+        bool isConnected = true;
+        #endregion
+
+        #region Constructor
         public Client(TcpClient tcpClient)
         {
             this.tcpClient = tcpClient;
-
 
             stream = tcpClient.GetStream();
 
@@ -39,21 +42,14 @@ namespace Connect4Game
             writer.AutoFlush = true;
             writer.Write("Connected");
 
-
             reader = new StreamReader(stream);
 
-            //Task.Run(() => ReceiveMessages());
             streamingThread = new Thread(() => ReceiveMessages());
             streamingThread.IsBackground = true;
             streamingThread.Start();
 
-
         }
-        //~Client() {
-        //    backgroundWorker2.CancelAsync();
-        //    tcpClient.Close();
-        //}
-
+        #endregion
 
         private void ReceiveMessages()
         {
@@ -61,6 +57,8 @@ namespace Connect4Game
             {
                 if (stream != null)
                 {
+
+                    #region Reading Message
                     char[] charArr = new char[100];
                     string str = "";
                     try
@@ -72,36 +70,35 @@ namespace Connect4Game
                     {
 
                     }
+                    #endregion
 
-                    //string str = await reader.ReadLineAsync();
+                    #region Client Disconnect
                     if (str.Contains("ClientStopped"))
                     {
                         MessageBox.Show("Your Client Stopped Playing!!");
                         if (myRoom.getHost() == this)
                         {
-                            this.server.needHost1 = true;
+
                             myRoom.setHost(null);
                             myRoom.setGuest(null);
                         }
-                        if (myRoom.getGuest() == this) { this.server.needGuest1 = true; myRoom.setGuest(null); }
+                        if (myRoom.getGuest() == this) {; myRoom.setGuest(null); }
 
                         this.tcpClient.Dispose();
                         streamingThread.Abort();
-                        //this.tcpClient.Close();
-
-                        //MessageBox.Show(this.tcpClient.Connected.ToString());
                     }
+                    #endregion
 
+                    #region Client Connect
                     else if (str.Contains(","))
                     {
-
                         string[] temp = str.Split(',');
                         name = temp[0];
-
                         //room = temp[1];
-                        /*MessageBox.Show(str);*/
                     }
-                    ////////////////////////accepting their request to join the room////////////////
+                    #endregion
+
+                    #region Client Request to Join a Room
                     else if (str.Contains("Room1") && this.room == null)
                     {
                         this.room = "1";
@@ -117,13 +114,15 @@ namespace Connect4Game
                         this.room = "3";
                         this.myRoom = this.server.room2;
                     }
-                    //////////////////////////////////////////////////////////////////////
-                    if (this.room == "1")
-                    {
+                    #endregion
 
+
+                    if (this.room == "1" || this.room == "2" || this.room == "3")
+                    {
+                        #region Client make a Play
+                        // ($Grow/col*playerName)
                         if (str.StartsWith("$"))
                         {
-
                             string full = str.Split('*')[0].Trim('$');
                             string playerName = str.Split('*')[1];
                             string row = full.Split('/')[0];
@@ -132,8 +131,8 @@ namespace Connect4Game
                             {
                                 row = row.Trim('G');
                                 myRoom.Board.Add(row + col + '/');
-                                this.server.room1.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
-                                foreach (Client watcher in this.server.room1.watcherList.ToList())
+                                this.myRoom.getHost().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                foreach (Client watcher in this.myRoom.watcherList.ToList())
                                 {
                                     if (watcher.tcpClient.Connected)
                                     {
@@ -148,7 +147,8 @@ namespace Connect4Game
                             {
                                 row = row.Trim('H');
                                 myRoom.Board.Add(row + col + '/');
-                                this.server.room1.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
+                                if (this.myRoom.getGuest() != null)
+                                    this.myRoom.getGuest().writer.WriteLine($"@{row}/{col}*{playerName}");
                                 foreach (Client watcher in this.server.room1.watcherList.ToList())
                                 {
                                     if (watcher.tcpClient.Connected)
@@ -160,10 +160,15 @@ namespace Connect4Game
                             }
 
                         }
+                        #endregion
+                        #region Client Play Again
                         if (str.StartsWith("PlayAgain"))
                         {
-
+                            this.myRoom.Board = new List<string>();
+                            this.myRoom.watcherList = new List<Client>();
                         }
+                        #endregion
+                        #region Client Exit
                         if (str.StartsWith("Exit"))
                         {
                             string status = str.Split('-')[1];
@@ -182,13 +187,34 @@ namespace Connect4Game
                             }
                             else if (status.Contains("Guest"))
                             {
+                                this.myRoom.getHost().writer.Write("CloseYourApp");
                                 this.server.clients.Remove(this);
                                 this.myRoom.setGuest(null);
                             }
                             isConnected = false;
                             this.tcpClient.Close();
                         }
+                        #endregion
+                        #region Saving Winner & Loser Data
+                        if (str.StartsWith("Lose"))
+                        {
+                            string room = this.room;
+                            string date = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+                            string winner = this.myRoom.getGuest().name;
+                            string loser = this.name;
 
+                            WritingToFile($"Winner : {winner},Loser :{loser},Room : {room},Date :{date}\n");
+
+                        }
+                        if (str.StartsWith("Win"))
+                        {
+                            string room = this.room;
+                            string date = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+                            string loser = this.myRoom.getGuest().name;
+                            string winner = this.name;
+                            WritingToFile($"Winner : {winner},Loser :{loser},Room : {room},Date :{date}\n");
+                        }
+                        #endregion
                     }
 
                 }
@@ -196,20 +222,12 @@ namespace Connect4Game
 
             }
         }
+        public void WritingToFile(string text)
+        {
+            string fullPath = Path.GetFullPath(".");
+            File.AppendAllText($"{fullPath}" + @"\Scaore.txt", text);
+        }
 
     }
 }
 
-
-//switch (status)
-//{
-//    case "Host":
-
-//        break;
-//    case "Guest":
-
-//        break;
-//    default:
-
-//        break;
-//}

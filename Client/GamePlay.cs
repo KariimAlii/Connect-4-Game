@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -39,7 +40,7 @@ namespace Client
                     Board[row, i + 2] == playerIdentifier &&
                     Board[row, i + 3] == playerIdentifier)
                 {
-                    WinOrLoseResponce();
+                    Task.Run(() => { WinOrLoseResponce(); });
                 }
 
             }
@@ -51,7 +52,7 @@ namespace Client
                     Board[i + 2, col] == playerIdentifier &&
                     Board[i + 3, col] == playerIdentifier)
                 {
-                    WinOrLoseResponce();
+                    Task.Run(() => { WinOrLoseResponce(); });
                 }
 
             }
@@ -76,7 +77,7 @@ namespace Client
                     Board[i + 2, j - 2] == playerIdentifier &&
                     Board[i + 3, j - 3] == playerIdentifier)
                 {
-                    WinOrLoseResponce();
+                    Task.Run(() => { WinOrLoseResponce(); });
                 }
 
             }
@@ -96,8 +97,7 @@ namespace Client
                     Board[i + 3, j + 3] == playerIdentifier)
                 {
 
-                    WinOrLoseResponce();
-
+                    Task.Run(() => { WinOrLoseResponce(); });
                 }
 
             }
@@ -107,8 +107,6 @@ namespace Client
 
         public void adjustPlay(int row_num, int col_num, int turn)
         {
-
-
             while (col_num >= 0 && Board[col_num, row_num] > 0)
             {
                 col_num--;
@@ -139,27 +137,38 @@ namespace Client
         }
         public void WinOrLoseResponce()
         {
-            this.GamePanel.Enabled = false;
+
+            if (this.player.playerStatus == Status.Watcher) { this.Close(); }
             DialogBox dlg_Box = new DialogBox();
-            if (this.challenger == this.player.name) dlg_Box.setLabelText("You Won !");
-            else dlg_Box.setLabelText("You Lose !");
-            DialogResult dlg_Result = dlg_Box.ShowDialog();
-            if (dlg_Result == DialogResult.OK)
+            if (this.challenger == this.player.name)
             {
-                MessageBox.Show("PlayAgain!");
-                Board = new int[Nrows, Ncols];
-                this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
-                this.GamePanel.Enabled = true;
-                DrawGamePanel();
-
-
+                dlg_Box.setLabelText("You Won !");
+                if (this.player.playerStatus == Status.Host) { this.player.writer.Write("Win"); }
             }
             else
             {
-                this.player.writer.Write("Exit-" + this.player.playerStatus.ToString());
-                this.Close();
-
+                dlg_Box.setLabelText("You Lose !");
+                if (this.player.playerStatus == Status.Host) { this.player.writer.Write("Lose"); }
             }
+            if (this.player.playerStatus != Status.Watcher)
+            {
+                DialogResult dlg_Result = dlg_Box.ShowDialog();
+                if (dlg_Result == DialogResult.OK)
+                {
+
+                    if (this.player.playerStatus == Status.Host) this.GamePanel.Enabled = true;
+                    Board = new int[Nrows, Ncols];
+                    this.player.writer.Write("PlayAgain-" + this.player.playerStatus.ToString());
+                    DrawGamePanel();
+                }
+                else
+                {
+                    this.player.writer.Write("Exit-" + this.player.playerStatus.ToString());
+                    this.Close();
+
+                }
+            }
+
 
         }
 
